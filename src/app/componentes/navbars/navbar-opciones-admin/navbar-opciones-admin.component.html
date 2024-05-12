@@ -1,0 +1,76 @@
+<nav class="navbar navbar-light bg-light user-select-none flex-nowrap">
+  <div class="container-fluid justify-content-start">
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvas" aria-controls="navbarOffcanvas">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="navbarOffcanvas" aria-labelledby="offcanvasNavbarLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menú</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav mb-2 mb-lg-0">
+          <!-- Adherentes -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Proveedores
+            </a>
+            <ul class="dropdown-menu">
+              <li><a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/bienvenido']" (click)="por_implementar()" role="button">ABM Proveedores</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/bienvenido']" (click)="por_implementar()" role="button">Realizar un pedido</a></li>
+              <li><a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/bienvenido']" (click)="por_implementar()" role="button">Consultar Facturas Compra Registradas</a></li>
+            </ul>
+          </li>
+          <!-- Débito Directo  -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Ventas
+            </a>
+            <ul class="dropdown-menu">
+              <li><a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/bienvenido']" (click)="por_implementar()" role="button">Emisión de Ventas</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/bienvenido']" (click)="por_implementar()" role="button">ABM Productos</a></li>
+              <li><hr data-bs-dismiss="offcanvas"  class="dropdown-divider"></li>
+              <li><a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/bienvenido']" (click)="por_implementar()" role="button">Control de Stock</a></li>
+              <li><a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/bienvenido']" (click)="por_implementar()" role="button">Avisos de Stock y Fec. Vencimiento Proximas</a></li>
+            </ul>
+          </li>
+          <!-- Usuarios ActualizadorDeFechaDeCobro-->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Usuarios
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/bienvenido']" (click)="por_implementar()" role="button">ABM Usuarios y Cambio de roles</a>
+              </li>
+            </ul>
+          </li>
+          <!-- Reportes -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Reportes
+            </a>
+            <ul class="dropdown-menu">
+              <li><a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/bienvenido']" (click)="por_implementar()" role="button">Ventas Del Dia</a></li>
+              <li><a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/bienvenido']" (click)="por_implementar()" role="button">Ventas de la Mes</a></li>
+            </ul>
+          </li>
+          <!-- Mantenimiento -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Mantenimiento
+            </a>
+            <ul class="dropdown-menu">
+              <li><a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/bienvenido']" (click)="por_implementar()" role="button">ABM Localidades</a></li>
+              <li><a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/bienvenido']" (click)="por_implementar()" role="button">ABM Provincias</a></li>
+              <li><a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/bienvenido']" (click)="por_implementar()" role="button">ABM Paises</a></li>
+              <li><a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/bienvenido']" (click)="por_implementar()" role="button">ABM Sexos</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>

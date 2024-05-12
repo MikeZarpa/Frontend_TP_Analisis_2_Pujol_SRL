@@ -1,0 +1,19 @@
+.login-page {
+    background-image: url(https://media.admagazine.com/photos/62301bc7818965ae9b897556/master/w_1600%2Cc_limit/pexels-karolina-grabowska-5882683.jpg);
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .card-pers {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-body-pers {
+    padding: 30px;
+  }

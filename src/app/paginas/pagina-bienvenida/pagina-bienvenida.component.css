@@ -1,0 +1,8 @@
+.fondo-bienvenida{
+    background-image: url("/assets/images/fondo-bienvenida.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.contenedor-saludos{
+    margin-top: 5%;
+}

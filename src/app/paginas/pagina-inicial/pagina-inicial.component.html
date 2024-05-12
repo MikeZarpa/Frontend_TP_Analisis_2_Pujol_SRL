@@ -1,0 +1,12 @@
+<div class="fondo-bienvenida page-container expandir-pantalla">
+    <app-navbar-inicial></app-navbar-inicial>
+    <div class="container">
+        <div class="contenedor-saludos text-center">
+            <h1>
+                Bienvenido al Sistema de Gestión de Pujol SRL
+            </h1>
+            <h2 *ngIf="!servicioDeSesion.elUsuarioEstaCargado">Por favor, inicie sesión para comenzar.</h2>
+            <h2 *ngIf="servicioDeSesion.elUsuarioEstaCargado">Es un placer verte de nuevo, {{servicioDeSesion.usuario?.apellido}}.</h2>
+        </div>
+    </div>
+</div>

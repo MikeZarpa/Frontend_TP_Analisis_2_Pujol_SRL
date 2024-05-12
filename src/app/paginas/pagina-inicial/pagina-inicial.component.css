@@ -1,0 +1,19 @@
+.fondo-bienvenida{
+    background-image: url("/assets/images/fondo-inicial.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.contenedor-saludos{
+    margin-top: 5%;
+}
+.expandir-pantalla{
+    display: flex;
+    flex-direction: column;
+}
+.expandir-pantalla .contenedor-saludos, .expandir-pantalla .container{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+}

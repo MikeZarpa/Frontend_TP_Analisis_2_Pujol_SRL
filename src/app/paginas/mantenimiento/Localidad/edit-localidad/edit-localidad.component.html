@@ -1,0 +1,46 @@
+<div class="card mx-auto p-5 col-8">
+    <form [formGroup]="localidadForm" (ngSubmit)="enviarFormulario($event);localidadForm.markAllAsTouched();" class="needs-validation">
+
+      <div class="card p-5 my-4 shadow">
+  
+        <h2 *ngIf="!editMode">Ingreso de una Nueva Localidad</h2>
+        <h2 *ngIf="editMode">Editando la Localidad: {{datosEdit.nombre}}</h2>
+        <div class="row">
+        <div class="col-6">
+          <label for="nombre">Nombre<span class="text-danger">*</span>:</label>
+          <input type="text" id="nombre" formControlName="nombre" class="form-control uppercase-text" >
+          <div *ngIf="localidadForm.get('nombre')?.invalid && (localidadForm.get('nombre')?.dirty || localidadForm.get('nombre')?.touched)" class="text-danger">
+            El Nombre es obligatorio.
+          </div>
+          <label for="codigo_postal">Código Postal<span class="text-danger">*</span>:</label>
+          <input type="number" id="codigo_postal" formControlName="codigo_postal" class="form-control">
+          <div *ngIf="localidadForm.get('codigo_postal')?.invalid && (localidadForm.get('codigo_postal')?.dirty || localidadForm.get('codigo_postal')?.touched)" class="text-danger">
+            El Código Postal es obligatorio.
+          </div>
+        </div>
+        <div class="col-6">
+            <label for="provincia">Provincia<span class="text-danger"></span>:</label>
+            <input disabled [value]="provinciaAlQuePertenece.nombre" type="text" id="provincia" class="form-control">
+          </div>
+        </div>
+
+        </div>
+  
+ 
+    <div class="row">
+      <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-primary btn-block">Enviar</button>
+      </div>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+      <div class="col-5">
+        <div class="d-grid gap-2">
+          <button (click)="volverClick()" type="button" class="btn btn-secondary ml-auto">Volver</button>
+        </div>
+      </div>
+    </div>
+    </form>
+  </div>
+    

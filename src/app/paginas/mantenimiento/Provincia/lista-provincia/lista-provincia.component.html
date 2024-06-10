@@ -1,0 +1,47 @@
+<app-btn-volver *ngIf="editando" (volver)="eventoVolver()"></app-btn-volver>
+<app-btn-volver *ngIf="!(editando)" [routerLink]="['/admin']"></app-btn-volver>
+
+<div class="p-5" [hidden]="editando" >
+  <div class="form-group col-6">
+    <h3>País al que pertenece la provincia</h3>
+    <label for="pais">País:</label>
+    <select #paisInput (change)="paisSeleccion($event, Paises)" class="form-select">
+      <option [selected]="true" value="" disabled>Seleccionar País</option>
+      <option *ngFor="let pais of Paises" [value]="pais.id">{{ pais.nombre }}</option>
+    </select>    
+  </div>
+</div>
+<div class="p-5" *ngIf="!editando">
+    <h2>Provincias</h2>
+    <table class="mat-elevation-z8 cdk-table mat-table table mat-small">
+        <!-- Definir las columnas -->
+        <thead>
+          <tr class="row ps-5">
+            <th class="col-2">Opciones</th>
+            <th class="col-2">Descripción</th>
+            <th class="col-2 " [hidden]="paisSeleccionado==undefined">
+              <mat-icon class="accion-icon border" title="Registrar una nueva provincia." (click)="this.crearNuevo(paisInput.value)" >add</mat-icon>
+            </th>
+            <!-- Definir el resto de las columnas -->
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Definir las filas -->
+          <tr class="row ps-5" *ngFor="let provincia of Provincias">
+            <td class="col-2">
+                <mat-icon class="accion-icon"  title="Modificar los datos de la provincia."  (click)="this.editar(provincia)" >edit</mat-icon>
+                <mat-icon class="accion-icon"  title="Borrar el registro de la provincia."  (click)="borrar(provincia)"npm install sweetalert2>delete</mat-icon>
+            </td>
+            <td class="col-2">{{ provincia.nombre }}</td>
+            <!-- Definir el resto de las columnas -->
+          </tr>
+        </tbody>
+      </table>
+      <div class="row text-center user-select-none">
+        <h3>Selecciona el país para comenzar.</h3>
+      </div>
+    </div>
+    
+    <app-edit-provincia [paisAlQuePertenece]="paisSeleccionado" [datosEdit]="datosAEditar!" [editMode]="activarEdicion" *ngIf="editando" (volver)="eventoVolver()" (envioExitoso)="eventoEnvioExitoso()"></app-edit-provincia>
+    <app-btn-volver *ngIf="editando" (volver)="eventoVolver()"></app-btn-volver>
+<app-btn-volver *ngIf="!(editando)" [routerLink]="['/admin']"></app-btn-volver>

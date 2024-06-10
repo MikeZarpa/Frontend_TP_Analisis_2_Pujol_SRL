@@ -1,0 +1,37 @@
+<div class="card mx-auto p-5 col-8">
+    <form [formGroup]="paisForm" (ngSubmit)="enviarFormulario($event);paisForm.markAllAsTouched();" class="needs-validation">
+
+      <div class="card p-5 my-4 shadow">
+  
+        <h2 *ngIf="!editMode">Ingresando un nuevo País</h2>
+        <h2 *ngIf="editMode">Editando al País: {{datosEdit.nombre}}</h2>
+        <div class="row">
+        <div class="col-6">
+          <label for="nombre">Nombre<span class="text-danger">*</span>:</label>
+          <input type="text" id="nombre" formControlName="nombre" class="form-control uppercase-text" >
+          <div *ngIf="paisForm.get('nombre')?.invalid && (paisForm.get('nombre')?.dirty || paisForm.get('nombre')?.touched)" class="text-danger">
+            El Nombre es obligatorio.
+          </div>
+        </div>
+        </div>
+
+        </div>
+  
+ 
+    <div class="row">
+      <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-primary btn-block">Enviar</button>
+      </div>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+      <div class="col-5">
+        <div class="d-grid gap-2">
+          <button (click)="volverClick()" type="button" class="btn btn-secondary ml-auto">Volver</button>
+        </div>
+      </div>
+    </div>
+    </form>
+  </div>
+    

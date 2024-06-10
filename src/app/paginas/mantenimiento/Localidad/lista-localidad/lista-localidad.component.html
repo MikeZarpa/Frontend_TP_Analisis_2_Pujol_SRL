@@ -1,0 +1,56 @@
+<app-btn-volver *ngIf="!(editando)" [routerLink]="['/admin']"></app-btn-volver>
+<app-btn-volver *ngIf="editando" (volver)="eventoVolver()"></app-btn-volver>
+<div class="p-5" [hidden]="editando" >
+  <div class="row">
+    <h3>País y Provincia al que pertenece la localidad</h3>
+    <div class="form-group col-6">
+      <label for="pais">País:</label>
+      <select #pais (change)="paisSeleccion($event,provincia)" id="pais" class="form-select">
+        <option [selected]="true" value="" disabled>Seleccionar País</option>
+        <option *ngFor="let pais of Paises" [value]="pais.id">{{ pais.nombre }}</option>
+    </select>
+  </div>
+<div class="form-group col-6">
+  <label for="provincia">Provincia:</label>
+  <select #provincia (change)="provinciasSeleccion($event,Provincias)" id="provincia" class="form-select">
+    <option [selected]="true" value="" disabled>{{(Provincias.length==0) ? "Seleccionar País" : "Seleccionar Provincia"}}</option>
+    <option *ngFor="let provincia of Provincias" [value]="provincia.id">{{ provincia.nombre }}</option>
+  </select>
+</div>
+</div>
+</div>
+<div class="p-5" *ngIf="!editando">
+    <h2>Localidades</h2>
+    <table class="mat-elevation-z8 cdk-table mat-table table mat-small">
+        <!-- Definir las columnas -->
+        <thead>
+          <tr class="row ps-5">
+            <th class="col-2">Opciones</th>
+            <th class="col-2">Nombre</th>
+            <th class="col-2">Código Postal</th>
+            <th class="col-2 " [hidden]="provinciaSeleccionada==undefined">
+              <mat-icon class="accion-icon border" title="Registrar a una nueva localidad." (click)="this.crearNuevo(provincia.value)" >add</mat-icon>
+            </th>
+
+            <!-- Definir el resto de las columnas -->
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Definir las filas -->
+          <tr class="row ps-5" *ngFor="let localidad of Localidades">
+            <td class="col-2">
+                <mat-icon class="accion-icon" title="Editar los datos de la localidad." (click)="this.editar(localidad)" >edit</mat-icon>
+                <mat-icon class="accion-icon" title="Borrar la localidad." (click)="borrar(localidad)"npm install sweetalert2>delete</mat-icon>
+            </td>
+            <td class="col-2">{{ localidad.nombre }}</td>
+            <td class="col-2">{{ localidad.codigo_postal }}</td>
+            <!-- Definir el resto de las columnas -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <app-edit-localidad [provinciaAlQuePertenece]="provinciaSeleccionada" [datosEdit]="datosAEditar!" [editMode]="activarEdicion" *ngIf="editando" (volver)="eventoVolver()" (envioExitoso)="eventoEnvioExitoso()"></app-edit-localidad>
+<app-btn-volver *ngIf="!(editando)" [routerLink]="['/admin']"></app-btn-volver>
+
+    <app-btn-volver *ngIf="editando" (volver)="eventoVolver()"></app-btn-volver>

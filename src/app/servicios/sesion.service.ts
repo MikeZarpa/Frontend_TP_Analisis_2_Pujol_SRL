@@ -30,7 +30,7 @@ export class SesionService extends DatosDeConexion {
 
   iniciarSesion(datos:DatosLogin): Promise<Usuario> {       
     return new Promise((resolve, reject) => {
-      this.http.post<Usuario>( this.urlConexionBase +'/Backend/verificar_login', datos, {headers:this.headers,observe:'response'})
+      this.http.post<Usuario>( this.urlConexionBase +'/verificar_login', datos, {headers:this.headers,observe:'response'})
         .pipe(map((response:HttpResponse<Usuario>)=>{
           //Para el login, separamos el header y el body, el header de la respuesta exitosa lo mandamos al servicio de Token
           const headers = response.headers;

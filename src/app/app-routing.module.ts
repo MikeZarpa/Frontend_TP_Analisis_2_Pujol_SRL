@@ -11,6 +11,7 @@ import { ListaPaisComponent } from './paginas/mantenimiento/Pais/lista-pais/list
 import { PaginaHomeComponent } from './paginas/pagina-bienvenida/pagina-home/pagina-home.component';
 import { ListaProductosComponent } from './paginas/ventas/productos/lista-productos/lista-productos.component';
 import { Producto } from './clases/base_de_datos/comercial/producto';
+import { EmisionVentaComponent } from './paginas/ventas/emisor_venta/emision-venta/emision-venta.component';
 
 export const PATHS = {
   inicio : "",
@@ -41,6 +42,7 @@ const routes: Routes = [
     {path:PATHS.ventas, component:PaginaBienvenidaComponent,
       children:[
         { path: 'Productos', component: ListaProductosComponent},
+        { path: 'EmisionVenta', component: EmisionVentaComponent},
       ],
       canActivate:[estaLogueadoGuard]},
 ];

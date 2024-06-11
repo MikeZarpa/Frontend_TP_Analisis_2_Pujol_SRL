@@ -27,6 +27,7 @@ import { BtnVolverComponent } from './componentes/interfaz/btn-volver/btn-volver
 import { PaginaHomeComponent } from './paginas/pagina-bienvenida/pagina-home/pagina-home.component';
 import { ListaProductosComponent } from './paginas/ventas/productos/lista-productos/lista-productos.component';
 import { BarraPaginacionComponent } from './componentes/interfaz/barra-paginacion/barra-paginacion.component';
+import { EmisionVentaComponent } from './paginas/ventas/emisor_venta/emision-venta/emision-venta.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { BarraPaginacionComponent } from './componentes/interfaz/barra-paginacio
     BtnVolverComponent,
     BarraPaginacionComponent,
     PaginaHomeComponent,
-    ListaProductosComponent
+    ListaProductosComponent,
+    EmisionVentaComponent
   ],
   imports: [
     BrowserModule,

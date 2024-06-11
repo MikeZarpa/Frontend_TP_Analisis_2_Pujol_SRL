@@ -31,7 +31,8 @@
           <!-- Definir las filas -->
           <tr class="row ps-5" *ngFor="let datos of productos">
             <td class="col-1">{{ datos.id_producto}}</td>
-            <td class="col-2">              
+            <td class="col-2">
+                <mat-icon class="accion-icon" title="Cambiar el precio del producto." (click)="this.cambiar_el_precio(datos)" >paid</mat-icon>
                 <mat-icon class="accion-icon" title="Modificar producto." (click)="this.editar(datos)" >edit</mat-icon>
                 <mat-icon class="accion-icon" [title]="(datos.habilitado == 1)?'Desactivar producto.':'Reactivar el producto.'" (click)="darDeBaja(datos)"npm install sweetalert2>{{datos.habilitado== 1 ? "arrow_downward" :"arrow_upward"}}</mat-icon>
             </td>

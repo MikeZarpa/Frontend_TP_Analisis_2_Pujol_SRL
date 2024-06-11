@@ -38,7 +38,7 @@ export class ListaProductosComponent {
     this.buscar();
   }
   editar(datos:Producto){
-    alert("Aun no");
+    this.cambiar_el_precio(datos);
   }
   //Desactivamos la edición
   volverABase(){
@@ -88,5 +88,112 @@ export class ListaProductosComponent {
   barraPageable(datos:DatosNavegacionPorPagina){
     this.datosDeLaBarra=datos;
     this.buscar();
+  }
+
+  cambiar_el_precio(datos:Producto){
+    if(!datos.historial_precio){
+      Swal.fire({
+        title:'Error',
+        icon:'error',
+        text:`El producto no tiene asociado un registro de precio, contacte con el Administrador de la base de datos.`
+      })
+      return;
+
+    }
+    Swal.fire({
+      title: 'Confirmación',
+      text: `¿En realidad quieres cambiar el precio del PRODUCTO: ${datos.descripcion} - ${datos.marca?.descripcion} ?`,
+      icon: 'question',
+      showCancelButton: true,
+      backdrop: true,
+      allowOutsideClick: true,
+      confirmButtonText: 'Cambiar precio',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: 'Ingresa el nuevo precio',
+          input: 'number',
+          inputAttributes: {
+            min: "0",
+            step: "0.01"
+          },
+          showCancelButton: true,
+          confirmButtonText: 'Aceptar',
+          cancelButtonText: 'Cancelar',
+          backdrop: true,
+          allowOutsideClick: true
+        }).then((priceResult) => {
+          if (priceResult.isConfirmed) {
+            const nuevoPrecio = priceResult.value;
+            Swal.fire({
+              title: 'Precio ingresado',
+              text: `El nuevo precio es: ${nuevoPrecio}`,
+              icon: 'info',
+              confirmButtonText: 'Aceptar',
+              toast: true,
+              showClass: {
+                popup: 'animated bounceIn'
+              },
+              hideClass: {
+                popup: 'animated bounceOut'
+              },
+            });
+            if(!isNaN(Number(nuevoPrecio))){
+              this.servicio.actualizar_precio(datos.id_producto!,nuevoPrecio).subscribe({
+                     next: () => {
+                       this.buscar();
+                       Swal.fire({
+                         position: 'center',
+                         icon: 'success',
+                         title: 'Precio actualizado correctamente',
+                         showConfirmButton: false,
+                         timer: 2000,
+                         timerProgressBar: true,
+                         toast: true,
+                         showClass: {
+                           popup: 'animated bounceIn'
+                         },
+                         hideClass: {
+                           popup: 'animated bounceOut'
+                         },
+                       });
+                     },
+                     error: () => {
+                       alert("Ocurrió un error al actualizar el precio.");
+                     }
+                   });
+
+            }
+            // Aquí puedes agregar la lógica para guardar el nuevo precio
+            // this.servicio.cambiarPrecio(datos.id_producto!, nuevoPrecio)
+            //   .subscribe({
+            //     next: () => {
+            //       this.buscar();
+            //       Swal.fire({
+            //         position: 'center',
+            //         icon: 'success',
+            //         title: 'Precio actualizado correctamente',
+            //         showConfirmButton: false,
+            //         timer: 2000,
+            //         timerProgressBar: true,
+            //         toast: true,
+            //         showClass: {
+            //           popup: 'animated bounceIn'
+            //         },
+            //         hideClass: {
+            //           popup: 'animated bounceOut'
+            //         },
+            //       });
+            //     },
+            //     error: () => {
+            //       alert("Ocurrió un error al actualizar el precio.");
+            //     }
+            //   });
+          }
+        });
+      }
+    });
+    
   }
 }

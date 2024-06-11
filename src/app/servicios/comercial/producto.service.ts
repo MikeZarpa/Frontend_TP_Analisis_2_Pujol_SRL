@@ -22,20 +22,14 @@ export class ProductoService extends DatosDeConexion{
       .set('pageSize', datosPagina.pageSize.toString());
       //.set('filtro',filtroJSON);    
   
-      return this.http.get<RespuestaPageable<Producto>>(this.urlConexionBase+"/producto",{ params: params });
+      return this.http.get<RespuestaPageable<Producto>>(this.urlConexionBase+"/producto.php",{ params: params });
      }
     public borrar(id:number):Observable<void>{
-      return this.http.delete<void>(this.urlConexionBase+"/producto?id_producto="+id);
+      return this.http.delete<void>(this.urlConexionBase+"/producto.php?id_producto="+id);
     }
   
-    /*
-    public obtenerPorId(id:number):Observable<InfoCobro>{
-      return this.http.get<InfoCobro>(this.urlConexionBase+"/infoCobro/"+id);
-     }*/
-    //  public obtenerPorSocioId(id:number):Observable<InfoCobro>{
-    //   return this.http.get<InfoCobro>(this.urlConexionBase+"/infoCobro/socio/"+id);
-    //  }
-    // public salvar(infoCobro:InfoCobro):Observable<InfoCobro>{
-    //   return this.http.post<InfoCobro>(this.urlConexionBase+"/infoCobro",infoCobro);
-    // }
+    public actualizar_precio(id_producto:number,precio:number){
+      let body = {id_producto, precio};
+      return this.http.post<void>(this.urlConexionBase+"/producto_ext/historial_precio",body);
+    }
 }

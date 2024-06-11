@@ -4,12 +4,12 @@
       <div class="card p-5 my-4 shadow">
   
         <h2 *ngIf="!editMode">Ingreso de una Nueva Localidad</h2>
-        <h2 *ngIf="editMode">Editando la Localidad: {{datosEdit.nombre}}</h2>
+        <h2 *ngIf="editMode">Editando la Localidad: {{datosEdit.descripcion}}</h2>
         <div class="row">
         <div class="col-6">
-          <label for="nombre">Nombre<span class="text-danger">*</span>:</label>
-          <input type="text" id="nombre" formControlName="nombre" class="form-control uppercase-text" >
-          <div *ngIf="localidadForm.get('nombre')?.invalid && (localidadForm.get('nombre')?.dirty || localidadForm.get('nombre')?.touched)" class="text-danger">
+          <label for="descripcion">Nombre<span class="text-danger">*</span>:</label>
+          <input type="text" id="descripcion" formControlName="descripcion" class="form-control uppercase-text" >
+          <div *ngIf="localidadForm.get('descripcion')?.invalid && (localidadForm.get('descripcion')?.dirty || localidadForm.get('descripcion')?.touched)" class="text-danger">
             El Nombre es obligatorio.
           </div>
           <label for="codigo_postal">Código Postal<span class="text-danger">*</span>:</label>
@@ -20,7 +20,7 @@
         </div>
         <div class="col-6">
             <label for="provincia">Provincia<span class="text-danger"></span>:</label>
-            <input disabled [value]="provinciaAlQuePertenece.nombre" type="text" id="provincia" class="form-control">
+            <input disabled [value]="provinciaAlQuePertenece.descripcion" type="text" id="provincia" class="form-control">
           </div>
         </div>
 

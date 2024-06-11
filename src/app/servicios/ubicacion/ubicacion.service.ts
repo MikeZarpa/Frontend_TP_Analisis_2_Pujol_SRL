@@ -35,13 +35,23 @@ export class UbicacionService extends DatosDeConexion{
 
   //Modificar y Crear
   public saveLocalidad(localidad:Localidad):Observable<void>{
-    return this.http.post<void>(this.urlConexionBase+"/localidad",localidad);
+    if(localidad.id_localidad)
+      return this.http.put<void>(this.urlConexionBase+"/localidad",localidad);
+    else
+      return this.http.post<void>(this.urlConexionBase+"/localidad",localidad);
+
   }
   public saveProvincia(provincia:Provincia):Observable<void>{
-    return this.http.post<void>(this.urlConexionBase+"/provincia",provincia);
+    if(provincia.id_provincia)
+      return this.http.put<void>(this.urlConexionBase+"/provincia",provincia);
+    else
+      return this.http.post<void>(this.urlConexionBase+"/provincia",provincia);
   }
   public savePais(pais:Pais):Observable<void>{
-    return this.http.post<void>(this.urlConexionBase+"/pais",pais);
+    if(pais.id_pais)
+      return this.http.put<void>(this.urlConexionBase+"/pais",pais);
+    else
+      return this.http.post<void>(this.urlConexionBase+"/pais",pais);
   }
   //Borrar
   public borrarLocalidad(id:number):Observable<void>{

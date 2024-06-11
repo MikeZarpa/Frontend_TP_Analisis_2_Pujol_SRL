@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Localidad } from 'src/app/class/models/localidad';
-import { Provincia } from 'src/app/class/models/provincia';
-import { FuncionesUtiles } from 'src/app/class/utils/funciones-utiles';
-import { UbicacionService } from 'src/app/services/UbicacionService/ubicacion.service';
+import { Localidad } from 'src/app/clases/base_de_datos/ubicacion/Localidad';
+import { Provincia } from 'src/app/clases/base_de_datos/ubicacion/Provincia';
+import { FuncionesUtiles } from 'src/app/clases/utiles/funciones-utiles';
+import { UbicacionService } from 'src/app/servicios/ubicacion/ubicacion.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -26,9 +26,10 @@ export class EditLocalidadComponent {
 
   constructor(){    
     this.localidadForm = this.formBuilder.group({
-      id: [this.id],
-      nombre:[""],
-      provincia: this.formBuilder.group({id:[null]},),
+      id_localidad: [this.id],
+      descripcion:[""],
+      id_provincia:null,
+      provincia: this.formBuilder.group({id_provincia:[null]},),
       codigo_postal: [""],
     });  
   }
@@ -43,17 +44,17 @@ export class EditLocalidadComponent {
 
     //@Input se activa luego del constructor...
     const provinciaForm = this.localidadForm.get('provincia') as FormGroup;
-    provinciaForm.patchValue({id:this.provinciaAlQuePertenece.id})
+    provinciaForm.patchValue({id_provincia:this.provinciaAlQuePertenece.id_provincia})
     if(this.editMode)
       this.cargarDatos();
   }
 
   cargarDatos(){
     this.localidadForm.patchValue({
-      id:this.datosEdit.id,
-      nombre:this.datosEdit.nombre,
+      id_localidad:this.datosEdit.id_localidad,
+      descripcion:this.datosEdit.descripcion,
       codigo_postal:this.datosEdit.codigo_postal,
-      provincia:this.datosEdit.provincia?.id,
+      id_provincia:this.datosEdit.provincia?.id_provincia,
     })
     
   }
@@ -63,6 +64,8 @@ export class EditLocalidadComponent {
 
     let datos= Object.assign({},this.localidadForm.value);
     datos = FuncionesUtiles.convertirCamposAMayusculas(datos);
+    datos.id_provincia = this.provinciaAlQuePertenece.id_provincia;
+    
     this.UbicServ.saveLocalidad(datos).subscribe(res=>{
       //console.log(res);
       

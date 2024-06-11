@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditPaisComponent } from './edit-pais.component';
+import { BtnVolverComponent } from './btn-volver.component';
 
-describe('EditPaisComponent', () => {
-  let component: EditPaisComponent;
-  let fixture: ComponentFixture<EditPaisComponent>;
+describe('BtnVolverComponent', () => {
+  let component: BtnVolverComponent;
+  let fixture: ComponentFixture<BtnVolverComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [EditPaisComponent]
+      declarations: [BtnVolverComponent]
     });
-    fixture = TestBed.createComponent(EditPaisComponent);
+    fixture = TestBed.createComponent(BtnVolverComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

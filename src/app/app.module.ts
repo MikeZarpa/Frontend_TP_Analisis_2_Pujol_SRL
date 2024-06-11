@@ -13,6 +13,18 @@ import { Interceptor } from './servicios/Interceptor/interceptor';
 import { NavbarInicialComponent } from './componentes/navbars/navbar-inicial/navbar-inicial.component';
 import { NavbarBienvenidaComponent } from './componentes/navbars/navbar-bienvenida/navbar-bienvenida.component';
 import { NavbarOpcionesAdminComponent } from './componentes/navbars/navbar-opciones-admin/navbar-opciones-admin.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
+import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
+import { ListaPaisComponent } from './paginas/mantenimiento/Pais/lista-pais/lista-pais.component';
+import { EditPaisComponent } from './paginas/mantenimiento/Pais/edit-pais/edit-pais.component';
+import { ListaProvinciaComponent } from './paginas/mantenimiento/Provincia/lista-provincia/lista-provincia.component';
+import { EditProvinciaComponent } from './paginas/mantenimiento/Provincia/edit-provincia/edit-provincia.component';
+import { ListaLocalidadComponent } from './paginas/mantenimiento/Localidad/lista-localidad/lista-localidad.component';
+import { EditLocalidadComponent } from './paginas/mantenimiento/Localidad/edit-localidad/edit-localidad.component';
+import { BtnVolverComponent } from './componentes/interfaz/btn-volver/btn-volver.component';
+import { PaginaHomeComponent } from './paginas/pagina-bienvenida/pagina-home/pagina-home.component';
 
 @NgModule({
   declarations: [
@@ -23,12 +35,27 @@ import { NavbarOpcionesAdminComponent } from './componentes/navbars/navbar-opcio
     NavbarInicialComponent,
     NavbarBienvenidaComponent,
     NavbarOpcionesAdminComponent,
+    //EditarPaises
+    ListaPaisComponent,
+    EditPaisComponent,
+    //EditarProvincia
+    ListaProvinciaComponent,
+    EditProvinciaComponent,
+    //EditarLocalidad
+    ListaLocalidadComponent,
+    EditLocalidadComponent,
+    //Interfaz, boton volver
+    BtnVolverComponent,
+    PaginaHomeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NoopAnimationsModule,
+    MatIconModule,
+    MatTableModule,
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass:Interceptor, multi:true} //Registramos el interceptor

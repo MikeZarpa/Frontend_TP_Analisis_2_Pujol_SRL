@@ -40,7 +40,7 @@ export class SesionService extends DatosDeConexion {
       })
   
       ).subscribe({
-        next: res => { this.usuario = res; resolve(res!);},
+        next: res => { this.usuario = res; console.log(res); resolve(res!);},
         error: error => reject({message:"Error de inicio de sesión", error: error})
       });
     });     

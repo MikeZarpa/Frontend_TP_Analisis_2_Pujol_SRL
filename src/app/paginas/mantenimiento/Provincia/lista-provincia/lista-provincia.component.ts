@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { Pais } from 'src/app/class/models/pais';
-import { Provincia } from 'src/app/class/models/provincia';
-import { UbicacionService } from 'src/app/services/UbicacionService/ubicacion.service';
+import { Pais } from 'src/app/clases/base_de_datos/ubicacion/Pais';
+import { Provincia } from 'src/app/clases/base_de_datos/ubicacion/Provincia';
+import { UbicacionService } from 'src/app/servicios/ubicacion/ubicacion.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -31,9 +31,8 @@ export class ListaProvinciaComponent {
     this.ubicServ.obtenerPaises().subscribe(res => this.Paises=res,err=>{console.log("Error al cargar los datos. ¿Servidor ocupado?")});
   }
   //Creamos nuevo
-  crearNuevo(id:any) {
-    if(id!=null){
-      this.paisSeleccionado = this.Paises.filter(pais => pais.id = id)[0];
+  crearNuevo() {
+    if(this.paisSeleccionado){
       this.datosAEditar=null;
       this.activarEdicion=false;
       window.setTimeout(()=>{this.editando = true;},500) 
@@ -41,7 +40,6 @@ export class ListaProvinciaComponent {
   }
   //Activamos edición
   editar(provincia: Provincia) {
-    this.paisSeleccionado = provincia.pais!;
     this.datosAEditar=provincia;
     this.activarEdicion=true;
     window.setTimeout(()=>{this.editando = true;},500)    
@@ -52,16 +50,16 @@ export class ListaProvinciaComponent {
   }
 
   //Si se selecciona un pais.
-  paisSeleccion(event: any, paises: Pais[]) {
+  paisSeleccion(event: any) {
     const id = event.target.value;
     if (id != null) {
       // Cargamos pais Seleccionado
-      this.paisSeleccionado = paises.find((pais) => pais.id === parseInt(id))!;
-      this.actualizarListaProvincias(this.paisSeleccionado.id);
+      this.paisSeleccionado = this.Paises.find((pais) => pais.id_pais == parseInt(id))!;
+      this.actualizarListaProvincias(this.paisSeleccionado.id_pais);
     }
   }
   
-  actualizarListaProvincias(id=this.paisSeleccionado.id){
+  actualizarListaProvincias(id=this.paisSeleccionado.id_pais){
     this.ubicServ.obtenerProvinciasPorPaisId(id!).subscribe(
       res => {this.Provincias = res; });
   }
@@ -70,7 +68,7 @@ export class ListaProvinciaComponent {
   borrar(provincia: Provincia) {
     Swal.fire({
       title: 'Confirmación',
-      text: `¿Estás seguro de que deseas borrar "Provincia : " ${provincia.nombre} ?`,
+      text: `¿Estás seguro de que deseas borrar "Provincia : " ${provincia.descripcion} ?`,
       icon: 'question',
       showCancelButton: true,
       backdrop:true,
@@ -81,7 +79,7 @@ export class ListaProvinciaComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         // Acción a realizar si se hace clic en "Aceptar"
-        this.ubicServ.borrarProvincia(provincia.id!)
+        this.ubicServ.borrarProvincia(provincia.id_provincia!)
         .subscribe(() => {
           this.actualizarListaProvincias();
           Swal.fire({

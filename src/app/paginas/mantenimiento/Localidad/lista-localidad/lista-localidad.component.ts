@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { Localidad } from 'src/app/class/models/localidad';
-import { Pais } from 'src/app/class/models/pais';
-import { Provincia } from 'src/app/class/models/provincia';
-import { UbicacionService } from 'src/app/services/UbicacionService/ubicacion.service';
+import { Localidad } from 'src/app/clases/base_de_datos/ubicacion/Localidad';
+import { Pais } from 'src/app/clases/base_de_datos/ubicacion/Pais';
+import { Provincia } from 'src/app/clases/base_de_datos/ubicacion/Provincia';
+import { UbicacionService } from 'src/app/servicios/ubicacion/ubicacion.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -33,9 +33,8 @@ export class ListaLocalidadComponent {
     this.ubicServ.obtenerPaises().subscribe(res => this.Paises=res,err=>{console.log("Error al cargar los datos. ¿Servidor ocupado?")});
   }
   //Creamos nuevo
-  crearNuevo(id:any) {
-    if(id!=null){
-      this.provinciaSeleccionada = this.Provincias.filter(provincia => provincia.id = id)[0];
+  crearNuevo() {
+    if(this.provinciaSeleccionada){
       this.datosAEditar=null;
       this.activarEdicion=false;
       window.setTimeout(()=>{this.editando = true;},500) 
@@ -43,7 +42,6 @@ export class ListaLocalidadComponent {
   }
   //Activamos edición
   editar(localidad: Localidad) {
-    this.provinciaSeleccionada = localidad.provincia!;
     this.datosAEditar=localidad;
     this.activarEdicion=true;
     window.setTimeout(()=>{this.editando = true;},500)    
@@ -64,16 +62,16 @@ export class ListaLocalidadComponent {
            this.Localidades=[]; });
   }
   //Si se selecciona una provincia
-  provinciasSeleccion(evento:any,provincias:Provincia[]){    
+  provinciasSeleccion(evento:any){    
     let id = evento.target.value;
     //Cargamos la provincia seleccionada
     if(id!=null){
-      this.provinciaSeleccionada = provincias.find(provincia => provincia.id === parseInt(id))!;
-      this.actualizarListaLocalidades(this.provinciaSeleccionada.id);
+      this.provinciaSeleccionada = this.Provincias.find(provincia => provincia.id_provincia == parseInt(id))!;
+      this.actualizarListaLocalidades(this.provinciaSeleccionada.id_provincia);
     }    
   }
 
-  actualizarListaLocalidades(id=this.provinciaSeleccionada.id){
+  actualizarListaLocalidades(id=this.provinciaSeleccionada.id_provincia){
     this.ubicServ.obtenerLocalidadesPorProvinciaId(id!).subscribe(
       res => {this.Localidades = res; });
   }
@@ -82,7 +80,7 @@ export class ListaLocalidadComponent {
   borrar(localidad: Localidad) {
     Swal.fire({
       title: 'Confirmación',
-      text: `¿Estás seguro de que deseas borrar "Localidad : " ${localidad.nombre} ?`,
+      text: `¿Estás seguro de que deseas borrar "Localidad : " ${localidad.descripcion} ?`,
       icon: 'question',
       showCancelButton: true,
       backdrop:true,
@@ -93,7 +91,7 @@ export class ListaLocalidadComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         // Acción a realizar si se hace clic en "Aceptar"
-        this.ubicServ.borrarLocalidad(localidad.id!)
+        this.ubicServ.borrarLocalidad(localidad.id_localidad!)
         .subscribe(() => {
           this.actualizarListaLocalidades();
           Swal.fire({

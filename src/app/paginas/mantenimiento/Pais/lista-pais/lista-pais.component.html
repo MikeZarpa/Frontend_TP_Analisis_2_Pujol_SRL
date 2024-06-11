@@ -1,5 +1,7 @@
 <app-btn-volver *ngIf="editando" (volver)="eventoVolver()"></app-btn-volver>
-<app-btn-volver *ngIf="!(editando)" [routerLink]="['/admin']"></app-btn-volver>
+<app-btn-volver *ngIf="!(editando)" [routerLink]="['/bienvenido']"></app-btn-volver>
+<div class="card h-90">
+
 
 <div class="p-5" *ngIf="!editando">
     <h2>Paises</h2>
@@ -20,7 +22,7 @@
           <tr class="row ps-5" *ngFor="let pais of Paises">
             <td class="col-2">
                 <mat-icon class="accion-icon" title="Modificar los datos del país." (click)="this.editar(pais)" >edit</mat-icon>
-                <mat-icon class="accion-icon" title="Borrar el registro del país." (click)="borrar(pais)"npm install sweetalert2>delete</mat-icon>
+                <!-- <mat-icon class="accion-icon" title="Borrar el registro del país." (click)="borrar(pais)"npm install sweetalert2>delete</mat-icon> -->
             </td>
             <td class="col-2">{{ pais.descripcion }}</td>
             <!-- Definir el resto de las columnas -->
@@ -30,5 +32,6 @@
     </div>
     
     <app-edit-pais [datosEdit]="datosAEditar!" [editMode]="activarEdicion" *ngIf="editando" (volver)="eventoVolver()" (envioExitoso)="eventoEnvioExitoso()"></app-edit-pais>
+  </div>
     <app-btn-volver *ngIf="editando" (volver)="eventoVolver()"></app-btn-volver>
-<app-btn-volver *ngIf="!(editando)" [routerLink]="['/admin']"></app-btn-volver>
+<app-btn-volver *ngIf="!(editando)" [routerLink]="['/bienvenido']"></app-btn-volver>

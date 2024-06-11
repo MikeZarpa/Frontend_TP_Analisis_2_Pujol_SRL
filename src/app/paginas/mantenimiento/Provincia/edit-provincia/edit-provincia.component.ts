@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Pais } from 'src/app/class/models/pais';
-import { Provincia } from 'src/app/class/models/provincia';
-import { FuncionesUtiles } from 'src/app/class/utils/funciones-utiles';
-import { UbicacionService } from 'src/app/services/UbicacionService/ubicacion.service';
+import { Pais } from 'src/app/clases/base_de_datos/ubicacion/Pais';
+import { Provincia } from 'src/app/clases/base_de_datos/ubicacion/Provincia';
+import { FuncionesUtiles } from 'src/app/clases/utiles/funciones-utiles';
+import { UbicacionService } from 'src/app/servicios/ubicacion/ubicacion.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -16,7 +16,7 @@ export class EditProvinciaComponent {
   UbicServ = inject(UbicacionService)
   provinciaForm: FormGroup;
 
-  @Input() id:number|null = null;
+  @Input() id_provincia:number|null = null;
   @Input() editMode :boolean = false;
   @Input() datosEdit!:Provincia;
   @Input() paisAlQuePertenece!:Pais;
@@ -26,9 +26,9 @@ export class EditProvinciaComponent {
 
   constructor(){    
     this.provinciaForm = this.formBuilder.group({
-      id: [this.id],
-      nombre:[""],
-      pais: this.formBuilder.group({id:[null]}
+      id_provincia: [this.id_provincia],
+      descripcion:[""],
+      pais: this.formBuilder.group({id_pais:[null]}
       )
     });  
   }
@@ -43,7 +43,7 @@ export class EditProvinciaComponent {
 
     //@Input se activa luego del constructor...
     const paisForm = this.provinciaForm.get('pais') as FormGroup;
-    paisForm.patchValue({id:this.paisAlQuePertenece.id})
+    paisForm.patchValue({id_pais:this.paisAlQuePertenece.id_pais})
 
     if(this.editMode)
       this.cargarDatos();
@@ -51,8 +51,8 @@ export class EditProvinciaComponent {
 
   cargarDatos(){
     this.provinciaForm.patchValue({
-      id:this.datosEdit.id,
-      nombre:this.datosEdit.nombre,
+      id_provincia:this.datosEdit.id_provincia,
+      descripcion:this.datosEdit.descripcion,
     })
     
   }
@@ -61,6 +61,7 @@ export class EditProvinciaComponent {
     event.preventDefault();
     let datos= Object.assign({},this.provinciaForm.value);
     datos = FuncionesUtiles.convertirCamposAMayusculas(datos);
+    datos.id_pais = this.paisAlQuePertenece.id_pais;
     this.UbicServ.saveProvincia(datos).subscribe(res=>{
       Swal.fire({
         position: 'center',

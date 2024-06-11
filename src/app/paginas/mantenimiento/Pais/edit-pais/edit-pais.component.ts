@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Pais } from 'src/app/class/models/pais';
-import { FuncionesUtiles } from 'src/app/class/utils/funciones-utiles';
-import { UbicacionService } from 'src/app/services/UbicacionService/ubicacion.service';
+import { Pais } from 'src/app/clases/base_de_datos/ubicacion/Pais';
+import { FuncionesUtiles } from 'src/app/clases/utiles/funciones-utiles';
+import { UbicacionService } from 'src/app/servicios/ubicacion/ubicacion.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -16,7 +16,7 @@ export class EditPaisComponent implements OnInit {
   cdr = inject(ChangeDetectorRef);
   paisForm: FormGroup;
 
-  @Input() id:number|null = null;
+  @Input() id_pais:number|null = null;
   @Input() editMode :boolean = false;
   @Input() datosEdit!:Pais;
 
@@ -25,8 +25,8 @@ export class EditPaisComponent implements OnInit {
 
   constructor(){    
     this.paisForm = this.formBuilder.group({
-      id: [this.id],
-      nombre:[""],      
+      id_pais: [this.id_pais],
+      descripcion:[""],      
     });  
   }
   ngOnInit(): void {
@@ -43,8 +43,8 @@ export class EditPaisComponent implements OnInit {
 
   cargarDatos(){
     this.paisForm.patchValue({
-      id:this.datosEdit.id,
-      nombre:this.datosEdit.nombre,
+      id_pais:this.datosEdit.id_pais,
+      descripcion:this.datosEdit.descripcion,
     })
   }
 

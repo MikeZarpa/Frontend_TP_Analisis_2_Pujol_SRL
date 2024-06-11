@@ -9,6 +9,8 @@ import { ListaLocalidadComponent } from './paginas/mantenimiento/Localidad/lista
 import { ListaProvinciaComponent } from './paginas/mantenimiento/Provincia/lista-provincia/lista-provincia.component';
 import { ListaPaisComponent } from './paginas/mantenimiento/Pais/lista-pais/lista-pais.component';
 import { PaginaHomeComponent } from './paginas/pagina-bienvenida/pagina-home/pagina-home.component';
+import { ListaProductosComponent } from './paginas/ventas/productos/lista-productos/lista-productos.component';
+import { Producto } from './clases/base_de_datos/comercial/producto';
 
 export const PATHS = {
   inicio : "",
@@ -18,6 +20,7 @@ export const PATHS = {
   panelAdministrador: "bienvenido",
   panelAgente : "agente",
   panelMantenimiento : "mantenimiento",  
+  ventas:"ventas",
 };
 
 const routes: Routes = [
@@ -32,10 +35,14 @@ const routes: Routes = [
     children:[
       { path: 'ListaDeLocalidades', component: ListaLocalidadComponent},
       { path: 'ListaDeProvincias', component: ListaProvinciaComponent},
-      { path: 'ListaDePaises', component: ListaPaisComponent}
+      { path: 'ListaDePaises', component: ListaProductosComponent}
     ],
     canActivate:[estaLogueadoGuard]},
-
+    {path:PATHS.ventas, component:PaginaBienvenidaComponent,
+      children:[
+        { path: 'Productos', component: ListaProductosComponent},
+      ],
+      canActivate:[estaLogueadoGuard]},
 ];
 
 @NgModule({

@@ -1,0 +1,17 @@
+<div class="row justify-content-center align-items-center">
+      <button mat-icon-button [disabled]="currentPage === 1" (click)="previousPage()" class="col-1">
+        <mat-icon>keyboard_arrow_left</mat-icon>
+      </button>
+      <div class="pagination-info col-4 text-center">
+        Página {{ currentPage }} de {{ totalPages }} 
+      </div>
+      <button mat-icon-button [disabled]="currentPage === totalPages" (click)="nextPage()" class="col-1">
+        <mat-icon>keyboard_arrow_right</mat-icon>
+      </button>
+</div>
+<div class="row pagination-info justify-content-cente text-center">
+    <p>
+      Rango: ({{rangeStart}}-{{rangeEnd}}) Total de elementos: {{ totalItems }}
+    </p>
+    <!-- Mostrando {{ rangeStart+1 }} - {{ rangeEnd }} --  -->
+</div>

@@ -1,0 +1,16 @@
+.pagination-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .pagination-controls {
+    display: flex;
+    align-items: center;
+  }
+  
+  .pagination-info {
+    font-size: 14px;
+    margin-right: 16px;
+  }
+  

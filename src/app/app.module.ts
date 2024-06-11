@@ -25,6 +25,8 @@ import { ListaLocalidadComponent } from './paginas/mantenimiento/Localidad/lista
 import { EditLocalidadComponent } from './paginas/mantenimiento/Localidad/edit-localidad/edit-localidad.component';
 import { BtnVolverComponent } from './componentes/interfaz/btn-volver/btn-volver.component';
 import { PaginaHomeComponent } from './paginas/pagina-bienvenida/pagina-home/pagina-home.component';
+import { ListaProductosComponent } from './paginas/ventas/productos/lista-productos/lista-productos.component';
+import { BarraPaginacionComponent } from './componentes/interfaz/barra-paginacion/barra-paginacion.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,9 @@ import { PaginaHomeComponent } from './paginas/pagina-bienvenida/pagina-home/pag
     EditLocalidadComponent,
     //Interfaz, boton volver
     BtnVolverComponent,
-    PaginaHomeComponent
+    BarraPaginacionComponent,
+    PaginaHomeComponent,
+    ListaProductosComponent
   ],
   imports: [
     BrowserModule,

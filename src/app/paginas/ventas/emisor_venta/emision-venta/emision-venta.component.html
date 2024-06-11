@@ -1,0 +1,62 @@
+<app-btn-volver [routerLink]="['/bienvenido']"></app-btn-volver>
+<div class="card text-center px-5">
+<div class="pt-5 px-5">
+    <h2>Gestión de los Registros de Productos</h2>
+</div>
+<div class="row">
+    <div class="col-6">
+        <label for="">Nombre
+            <input (keyup)="this.filtrar(inputFiltro.value)" type="text" #inputFiltro>
+        </label>
+        <div class="pb-5 px-5">
+            <table class="mat-elevation-z8 cdk-table mat-table table mat-small text-center">
+                <!-- Definir las columnas -->
+                <thead>
+                <tr class="row ps-5">
+                    <th class="col-4">Nombre</th>
+                    <th class="col-4">Marca</th>
+                    <th class="col-2">Cantidad</th>
+                    <th class="col-2">Precio</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Definir las filas -->
+                <tr class="row {{styleProductoSeleccionado(datos)}} ps-5" (click)="seleccionar(datos)" *ngFor="let datos of productos_filtrados">
+                    <th class="col-4">{{datos.descripcion}}</th>
+                    <th class="col-4">{{datos.marca?.descripcion || "Sin marca"}}</th>
+                    <th class="col-2">{{datos.total_cantidad || "-" }}</th>
+                    <th class="col-2">{{datos.historial_precio?.precio || "Error"}}</th>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="pb-5 px-5">
+            <table class="mat-elevation-z8 cdk-table mat-table table mat-small text-center">
+                <!-- Definir las columnas -->
+                <thead>
+                <tr class="row ps-5">
+                    <th class="col-4">Nombre</th>
+                    <th class="col-4">Marca</th>
+                    <th class="col-2">Cantidad</th>
+                    <th class="col-2">Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Definir las filas -->
+                 <!-- 
+                    <tr class="row ps-5" (click)="remover_lista(datos)" *ngFor="let datos of carrito">
+                        <th class="col-4">{{datos.descripcion}}</th>
+                        <th class="col-4">{{datos.marca?.descripcion || "Sin marca"}}</th>
+                        <th class="col-2">{{datos.cantidad || "-" }}</th>
+                        <th class="col-2">{{datos.}}</th>
+                        </tr>
+                    -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<app-btn-volver [routerLink]="['/bienvenido']"></app-btn-volver>

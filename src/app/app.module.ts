@@ -28,6 +28,7 @@ import { PaginaHomeComponent } from './paginas/pagina-bienvenida/pagina-home/pag
 import { ListaProductosComponent } from './paginas/ventas/productos/lista-productos/lista-productos.component';
 import { BarraPaginacionComponent } from './componentes/interfaz/barra-paginacion/barra-paginacion.component';
 import { EmisionVentaComponent } from './paginas/ventas/emisor_venta/emision-venta/emision-venta.component';
+import { EditProductoComponent } from './paginas/ventas/productos/lista-productos/edit-producto/edit-producto.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { EmisionVentaComponent } from './paginas/ventas/emisor_venta/emision-ven
     BarraPaginacionComponent,
     PaginaHomeComponent,
     ListaProductosComponent,
-    EmisionVentaComponent
+    EmisionVentaComponent,
+    EditProductoComponent
   ],
   imports: [
     BrowserModule,

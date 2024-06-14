@@ -1,55 +1,59 @@
 <app-btn-volver *ngIf="estadoFormulario!=EnumEstadoDelFormulario.Base" (volver)="volverABase()"></app-btn-volver>
 <app-btn-volver *ngIf="estadoFormulario==EnumEstadoDelFormulario.Base" [routerLink]="['/bienvenido']"></app-btn-volver>
 <div class="card text-center">
-<div class="pt-5 px-5" [hidden]="estadoFormulario != EnumEstadoDelFormulario.Base">
+<div class="pt-5 px-1" [hidden]="estadoFormulario != EnumEstadoDelFormulario.Base">
     <h2>Gestión de los Registros de Productos</h2>
+    <div><button class="btn btn-primary" (click)="buscar()">Buscar</button></div>
 </div>
 
-<div class="pb-5 px-5" *ngIf="estadoFormulario == EnumEstadoDelFormulario.Base">
+  <div class="pb-5 px-1" *ngIf="estadoFormulario == EnumEstadoDelFormulario.Base">
 
-    <table class="mat-elevation-z8 cdk-table mat-table table mat-small text-center">
-        <!-- Definir las columnas -->
-        <thead>
-          <tr class="row ps-5">
-            <th class="col-1">Nro Id</th>
-            <th class="col-2">Opciones</th>
-            <th class="col-2">Nombre</th>
-            <th class="col-2">Marca</th>
-            <th class="col-1">Cantidad Minima</th>
-            <th class="col-1">Stock</th>
-            <th class="col-1">Precio Actual</th>
-            <th class="col-2">
-              <div class="addicon-inline">
-                Habilitado
-                <mat-icon class="accion-icon border" title="Agregar un nuevo producto." (click)="crearNuevo()" >add</mat-icon>
-              </div>
-            </th>
-            <!-- Definir el resto de las columnas -->
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Definir las filas -->
-          <tr class="row ps-5" *ngFor="let datos of productos">
-            <td class="col-1">{{ datos.id_producto}}</td>
-            <td class="col-2">
-                <mat-icon class="accion-icon" title="Cambiar el precio del producto." (click)="this.cambiar_el_precio(datos)" >paid</mat-icon>
-                <mat-icon class="accion-icon" title="Modificar producto." (click)="this.editar(datos)" >edit</mat-icon>
-                <mat-icon class="accion-icon" [title]="(datos.habilitado == 1)?'Desactivar producto.':'Reactivar el producto.'" (click)="darDeBaja(datos)"npm install sweetalert2>{{datos.habilitado== 1 ? "arrow_downward" :"arrow_upward"}}</mat-icon>
-            </td>
-            <td class="col-2">{{ datos.descripcion}}</td>
-            <td class="col-2">{{ datos.marca?.descripcion || "Sin Marca" }}</td>
-            <td class="col-1">{{ datos.cantidad_minima || "No"}}</td>
-            <td class="col-1">{{ datos.total_cantidad ||"Sin Stock" }}</td>
-            <td class="col-1">{{ datos.historial_precio?.precio || "Sin Precio" }}</td>
-            <td class="col-2">{{ datos.habilitado== 1 ? "Activado" : "No"}}</td>
-            <!-- Definir el resto de las columnas -->
-          </tr>
-        </tbody>
-      </table>
-      <div class="row justify-content-center">
-        <app-barra-paginacion class="col-6" (emitirBusqueda)="barraPageable($event)" *ngIf="datosPageable!=null" [datosPageable]="datosPageable!"></app-barra-paginacion>
-      </div>
-</div>
+      <table class="mat-elevation-z8 cdk-table mat-table table mat-small text-center">
+          <!-- Definir las columnas -->
+          <thead>
+            <tr class="row ps-5">
+              <th class="col-1">Nro Id</th>
+              <th class="col-2">Opciones</th>
+              <th class="col-2">Nombre</th>
+              <th class="col-2">Marca</th>
+              <th class="col-1">Cantidad Minima</th>
+              <th class="col-1">Stock</th>
+              <th class="col-1">Precio Actual</th>
+              <th class="col-2">
+                <div class="addicon-inline">
+                  Habilitado
+                  <mat-icon class="accion-icon border" title="Agregar un nuevo producto." (click)="crearNuevo()" >add</mat-icon>
+                </div>
+              </th>
+              <!-- Definir el resto de las columnas -->
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Definir las filas -->
+            <tr class="row ps-5" *ngFor="let datos of productos">
+              <td class="col-1">{{ datos.id_producto}}</td>
+              <td class="col-2">
+                  <mat-icon class="accion-icon" title="Cambiar el precio del producto." (click)="this.cambiar_el_precio(datos)" >paid</mat-icon>
+                  <mat-icon class="accion-icon" title="Modificar producto." (click)="this.editar(datos)" >edit</mat-icon>
+                  <mat-icon class="accion-icon" [title]="(datos.habilitado == 1)?'Desactivar producto.':'Reactivar el producto.'" (click)="darDeBaja(datos)"npm install sweetalert2>{{datos.habilitado== 1 ? "arrow_downward" :"arrow_upward"}}</mat-icon>
+              </td>
+              <td class="col-2">{{ datos.descripcion}}</td>
+              <td class="col-2">{{ datos.marca?.descripcion || "Sin Marca" }}</td>
+              <td class="col-1">{{ datos.cantidad_minima || "No"}}</td>
+              <td class="col-1">{{ datos.total_cantidad ||"Sin Stock" }}</td>
+              <td class="col-1">{{ datos.historial_precio?.precio || "Sin Registro" }}</td>
+              <td class="col-2">{{ datos.habilitado== 1 ? "Activado" : "No"}}</td>
+              <!-- Definir el resto de las columnas -->
+            </tr>
+          </tbody>
+        </table>
+        <div class="row justify-content-center">
+          <app-barra-paginacion class="col-6" (emitirBusqueda)="barraPageable($event)" *ngIf="datosPageable!=null" [datosPageable]="datosPageable!"></app-barra-paginacion>
+        </div>
+  </div>
+  <div class="pb-5 px-5" *ngIf="estadoFormulario != EnumEstadoDelFormulario.Base">
+    <app-edit-producto [datosEdit]="productoSeleccionado" [estadoFormulario]="estadoFormulario" (envioExitoso)="envioExitoso()" (volver)="volverABase()"> </app-edit-producto>
+  </div>
 </div>
 <app-btn-volver *ngIf="estadoFormulario==EnumEstadoDelFormulario.Base" [routerLink]="['/bienvenido']"></app-btn-volver>
 <app-btn-volver *ngIf="estadoFormulario!=EnumEstadoDelFormulario.Base" (volver)="volverABase()"></app-btn-volver>

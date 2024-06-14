@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Producto } from 'src/app/clases/base_de_datos/comercial/producto';
 import { EstadoDelFormulario } from 'src/app/clases/enums';
 import { DatosNavegacionPorPagina, RespuestaPageable } from 'src/app/componentes/interfaz/barra-paginacion/barra-paginacion.component';
@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
   templateUrl: './lista-productos.component.html',
   styleUrls: ['./lista-productos.component.css']
 })
-export class ListaProductosComponent {
+export class ListaProductosComponent implements OnInit {
   readonly servicio = inject(ProductoService);
   readonly sesionService = inject(SesionService);
   //Productos a listar
@@ -27,6 +27,9 @@ export class ListaProductosComponent {
   datosPageable: RespuestaPageable<Producto>|null = null;
   datosDeLaBarra:DatosNavegacionPorPagina|null=null;
 
+  ngOnInit(): void {
+    
+  } 
   buscar(){
     ((this.datosDeLaBarra!=null) ? this.servicio.obtenerTodosConPagina(this.datosDeLaBarra) : this.servicio.obtenerTodosConPagina())
     .subscribe(
@@ -35,14 +38,19 @@ export class ListaProductosComponent {
         this.productos = res.datos;this.datosPageable = res;});
   }
   crearNuevo(){
-    this.buscar();
+    this.estadoFormulario = EstadoDelFormulario.Nuevo;
   }
   editar(datos:Producto){
-    this.cambiar_el_precio(datos);
+    this.productoSeleccionado = datos;
+    window.setTimeout(()=>{this.estadoFormulario = EstadoDelFormulario.Editando;},500);
   }
   //Desactivamos la edición
   volverABase(){
     this.estadoFormulario=EstadoDelFormulario.Base;
+  }
+  envioExitoso(){
+    this.estadoFormulario=EstadoDelFormulario.Base;
+    this.buscar();
   }
   darDeBaja(datos:Producto){
     

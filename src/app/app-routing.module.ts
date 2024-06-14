@@ -36,7 +36,7 @@ const routes: Routes = [
     children:[
       { path: 'ListaDeLocalidades', component: ListaLocalidadComponent},
       { path: 'ListaDeProvincias', component: ListaProvinciaComponent},
-      { path: 'ListaDePaises', component: ListaProductosComponent}
+      { path: 'ListaDePaises', component: ListaPaisComponent}
     ],
     canActivate:[estaLogueadoGuard]},
     {path:PATHS.ventas, component:PaginaBienvenidaComponent,

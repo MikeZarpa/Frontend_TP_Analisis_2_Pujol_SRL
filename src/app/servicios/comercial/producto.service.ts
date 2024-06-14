@@ -34,4 +34,11 @@ export class ProductoService extends DatosDeConexion{
     public obtenerTodosSinPagina():Observable<Producto[]>{
       return this.http.get<Producto[]>(this.urlConexionBase+"/producto.php?no_paginar=true");
     }
+
+    public crear_producto(producto:Producto):Observable<void>{
+      return this.http.post<void>(this.urlConexionBase+"/producto.php",producto);
+    }
+    public actualizar_producto(producto:Producto):Observable<void>{
+      return this.http.put<void>(this.urlConexionBase+"/producto.php",producto);
+    }
 }

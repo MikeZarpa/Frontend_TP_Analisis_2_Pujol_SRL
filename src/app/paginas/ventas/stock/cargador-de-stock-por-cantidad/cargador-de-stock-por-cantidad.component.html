@@ -1,0 +1,80 @@
+<app-btn-volver [routerLink]="['/bienvenido']"></app-btn-volver>
+<div class="card text-center py-3">
+
+<div>
+<!-- //comenzamos -->
+  <div class="text-center">
+      <h2>Carga de Registros de Stock en Masa</h2>
+      <div class="d-flex justify-content-center">
+          <div class="card p-3 mx-5">
+              <p>Seleccionar Producto a Cargar</p>
+              <div >
+                  <button class="btn btn-primary" type="button" (click)="buscar_producto()">SELECCIONAR</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="pb-5 px-3 mt-3">
+      <table class="mat-elevation-z8 cdk-table mat-table table mat-small text-center">
+          <!-- Definir las columnas -->
+          <thead>
+            <tr class="row ps-5 justify-content-center">
+              <th class="col-3">Nombre de Producto</th>
+              <th class="col-2">Cantidad</th>
+              <th class="col-2">Coste ($)</th>
+              <th class="col-2">Fecha de Vto</th>
+              <th class="col-2">SubTotal ($)</th>
+              <th class="col-1"></th>
+              <!-- Definir el resto de las columnas -->
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Definir las filas -->
+            <tr [ngClass]="{'fila-con-error':el_stock_es_invalido(stock)}" class="row px-3" *ngFor="let stock of stocks_a_cargar">
+                <td class="col-3">{{stock.producto?.descripcion}} - {{(stock.producto?.marca?.descripcion||"Sin Marca")}}</td>
+                <td class="col-2">
+                    <input type="number" [(ngModel)]="stock.cantidad">
+                </td>
+                <td class="col-2">
+                    <input type="number" [(ngModel)]="stock.coste">    
+                </td>
+                <td class="col-2">
+                    <input type="date" [(ngModel)]="stock.fecha_vto">
+                    <button class="btn btn-secondary mx-1 p-0" *ngIf="stock.fecha_vto!=null" type="button" (click)="stock.fecha_vto=null">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </td>
+                <th class="col-2">
+                    <input [disabled]="true" type="text" [value]="(stock.coste && stock.cantidad)? stock.coste*stock.cantidad :'-'">
+                </th>
+                <td class="col-1">
+                    <button type="button" class="btn btn-warning p-0" (click)="quitar_de_la_lista(stock)">
+                        <mat-icon>close</mat-icon>
+                    </button>    
+                </td>
+            </tr>
+          </tbody>
+        </table>
+  </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-4">
+    </div>
+    <div class="col-1"></div>
+    <div class="col-4">
+        <div class="row">
+            <div class="col-8 d-flex justify-content-start">
+                <p class="h5">TOTAL INGRESADO:</p>                
+            </div>
+            <div class="col-4 d-flex justify-content-end">
+                <p class="h5"> $ {{total_ingresado}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <button class="btn btn-primary" [disabled]="!verificar_todos_los_lotes_a_enviar()" (click)="this.enviar_a_guardar_lotes()">Finalizar la carga</button>
+</div>
+  </div>
+<app-btn-volver [routerLink]="['/bienvenido']"></app-btn-volver>

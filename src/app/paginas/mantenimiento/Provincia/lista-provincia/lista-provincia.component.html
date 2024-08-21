@@ -21,7 +21,7 @@
             <th class="col-2">Opciones</th>
             <th class="col-2">Descripción</th>
             <th class="col-2 " [hidden]="paisSeleccionado==undefined">
-              <mat-icon class="accion-icon border" title="Registrar una nueva provincia." (click)="this.crearNuevo()" >add</mat-icon>
+              <mat-icon class="accion-icon border clickeable" title="Registrar una nueva provincia." (click)="this.crearNuevo()" >add</mat-icon>
             </th>
             <!-- Definir el resto de las columnas -->
           </tr>
@@ -30,15 +30,15 @@
           <!-- Definir las filas -->
           <tr class="row ps-5" *ngFor="let provincia of Provincias">
             <td class="col-2">
-                <mat-icon class="accion-icon"  title="Modificar los datos de la provincia."  (click)="this.editar(provincia)" >edit</mat-icon>
-                <mat-icon class="accion-icon"  title="Borrar el registro de la provincia."  (click)="borrar(provincia)"npm install sweetalert2>delete</mat-icon>
+                <mat-icon class="accion-icon clickeable"  title="Modificar los datos de la provincia."  (click)="this.editar(provincia)" >edit</mat-icon>
+                <mat-icon class="accion-icon clickeable"  title="Borrar el registro de la provincia."  (click)="borrar(provincia)"npm install sweetalert2>delete</mat-icon>
             </td>
             <td class="col-2">{{ provincia.descripcion }}</td>
             <!-- Definir el resto de las columnas -->
           </tr>
         </tbody>
       </table>
-      <div class="row text-center user-select-none">
+      <div *ngIf="!this.paisSeleccionado" class="row text-center user-select-none">
         <h3>Selecciona el país para comenzar.</h3>
       </div>
     </div>

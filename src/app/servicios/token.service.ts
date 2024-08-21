@@ -16,6 +16,9 @@ export class TokenService {
   obtener_token():string|null{
     return localStorage.getItem(TOKENKEY);
   }
+  esta_logueado():boolean{
+    return this.obtener_token() != null;
+  }
 
   capturar_token_desde_headers(headers:HttpHeaders){
      // Verificar si existe el encabezado de autorización
@@ -44,6 +47,8 @@ export class TokenService {
   }
 
   borrar_token(){
+    console.log("Se borró el token");
+    
     localStorage.removeItem(TOKENKEY);
   }
 }

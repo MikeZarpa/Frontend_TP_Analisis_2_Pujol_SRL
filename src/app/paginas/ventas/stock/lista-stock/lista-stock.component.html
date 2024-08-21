@@ -1,0 +1,82 @@
+<app-btn-volver *ngIf="estadoFormulario!=EnumEstadoDelFormulario.Base && estadoFormulario!=EnumEstadoDelFormulario.Busqueda" (volver)="volverABase()"></app-btn-volver>
+<app-btn-volver *ngIf="estadoFormulario==EnumEstadoDelFormulario.Base" [routerLink]="['/bienvenido']"></app-btn-volver>
+<div class="card text-center py-3">
+
+<div  *ngIf=" (estadoFormulario == EnumEstadoDelFormulario.Base || estadoFormulario == EnumEstadoDelFormulario.Busqueda)">
+<!-- //comenzamos -->
+  <div class="text-center">
+      <h2>Gestión de los Registros de Stock</h2>
+      <div class="d-flex justify-content-center">
+          <div class="card p-3 mx-5">
+              <p>{{(producto == null)?"Seleccionar Producto": producto.descripcion+" "+(producto.marca?.descripcion || "Sin Marca") }}</p>
+              <div >
+                  <button class="btn btn-primary" type="button" (click)="seleccionarProducto()">{{(producto == null)?"Seleccionar":"Cambiar"}}</button>
+              </div>
+          </div>
+          <div class="mx-5">
+            <app-barra-filtro-desplegable
+              [title]="'Cantidad'"
+              [filtroDetalle]="filtro.filters[0]"
+              [campo]="EnumFiltroStock.cantidad"
+              [tipoDeComparacion]="TipoDeComparacion.MAYOR_QUE"
+              [opcionesNombre]="['Con Contenido']"
+              [opcionesValores]="[0]"
+              (eventoEmision)="buscar()"
+            >
+            </app-barra-filtro-desplegable>
+          </div>
+      </div>
+  </div>
+
+  <div class="pb-5 px-3 mt-3" *ngIf="producto != null">
+      <h3>Visualizando el stock de: {{producto.descripcion}} - {{producto.marca?.descripcion || "Sin Marca"}}</h3>
+      <table class="mat-elevation-z8 cdk-table mat-table table mat-small text-center">
+          <!-- Definir las columnas -->
+          <thead>
+            <tr class="row ps-5 justify-content-center">
+              <th class="col-1">Nro Id</th>
+              <th class="col-2">Opciones</th>
+              <th class="col-3">Producto</th>
+              <th class="col-2">Fecha de Vto</th>
+              <th class="col-1">Cantidad</th>
+              <th class="col-1">Coste</th>
+              <th class="col-1">
+                <div class="addicon-inline">
+                  <mat-icon class="accion-icon border clickeable" title="Agregar un nuevo producto." (click)="crearNuevo()" >add</mat-icon>
+                </div>
+              </th>
+              <!-- Definir el resto de las columnas -->
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Definir las filas -->
+            <tr class="row ps-5 justify-content-center" *ngFor="let stock of listaDeStocks">
+              <td class="col-1">{{ stock.id_stock}}</td>
+              <td class="col-2">
+                  <mat-icon *ngIf="estadoFormulario == EnumEstadoDelFormulario.Base" class="accion-icon clickeable" title="Modificar registro de stock." (click)="this.editar(stock)" >edit</mat-icon>
+                  <mat-icon class="accion-icon clickeable" [title]="'Borrar o vaciar registro de stock'" (click)="darDeBaja(stock)"npm install sweetalert2>delete</mat-icon>
+              </td>
+              <td class="col-3">{{ producto.descripcion + " " + (producto.marca?.descripcion || "Sin Marca")}}</td>
+              <td class="col-2">{{ (stock.fecha_vto) ? (stock.fecha_vto+"").substring(0, 10) : "No"}}</td>
+              <td class="col-1">{{ stock.cantidad }}</td>
+              <td class="col-1">$ {{ stock.coste}}</td>
+              <td class="col-1"></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="row justify-content-center">
+          <app-barra-paginacion class="col-6" (emitirBusqueda)="eventoProvocadoPorBarraPageable($event)" *ngIf="datosPageable!=null" [datosPageable]="datosPageable!"></app-barra-paginacion>
+        </div>
+  </div>
+</div>
+<app-edit-stock
+      *ngIf="estadoFormulario == EnumEstadoDelFormulario.Editando || estadoFormulario == EnumEstadoDelFormulario.Nuevo"
+      [estadoFormulario]="estadoFormulario"
+      [producto]="producto!"
+      [datosEdit]="stockSeleccionado"
+      (volver)="volverABase()"
+      (envioExitoso)="cambioExitoso()"
+    ></app-edit-stock>
+  </div>
+<app-btn-volver *ngIf="estadoFormulario!=EnumEstadoDelFormulario.Base && estadoFormulario!=EnumEstadoDelFormulario.Busqueda" (volver)="volverABase()"></app-btn-volver>
+<app-btn-volver *ngIf="estadoFormulario==EnumEstadoDelFormulario.Base" [routerLink]="['/bienvenido']"></app-btn-volver>

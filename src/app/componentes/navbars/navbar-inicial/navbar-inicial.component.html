@@ -19,11 +19,11 @@
           <a class="nav-link"  routerLink="/" (click)="por_implementar()">Reportar un problema</a>
         </li>
         <li class="nav-item">
-          <a *ngIf="!this.servicioDeSesion.elUsuarioEstaCargado" class="nav-link" routerLink="/login">Iniciar Sesión</a>
-          <a *ngIf="this.servicioDeSesion.elUsuarioEstaCargado" [class.disabled]="!this.servicioDeSesion.elUsuarioEstaCargado" class="nav-link"
+          <a *ngIf="!this.servicioDeSesion.usuarioEstaCargado()" class="nav-link" routerLink="/login">Iniciar Sesión</a>
+          <a *ngIf="this.servicioDeSesion.usuarioEstaCargado()" [class.disabled]="!this.servicioDeSesion.elUsuarioEstaCargado" class="nav-link"
             routerLink="/bienvenido">Continuar como {{this.servicioDeSesion.usuario?.username}}</a>
         </li>
-        <li *ngIf="this.servicioDeSesion.elUsuarioEstaCargado" class="nav-item" routerLinkActive="active">
+        <li *ngIf="this.servicioDeSesion.usuarioEstaCargado()" class="nav-item" routerLinkActive="active">
           <a class="nav-link" (click)="this.servicioDeSesion.cerrarSesion()">Cerrar Sesión</a>
         </li>
       </ul>

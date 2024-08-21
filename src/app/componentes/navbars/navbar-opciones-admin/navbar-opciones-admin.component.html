@@ -1,8 +1,14 @@
-<nav class="navbar navbar-light bg-light user-select-none flex-nowrap">
+<div *ngIf="!servicioSesion.tieneAlgunRol()" class="card text-center p-3">
+  <h3>Aviso: La cuenta de usuario asignado ningún rol.</h3>
+</div>
+<nav *ngIf="servicioSesion.tieneAlgunRol()" class="navbar navbar-light bg-light user-select-none flex-nowrap">
   <div class="container-fluid justify-content-start">
     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvas" aria-controls="navbarOffcanvas">
       <span class="navbar-toggler-icon"></span>
     </button>
+    <a class="mx-3" href="#" (click)="refresh($event)">
+      <mat-icon class="">refresh</mat-icon>
+    </a>
     <div class="offcanvas offcanvas-start" tabindex="-1" id="navbarOffcanvas" aria-labelledby="offcanvasNavbarLabel">
       <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menú</h5>
@@ -10,8 +16,8 @@
       </div>
       <div class="offcanvas-body">
         <ul class="navbar-nav mb-2 mb-lg-0">
-          <!-- Adherentes -->
-          <li class="nav-item dropdown">
+          <!-- Proveedores-->
+          <!-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Proveedores
             </a>
@@ -21,8 +27,8 @@
               <li><a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/bienvenido']" (click)="por_implementar()" role="button">Realizar un pedido</a></li>
               <li><a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/bienvenido']" (click)="por_implementar()" role="button">Consultar Facturas Compra Registradas</a></li>
             </ul>
-          </li>
-          <!-- Débito Directo  -->
+          </li> -->
+          <!-- Ventas  -->
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Ventas
@@ -30,35 +36,49 @@
             <ul class="dropdown-menu">
               <li><a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/ventas/EmisionVenta']" role="button">Emisión de Ventas</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/ventas/Productos']" role="button">ABM Productos</a></li>
+              <li *appSoloAdmin><a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/ventas/Productos']" role="button">ABM Productos</a></li>
+              <li *appSoloAdmin><a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/ventas/Marcas']" role="button">ABM Marcas</a></li>
+              <li *appSoloAdmin><a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/ventas/CategoriaProducto']" role="button">ABM Categoria Prod.</a></li>
               <li><hr data-bs-dismiss="offcanvas"  class="dropdown-divider"></li>
-              <li><a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/bienvenido']" (click)="por_implementar()" role="button">Control de Stock</a></li>
-              <li><a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/bienvenido']" (click)="por_implementar()" role="button">Avisos de Stock y Fec. Vencimiento Proximas</a></li>
+              <li *appSoloAdmin><a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/ventas/Facturas']" role="button">Facturas</a></li>
+              <li *appSoloAdmin><hr data-bs-dismiss="offcanvas"  class="dropdown-divider"></li>
+              <li *appSoloAdmin><a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/ventas/Stock']" role="button">Control de Stock</a></li>
+              <li *appSoloAdmin><a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/ventas/CargaDeStock']" role="button">Cargar Compra</a></li>
             </ul>
           </li>
-          <!-- Usuarios ActualizadorDeFechaDeCobro-->
-          <li class="nav-item dropdown">
+          <!-- Clientes -->
+          <li class="nav-item dropdown" *appSoloAdmin>
+            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Clientes
+            </a>
+            <ul class="dropdown-menu">
+              <li><a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/'+PATHS.clientes]" role="button">Lista de Clientes</a></li>
+            </ul>
+          </li>
+          <!-- Usuarios-->
+          <li *appSoloAdmin class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Usuarios
             </a>
             <ul class="dropdown-menu">
               <li>
-                <a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/bienvenido']" (click)="por_implementar()" role="button">ABM Usuarios y Cambio de roles</a>
+                <a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/usuarios']" role="button">ABM Usuarios y Cambio de roles</a>
               </li>
             </ul>
           </li>
           <!-- Reportes -->
-          <li class="nav-item dropdown">
+          <li *appSoloAdmin class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Reportes
+              Informes
             </a>
             <ul class="dropdown-menu">
-              <li><a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/bienvenido']" (click)="por_implementar()" role="button">Ventas Del Dia</a></li>
-              <li><a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/bienvenido']" (click)="por_implementar()" role="button">Ventas de la Mes</a></li>
+              <li><a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/'+PATHS.informes+'/ventas']" role="button">Ventas</a></li>
+              <li><a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/'+PATHS.informes+'/aviso_de_stock']" role="button">Faltantes Stock</a></li>
+              <li><a data-bs-dismiss="offcanvas"  class="dropdown-item" [routerLink]="['/'+PATHS.informes+'/aviso_de_vencimiento']" role="button">Stocks Por Vencer</a></li>
             </ul>
           </li>
           <!-- Mantenimiento -->
-          <li class="nav-item dropdown">
+          <li *appSoloAdmin class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Mantenimiento
             </a>

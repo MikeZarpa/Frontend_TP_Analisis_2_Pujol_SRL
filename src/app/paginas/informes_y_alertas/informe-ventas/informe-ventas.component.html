@@ -1,0 +1,179 @@
+<app-btn-volver [routerLink]="['/bienvenido']"></app-btn-volver>
+<div class="card text-center  py-3">
+<div class="text-center pt-5 pb-1 px-5">
+    <h2>Informe de Ventas: {{(buscar_por_categoria)? "POR CATEGORIA":"POR PRODUCTO"}}</h2>
+    <h4>{{(vista_de_promedios)? "Vista Promedio":"Vista General"}}</h4>
+    <div class="card m-4 p-4 text-start">
+        <form [formGroup]="formularioFecha" (ngSubmit)="enviarFormulario($event);formularioFecha.markAllAsTouched();"  >
+            <div class="row justify-content-center">
+                <div class="col-4">
+                    <label for="fecha_1">Fecha 1:</label>
+                    <div class="row align-items-center">
+                      <div class="col-10"><input type="date" id="fecha_1" formControlName="fecha_1" class="form-control" (change)="buscar()"></div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <label for="fecha_2">Fecha 2:</label>
+                    <div class="row align-items-center">
+                      <div class="col-10"><input type="date" id="fecha_2" formControlName="fecha_2" class="form-control"  (change)="buscar()"></div>
+                    </div>
+                </div>
+                <div class="col-1 row align-items-center">
+                    <button class="btn btn-primary" [disabled]="formularioFecha.invalid" type="submit">Buscar</button>
+                </div>
+                <div class="col-1 row align-items-center">
+                    <div>
+                        <button class="btn btn-secondary" (click)="vista_de_promedios=!vista_de_promedios;">{{(!vista_de_promedios)?"Vista Promedio":"Vista General"}}</button>
+                    </div>
+                </div>
+                <div class="col-1 row align-items-center">
+                    <div>                        
+                        <button (click)="buscar_por_categoria=!buscar_por_categoria; this.buscar()" class="btn btn-secondary">{{(!buscar_por_categoria)?"Vista Por Categoria":"Vista por Producto"}}</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        </div>
+    <div class="row justify-content-center">
+        <p class="col-3 h4">Desde {{primera_fecha}}</p>
+        <p class="col-3 h4">Hasta {{segunda_fecha}}</p>
+    </div>
+    <p>Cantidad de días {{cantidad_dias}}</p>
+</div>
+<hr/>
+<div *ngIf="registros_productos.length == 0" class="text-center">
+    <p class="h4">No se encontraron registros.</p>
+</div>
+<div class="pb-5 px-3" *ngIf=" (buscar_por_categoria && (registros_categorias.length>0)) || (!buscar_por_categoria && (registros_productos.length > 0))">
+    <!-- Por Categoria -->
+    <table *ngIf="buscar_por_categoria"
+        style="border-collapse: separate;"
+        class="mat-elevation-z8 cdk-table mat-table table mat-small text-center pt-1 pb-3 px-0">
+        <!-- Definir las columnas -->
+        <thead>
+          <tr class="row ps-5 justify-content-center">
+            <th class="col-1">Nro Id</th>
+            <th class="col-3">Nombre Categoria</th>
+            <th class="col-1">U. Vendidas {{(vista_de_promedios)?"(PROM)":""}}</th>
+            <th class="col-1">T. COSTE {{(vista_de_promedios)?"(PROM)":""}}</th>
+            <th class="col-1">T. VENDIDO {{(vista_de_promedios)?"(PROM)":""}}</th>
+            <th class="col-2">GANANCIA GENERADA {{(vista_de_promedios)?"(PROM)":""}}</th>
+            <!-- Definir el resto de las columnas -->
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Definir las filas -->
+          <tr class="row ps-5 justify-content-center" *ngFor="let registro of registros_categorias">
+            <td class="col-1">{{ registro.categoria?.id_categoria || "-"}}</td>
+            <td class="col-3">{{ registro.categoria?.descripcion || "Sin Categoria"}}</td>
+            <ng-container *ngIf="vista_de_promedios">
+                <td class="col-1">{{ registro.CANT_PROM_DIARIO}}</td>
+                <td class="col-1">$ {{ registro.COSTE_PROM_DIARIO }}</td>
+                <td class="col-1">$ {{ registro.VENDIDO_PROM_DIARIO }}</td>
+                <td class="col-2">$ {{ registro.GANANCIA_PROM_DIARIO }}</td>
+            </ng-container>
+            <ng-container *ngIf="!vista_de_promedios">
+                <td class="col-1">{{ registro.CANTIDAD_VENDIDA}}</td>
+                <td class="col-1">$ {{ registro.TOTAL_COSTE }}</td>
+                <td class="col-1">$ {{ registro.TOTAL_VENDIDO }}</td>
+                <td class="col-2">$ {{ registro.GANANCIA_GENERADA }}</td>
+            </ng-container>
+          </tr>
+        </tbody>
+      </table>
+    <!-- Por producto -->
+    <table *ngIf="!buscar_por_categoria"
+        style="border-collapse: separate;"
+        class="mat-elevation-z8 cdk-table mat-table table mat-small text-center pt-1 pb-3 px-0">
+        <!-- Definir las columnas -->
+        <thead>
+          <tr class="row ps-5 justify-content-center">
+            <th class="col-1">Nro Id</th>
+            <th class="col-2">Nombre</th>
+            <th class="col-2">Marca</th>
+            <th class="col-1">U. Vendidas {{(vista_de_promedios)?"(PROM)":""}}</th>
+            <th class="col-1">T. COSTE {{(vista_de_promedios)?"(PROM)":""}}</th>
+            <th class="col-1">T. VENDIDO {{(vista_de_promedios)?"(PROM)":""}}</th>
+            <th class="col-2">GANANCIA GENERADA {{(vista_de_promedios)?"(PROM)":""}}</th>
+            <!-- Definir el resto de las columnas -->
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Definir las filas -->
+          <tr class="row ps-5 justify-content-center" *ngFor="let registro of registros_productos">
+            <td class="col-1">{{ registro.producto.id_producto}}</td>
+            <td class="col-2">{{ registro.producto.descripcion}}</td>
+            <td class="col-2">{{ registro.producto.marca?.descripcion || "Sin Marca" }}</td>
+            <ng-container *ngIf="vista_de_promedios">
+                <td class="col-1">{{ registro.CANT_PROM_DIARIO}}</td>
+                <td class="col-1">$ {{ registro.COSTE_PROM_DIARIO }}</td>
+                <td class="col-1">$ {{ registro.VENDIDO_PROM_DIARIO }}</td>
+                <td class="col-2">$ {{ registro.GANANCIA_PROM_DIARIO }}</td>
+            </ng-container>
+            <ng-container *ngIf="!vista_de_promedios">
+                <td class="col-1">{{ registro.CANTIDAD_VENDIDA}}</td>
+                <td class="col-1">$ {{ registro.TOTAL_COSTE }}</td>
+                <td class="col-1">$ {{ registro.TOTAL_VENDIDO }}</td>
+                <td class="col-2">$ {{ registro.GANANCIA_GENERADA }}</td>
+            </ng-container>
+          </tr>
+        </tbody>
+      </table>
+      <!-- Metricas GENERALES -->
+     <div class="row justify-content-center">
+        <div class="col-4">
+            <div class="row">
+                <div class="col-8 d-flex justify-content-start">
+                    <p>INGRESOS DIARIOS:</p>                
+                </div>
+                <div class="col-4 d-flex justify-content-end">
+                    <p> $ {{Math.round(total_ingresos/cantidad_dias)}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8 d-flex justify-content-start">
+                    <p>COSTO DIARIO:</p>                
+                </div>
+                <div class="col-4 d-flex justify-content-end">
+                    <p> $ {{Math.round(total_costos/cantidad_dias)}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8 d-flex justify-content-start">
+                    <p>GANANCIAS NETAS DIARIA:</p>                
+                </div>
+                <div class="col-4 d-flex justify-content-end">
+                    <p> $ {{Math.round(total_ganancias/cantidad_dias)}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-1"></div>
+        <div class="col-4">
+            <div class="row">
+                <div class="col-8 d-flex justify-content-start">
+                    <p>TOTAL INGRESADO:</p>                
+                </div>
+                <div class="col-4 d-flex justify-content-end">
+                    <p> $ {{total_ingresos}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8 d-flex justify-content-start">
+                    <p>TOTAL COSTOS:</p>                
+                </div>
+                <div class="col-4 d-flex justify-content-end">
+                    <p> $ {{total_costos}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8 d-flex justify-content-start">
+                    <p>TOTAL GANANCIAS NETAS:</p>                
+                </div>
+                <div class="col-4 d-flex justify-content-end">
+                    <p> $ {{total_ganancias}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div></div>
+<app-btn-volver [routerLink]="['/bienvenido']"></app-btn-volver>

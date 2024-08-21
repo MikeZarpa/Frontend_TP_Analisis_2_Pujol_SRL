@@ -1,62 +1,106 @@
 <app-btn-volver [routerLink]="['/bienvenido']"></app-btn-volver>
-<div class="card text-center px-5">
-<div class="pt-5 px-5">
-    <h2>Gestión de los Registros de Productos</h2>
+<div class="c-1 pt-2 pb-2 titulo-panel">
+    <p class="h1">Emisión de Ventas</p>
 </div>
-<div class="row">
-    <div class="col-6">
-        <label for="">Nombre
-            <input (keyup)="this.filtrar(inputFiltro.value)" type="text" #inputFiltro>
-        </label>
-        <div class="pb-5 px-5">
-            <table class="mat-elevation-z8 cdk-table mat-table table mat-small text-center">
+<div class="card text-center py-3">
+<div class="buscador-de-clientes pt-2 row">
+    <p class="col-1 d-flex justify-content-center">
+        <mat-icon *ngIf="cliente==null" class="accion-icon border clickeable" title="Identificar al cliente." (click)="this.seleccionar_cliente()" >search</mat-icon>
+        <mat-icon *ngIf="cliente!=null" class="accion-icon border clickeable" title="Identificar al cliente." (click)="this.cliente = null" >close</mat-icon>
+    </p>
+    <p *ngIf="cliente != null" class="col-6">Cliente: {{cliente.apellido}}, {{cliente.nombre}} - CUIL/CUIT: {{cliente.cuil_cuit}}</p>
+    <p *ngIf="cliente == null" class="col-6">Cliente: Anónimo</p>
+</div>
+<div class="c-4 ambas-columnas">
+    <div class=" c-3 columna-1">
+        <div class=" c-4 barra-de-busqueda text-center">
+            <label class="label-campo-filtro-productos h6" for="filtro-productos">Nombre de Producto
+            </label>
+            <input class="campo-filtro-productos" id="filtro-productos" (keyup)="this.filtrar(inputFiltro.value)" type="text" #inputFiltro>
+        </div>
+        <div class=" c-1 lista-de-elementos">
+            <table class="cdk-table mat-table table mat-small text-center lista-de-productos">
                 <!-- Definir las columnas -->
                 <thead>
-                <tr class="row ps-5">
+                <tr class="row">
                     <th class="col-4">Nombre</th>
                     <th class="col-4">Marca</th>
                     <th class="col-2">Cantidad</th>
                     <th class="col-2">Precio</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody class="cuerpo-lista-productos">
                 <!-- Definir las filas -->
-                <tr class="row {{styleProductoSeleccionado(datos)}} ps-5" (click)="seleccionar(datos)" *ngFor="let datos of productos_filtrados">
-                    <th class="col-4">{{datos.descripcion}}</th>
-                    <th class="col-4">{{datos.marca?.descripcion || "Sin marca"}}</th>
-                    <th class="col-2">{{datos.total_cantidad || "-" }}</th>
-                    <th class="col-2">{{datos.historial_precio?.precio || "Error"}}</th>
+                <tr class="row clickeable " (click)="seleccionar(datos)" (dblclick)="test_agregar_al_carrito()" *ngFor="let datos of productos_filtrados">
+                    <td class="col-4 {{styleProductoSeleccionado(datos)}}">{{datos.descripcion}}</td>
+                    <td class="col-4 {{styleProductoSeleccionado(datos)}}">{{datos.marca?.descripcion || "Sin marca"}}</td>
+                    <td class="col-2 {{styleProductoSeleccionado(datos)}}">{{datos.total_cantidad || "-" }}</td>
+                    <td class="col-2 {{styleProductoSeleccionado(datos)}}">{{datos.historial_precio?.precio || "Error"}}</td>
                 </tr>
                 </tbody>
             </table>
         </div>
+        <div class=" c-2 selector-de-cantidad row">
+            <div class="col-6">
+                <label class="h6" for="input-cantidad">Cantidad:</label>
+                <input class="mx-2" type="number" name="input-cantidad" id="" #input_cantidad>
+            </div>
+            <div class="col-6">
+                <button #btn  class="btn btn-primary" (click)="btn.focus(); agregar_al_carrito(input_cantidad.valueAsNumber || 1);">Ingresar a la lista</button>
+            </div>
         </div>
     </div>
-    <div class="col-6">
-        <div class="pb-5 px-5">
-            <table class="mat-elevation-z8 cdk-table mat-table table mat-small text-center">
-                <!-- Definir las columnas -->
-                <thead>
-                <tr class="row ps-5">
-                    <th class="col-4">Nombre</th>
-                    <th class="col-4">Marca</th>
-                    <th class="col-2">Cantidad</th>
-                    <th class="col-2">Total</th>
-                </tr>
-                </thead>
-                <tbody>
-                <!-- Definir las filas -->
-                 <!-- 
-                    <tr class="row ps-5" (click)="remover_lista(datos)" *ngFor="let datos of carrito">
-                        <th class="col-4">{{datos.descripcion}}</th>
-                        <th class="col-4">{{datos.marca?.descripcion || "Sin marca"}}</th>
-                        <th class="col-2">{{datos.cantidad || "-" }}</th>
-                        <th class="col-2">{{datos.}}</th>
+    <div class="c-1 columna-2">
+        <div class="c-2 productos-en-el-carrito">
+            <div class="c-1 titulo-carrito">
+                <p class="h5">Lista de Compras</p>
+            </div>
+            <div class="c-4 productos-carrito">
+                <table class="cdk-table mat-table table mat-small text-center lista-de-productos">
+                    <!-- Definir las columnas -->
+                    <thead>
+                        <tr class="row">
+                            <th class="col-8">Producto</th>
+                            <!-- <th class="col-4">Marca</th> -->
+                            <th class="col-2">Cantidad</th>
+                            <th class="col-2">Total</th>
                         </tr>
-                    -->
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody class="cuerpo-lista-productos">
+                    <!-- Definir las filas -->
+                        <tr class="row" (click)="remover_lista(datos)" *ngFor="let datos of carrito">
+                            <td class="col-8">{{datos.producto.descripcion}} - {{datos.producto.marca?.descripcion || "Sin marca"}}</td>
+                            <!-- <th class="col-4">{{datos.producto.marca?.descripcion || "Sin marca"}}</th> -->
+                            <td class="col-2">{{datos.cantidad || "-" }}</td>
+                            <td class="col-2">{{datos.producto.historial_precio?.precio || 0 * datos.cantidad }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="c-4 informacion-de-la-compra">
+            <div class="row">
+                <div class="col-6 text-center">
+                    <p>SubTotal</p>
+                    <p>Descuento del IVA</p>
+                </div>
+                <div class="col-6 text-center">
+                    <p>{{this.subtotal}}</p>
+                    <p>{{this.descuento}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="c-2 boton-de-confirmacion">
+            <div class="row">
+                <div class="col-6 text-center">               
+                    <p>TOTAL : {{this.total}}</p>
+                </div>
+                <div class="col-6 text-center">
+                    <button class="btn btn-warning"
+                    [disabled]="this.carrito.length == 0 || emitiendo" (click)="cerrar_factura()">FINALIZAR</button>
+                </div>            </div>
         </div>
     </div>
+</div>
 </div>
 <app-btn-volver [routerLink]="['/bienvenido']"></app-btn-volver>

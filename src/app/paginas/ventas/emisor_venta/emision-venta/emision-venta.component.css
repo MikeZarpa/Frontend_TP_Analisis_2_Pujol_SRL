@@ -1,3 +1,98 @@
 .linea-seleccionada{
-    background-color: royalblue;
+    background-color: rgba(65, 105, 225, 0.5);
+}
+.btn-cargar-producto{
+    height: 10vh;
+    width: 20vw;
+}
+.vh-30{
+    height: 30vh;
+}
+.vh-40{
+    height: 40vh;
+}
+
+
+.titulo-panel{
+    text-align: center;
+}
+.ambas-columnas{
+    height: 70vh;
+    display: flex;
+    flex-direction: row;
+    gap: 5%;
+    /* background-color: rgb(201 225 225); */
+}
+.columna-1 {
+    height: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.barra-de-busqueda, .titulo-carrito{
+    height: 30px;
+}
+.barra-de-busqueda{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10%;
+}
+.campo-filtro-productos, .label-campo-filtro-productos{
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.campo-filtro-productos{
+    width: 60%;
+}
+
+.lista-de-elementos{
+    flex: 1;
+}
+.lista-de-productos{
+    height: 100%;
+}
+.cuerpo-lista-productos{
+    overflow-x: hidden;
+    height: 90%;
+    display: block;
+}
+.selector-de-cantidad{
+    height: 60px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+.columna-2 {
+    height: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.lista-de-elementos, .productos-en-el-carrito{
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+.productos-en-el-carrito{
+    flex:1;
+}
+.titulo-carrito{
+    text-align: center;
+}
+.productos-carrito{
+    height: 100%;    
+}
+.informacion-de-la-compra{
+    height: 100px;
+}
+.boton-de-confirmacion{
+    height: 60px;
+}
+.buscador-de-clientes{
+    background-color: rgb(224, 220, 220);
+}
+th{
+    background-color: lightgray;
 }

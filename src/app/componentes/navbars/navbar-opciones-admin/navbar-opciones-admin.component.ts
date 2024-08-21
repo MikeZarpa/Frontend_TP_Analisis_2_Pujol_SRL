@@ -1,5 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { PATHS } from 'src/app/app-routing.module';
+import { FuncionesUtiles } from 'src/app/clases/utiles/funciones-utiles';
+import { SesionService } from 'src/app/servicios/sesion.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -9,6 +12,8 @@ import Swal from 'sweetalert2';
 })
 export class NavbarOpcionesAdminComponent {
   readonly router = inject(Router);
+  readonly PATHS = PATHS;
+  readonly servicioSesion = inject(SesionService);
 
   por_implementar(){
     Swal.fire(
@@ -21,5 +26,10 @@ export class NavbarOpcionesAdminComponent {
         timerProgressBar:true,
         backdrop:true,
       })
+  }
+
+  refresh(event:Event) {
+    event.preventDefault();
+    FuncionesUtiles.refresh(this.router);
   }
 }

@@ -21,7 +21,8 @@
                     <div *ngIf="password!.errors?.['minlength']">La contraseña debe tener al menos 3 caracteres.</div>
                   </div>
                 </div>
-                <button class="btn btn-primary d-block mx-auto" [disabled]="loginForm.invalid">Iniciar Sesión</button>
+                <button *ngIf="!seEstaEnviando" class="btn btn-primary d-block mx-auto" [disabled]="loginForm.invalid || seEstaEnviando">Iniciar Sesión</button>
+                <button *ngIf="seEstaEnviando" class="btn btn-primary d-block mx-auto" [disabled]="true">Enviando...</button>
               </form>
             </div>
           </div>

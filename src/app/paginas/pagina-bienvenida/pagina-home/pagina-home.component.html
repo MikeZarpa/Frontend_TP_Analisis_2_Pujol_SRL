@@ -3,4 +3,37 @@
         <h2>Bienvenido, {{servicioDeSesion.usuario?.nombre || "usuario"}}.</h2>
         <h3>¿Que hacemos hoy?</h3>
     </div>
+    <!-- Contenedor de las notificaciones -->
+    <div *appSoloAdmin class="row justify-content-center mt-5">
+           <!-- Notificación de bajo stock  -->
+        <div
+        *ngIf="servicioDeAlertaStock.hay_productos_bajo_stock"
+        class="card col-4 p-2 bg-primary bg-opacity-10 resaltable"
+        [routerLink]="['/'+PATHS.informes+'/aviso_de_stock']"
+        >
+            <div class="row justify-content-end">
+                <div class="col-2">
+                    <button type="button" title="Silenciar esta notificación durante toda la sesión restante." (click)="servicioDeAlertaStock.silenciar()" class="btn btn-outline-secondary btn-sm">
+                        <mat-icon>notifications_off</mat-icon>
+                    </button>
+                </div>
+                <p class="p-1 h5">Aviso: Hay {{servicioDeAlertaStock.cantidad_que_faltaban_la_ultima_vez_consultada}} productos bajo de stock.</p>
+            </div>
+        </div>
+            <!-- Notificación de productos por vencer -->
+        <div
+        *ngIf="servicioDeAlertaVencimiento.hay_productos_por_vencerse"
+        class="card col-4 p-2 bg-primary bg-opacity-10 resaltable"
+        [routerLink]="['/'+PATHS.informes+'/aviso_de_vencimiento']"
+        >
+            <div class="row justify-content-end">
+                <div class="col-2">
+                    <button type="button" title="Silenciar esta notificación durante toda la sesión restante." (click)="servicioDeAlertaVencimiento.silenciar()" class="btn btn-outline-secondary btn-sm">
+                        <mat-icon>notifications_off</mat-icon>
+                    </button>
+                </div>
+                <p class="p-1 h5">Aviso: Lotes de Stock proximos a vencerse. Cantidad de Lotes: {{servicioDeAlertaVencimiento.cantidad_la_ultima_vez_consultada}}.</p>
+            </div>
+        </div>
+    </div>
 </div>

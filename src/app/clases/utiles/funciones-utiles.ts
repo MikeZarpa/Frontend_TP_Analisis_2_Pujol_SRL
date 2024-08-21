@@ -1,3 +1,4 @@
+import { Router } from "@angular/router";
 import Swal from "sweetalert2";
 
 export class FuncionesUtiles{
@@ -134,4 +135,13 @@ export class FuncionesUtiles{
   
     return new Date(fechaFormateada);
   } 
+
+  static refresh(router:Router){
+    Swal.fire({icon:'info', title:"Recargando",timer:750,timerProgressBar:true,showConfirmButton:false})
+    
+    const currentUrl = router.url; // Agrega un parámetro al final de la URL
+    router.navigateByUrl("/bienvenido", { skipLocationChange: true }).then(() => {
+      router.navigate([currentUrl]); // Navega de nuevo a la URL original sin cambiar el estado del historial
+    });
+  }
 }

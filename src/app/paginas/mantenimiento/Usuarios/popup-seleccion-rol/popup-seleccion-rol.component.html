@@ -1,0 +1,58 @@
+<div class="card p-4 m-4">
+    <div class="row my-5">
+        <div class="col text-center">
+            <h2>
+                Asignación de Roles: Usuario "{{usuario.username}}"
+            </h2>
+        </div>
+    </div>
+    <div class="row my-5 mx-5">
+
+        <div class="col-5 text-center">
+            <h2>Roles No Asignados</h2>
+            <table class="mat-elevation-z8 cdk-table mat-table table mat-small">
+                <thead>
+                <tr class="row  ps-5">
+                    <th class="col-8">Rol</th>        
+                    <th class="col-4">Acción</th>        
+                </tr>
+                </thead>
+                <tbody>        
+                <tr class="row  ps-5" *ngFor="let rol of rolesQueNoPosee">
+                    <td class="col-8">{{rol.descripcion}}</td>
+                    <td class="col-4">
+                        <button (click)="agregar(rol)" class="btn btn-success">Asignar</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="offset-2 col-5 text-center">
+            <h2>Roles Asignados</h2>
+            <table class="mat-elevation-z8 cdk-table mat-table table mat-small">
+                <thead>
+                <tr class="row ps-5">
+                    <th class="col-8">Rol</th>        
+                    <th class="col-4">Acción</th>        
+                </tr>
+                </thead>
+                <tbody>        
+                <tr class="row  ps-5" *ngFor="let rol of rolesQuePosee">
+                    <td class="col-8">{{rol.descripcion}}</td>
+                    <td class="col-4">
+                        <button (click)="quitar(rol)" class="btn btn-warning">Revocar</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row my-5">
+        <div class="offset-4 col-4">        
+            <div class="d-grid gap-2 mt-4">
+                <button class="btn btn-primary" [disabled]="!cargaDeDatosFinalizada" (click)="salvar()">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+</div>

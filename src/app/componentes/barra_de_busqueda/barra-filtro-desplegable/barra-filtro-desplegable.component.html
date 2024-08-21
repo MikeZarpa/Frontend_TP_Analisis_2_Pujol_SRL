@@ -1,0 +1,9 @@
+<div class="input-group mb-3 text-start">
+    <label>{{label_titulo}}
+        <select (change)="emitir()" class="form-select" [(ngModel)]="filtroDetalle.terminosDeBusqueda[0]">
+            <option [value]="''">Todos</option>
+            <option *ngFor="let opcion of opciones" [value]="opcion.valor">{{opcion.nombre}}</option>
+        </select>
+    </label>
+  </div>
+  

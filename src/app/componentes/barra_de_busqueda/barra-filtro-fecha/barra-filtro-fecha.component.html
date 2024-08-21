@@ -1,0 +1,30 @@
+<form [formGroup]="dateRangeForm" class="card">
+<div class="px-4 py-1 row align-items-center text-start">
+    <div class="form-check col-2">
+        <label for="useFilterCheckbox">
+        <input #checkbox (change)="emitirFiltroSioSi()" id="useFilterCheckbox" type="checkbox" formControlName="useFilter" class="form-check-input">
+            Usar filtro</label>
+    </div> 
+    <div class="form-group col-4">
+        <div class="row align-items-center">
+                <label for="startDate">Desde:</label>
+            <input id="startDate" type="date" formControlName="startDate" class="form-control col-10 w-auto" (change)="emitirFiltro()">
+        </div>
+        <!-- <input type="text" class="form-control" [value]="formattedStartDate" [readonly]="true"> -->
+    </div>
+    
+    <div class="form-group col-4">
+        <div class="row  align-items-center">
+            <label for="endDate" >Hasta:</label>
+            <input id="endDate" type="date" formControlName="endDate" class="form-control col-10 w-auto" (change)="emitirFiltro()">
+        </div>
+        <!-- <input type="text" class="form-control" [value]="formattedEndDate" [readonly]="true"> -->
+    </div>
+    <div class="form-group col-2 align-items-center d-flex justify-content-center ">
+        <div class="">
+                <button *ngIf="this.dateRangeForm.value.useFilter" (click)="verTodos()" type="button" class="btn btn-primary"> Quitar Filtro </button>
+        </div>
+        <!-- <input type="text" class="form-control" [value]="formattedEndDate" [readonly]="true"> -->
+    </div>
+</div>
+</form>

@@ -1,6 +1,7 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { Producto } from 'src/app/clases/base_de_datos/comercial/producto';
-import { EstadoDelFormulario } from 'src/app/clases/enums';
+import { EnumFiltroProductos, EstadoDelFormulario, TipoDeComparacion } from 'src/app/clases/enums';
+import { Filtro } from 'src/app/clases/utiles/filtro';
 import { DatosNavegacionPorPagina, RespuestaPageable } from 'src/app/componentes/interfaz/barra-paginacion/barra-paginacion.component';
 import { ProductoService } from 'src/app/servicios/comercial/producto.service';
 import { SesionService } from 'src/app/servicios/sesion.service';
@@ -17,10 +18,13 @@ export class ListaProductosComponent implements OnInit {
   //Productos a listar
   productos:Producto[]=[];
   //Estados del formulario
-  estadoFormulario:EstadoDelFormulario = EstadoDelFormulario.Base;
+  @Input() estadoFormulario:EstadoDelFormulario = EstadoDelFormulario.Base;
   EnumEstadoDelFormulario = EstadoDelFormulario;
+  estadoFormularioAnterior!:EstadoDelFormulario;
   //Util para abrir el modo edicion de producto
   productoSeleccionado!:Producto;
+  //Para la emisión de la seleccion de busqueda
+  @Output() elementoSeleccionado = new EventEmitter<Producto>();
 
 
   //Para la barra de navegación de paginas
@@ -28,35 +32,38 @@ export class ListaProductosComponent implements OnInit {
   datosDeLaBarra:DatosNavegacionPorPagina|null=null;
 
   ngOnInit(): void {
-    
+    this.buscar();    
   } 
   buscar(){
-    ((this.datosDeLaBarra!=null) ? this.servicio.obtenerTodosConPagina(this.datosDeLaBarra) : this.servicio.obtenerTodosConPagina())
+    this.filtro.comprobar();
+    ((this.datosDeLaBarra!=null) ? this.servicio.obtenerTodosConPagina(this.filtro, this.datosDeLaBarra) : this.servicio.obtenerTodosConPagina(this.filtro))
     .subscribe(
       res =>{
         console.log(res);
         this.productos = res.datos;this.datosPageable = res;});
   }
   crearNuevo(){
+    this.estadoFormularioAnterior = this.estadoFormulario;
     this.estadoFormulario = EstadoDelFormulario.Nuevo;
   }
   editar(datos:Producto){
     this.productoSeleccionado = datos;
+    this.estadoFormularioAnterior = this.estadoFormulario;
     window.setTimeout(()=>{this.estadoFormulario = EstadoDelFormulario.Editando;},500);
   }
   //Desactivamos la edición
   volverABase(){
-    this.estadoFormulario=EstadoDelFormulario.Base;
+    this.estadoFormulario = this.estadoFormularioAnterior;
   }
   envioExitoso(){
-    this.estadoFormulario=EstadoDelFormulario.Base;
+    this.estadoFormulario = this.estadoFormularioAnterior;
     this.buscar();
   }
   darDeBaja(datos:Producto){
     
     Swal.fire({
       title: 'Confirmación',
-      text: `¿Estás seguro de que deseas ${(datos.habilitado== 1)?"DAR DE BAJA":"ACTIVAR"} el PRODUCTO: ${datos.descripcion} - ${datos.marca?.descripcion} ?`,
+      text: `¿Estás seguro de que deseas ${(datos.habilitado== 1)?"DAR DE BAJA":"ACTIVAR"} el PRODUCTO: ${datos.descripcion} - ${datos.marca?.descripcion  || "Sin marca"} ?`,
       icon: 'question',
       showCancelButton: true,
       backdrop:true,
@@ -110,7 +117,7 @@ export class ListaProductosComponent implements OnInit {
     }
     Swal.fire({
       title: 'Confirmación',
-      text: `¿En realidad quieres cambiar el precio del PRODUCTO: ${datos.descripcion} - ${datos.marca?.descripcion} ?`,
+      text: `¿En realidad quieres cambiar el precio del PRODUCTO: ${datos.descripcion} - ${datos.marca?.descripcion || "Sin marca"} ?`,
       icon: 'question',
       showCancelButton: true,
       backdrop: true,
@@ -173,35 +180,27 @@ export class ListaProductosComponent implements OnInit {
                    });
 
             }
-            // Aquí puedes agregar la lógica para guardar el nuevo precio
-            // this.servicio.cambiarPrecio(datos.id_producto!, nuevoPrecio)
-            //   .subscribe({
-            //     next: () => {
-            //       this.buscar();
-            //       Swal.fire({
-            //         position: 'center',
-            //         icon: 'success',
-            //         title: 'Precio actualizado correctamente',
-            //         showConfirmButton: false,
-            //         timer: 2000,
-            //         timerProgressBar: true,
-            //         toast: true,
-            //         showClass: {
-            //           popup: 'animated bounceIn'
-            //         },
-            //         hideClass: {
-            //           popup: 'animated bounceOut'
-            //         },
-            //       });
-            //     },
-            //     error: () => {
-            //       alert("Ocurrió un error al actualizar el precio.");
-            //     }
-            //   });
           }
         });
       }
     });
     
+  }
+
+  //Filtros
+
+  filtro = new Filtro<EnumFiltroProductos>();
+
+  constructor(){
+    this.filtro.setCantidadFilters(2);
+    this.filtro.filters[1].campo = EnumFiltroProductos.Habilitado;
+    this.filtro.filters[1].terminosDeBusqueda[0] = '1';
+    this.filtro.filters[1].tipoBusqueda = TipoDeComparacion.LITERAL;
+  }
+  readonly EnumFiltroProductos = EnumFiltroProductos;
+  readonly TipoDeComparacion = TipoDeComparacion;
+
+  emitirSeleccion(producto:Producto){
+    this.elementoSeleccionado.emit(producto);
   }
 }

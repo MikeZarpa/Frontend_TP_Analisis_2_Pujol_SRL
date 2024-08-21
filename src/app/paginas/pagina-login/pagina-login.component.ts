@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { RespuestaDeError } from 'src/app/clases/utiles/RespuestaDeError';
 import { SesionService } from 'src/app/servicios/sesion.service';
 import Swal from 'sweetalert2';
 
@@ -15,6 +16,7 @@ export class PaginaLoginComponent  {
   readonly formBuilder = inject(FormBuilder);
   readonly ServicioDeSesion = inject(SesionService);
   readonly router = inject(Router);
+  seEstaEnviando = false;
 
   ngOnInit(){
     this.loginForm = this.formBuilder.group({
@@ -32,22 +34,26 @@ export class PaginaLoginComponent  {
 
   submitForm(event:Event) {
     event.preventDefault();
+    this.seEstaEnviando = true;
     // Lógica para enviar el formulario
     //Usar el servicio para enviar formulario
-    this.ServicioDeSesion.iniciarSesion(this.loginForm.value)
+    const datos = this.loginForm.value;
+    datos.username = datos.email; //Para probar por username tambien
+    this.ServicioDeSesion.iniciarSesion(datos)
       .then( 
         res => this.ingresar()
       )
-      .catch( (res:{message:string, error:HttpErrorResponse }) => {
-        const codigo_error = res.error.error.result.error_id;
-        switch(codigo_error){
-          case "404": Swal.fire({title:"Credenciales inválidas", icon:"error"});
-            break;
-          case "500": Swal.fire({title:"Hubo un error con el servidor. Intente nuevamente mas tarde.", icon:"warning"});
-            break;
-          case "400": Swal.fire({title:"Por favor, rellenar todos los campos.", icon:"error"});
-            break;
+      .catch( (res) => {
+        this.seEstaEnviando = false;
+        if(res.error.status == 0){
+          Swal.fire({title:"Error desconocido.", text:"¿Servidor apagado o no disponible?", icon:"error"});
         }
+        const respuestaError = new RespuestaDeError(res);
+        Swal.fire({
+          title:"Credenciales inválidas",
+          icon:"error",
+          text:`Servidor Responde: ${respuestaError.error_msg}`,
+        });
         this.borrar_campo_password();
        } );
   }

@@ -1,0 +1,11 @@
+<div class="input-group mb-3">  
+  <select class="form-select input-group-text" [(ngModel)]="filtroDetalle.campo">
+    <option *ngFor="let criterio of criterios.slice(0,3);" [value]="criterio.valor">{{ criterio.nombre }}</option>
+  </select>
+  <input type="text" class="form-control uppercase-text"
+  [(ngModel)]="filtroDetalle.terminosDeBusqueda[0]"
+  (keydown.enter)="this.emitir()"
+  >
+  <button class="btn btn-primary me-2" (click)="this.emitir()">Buscar</button>
+  <button class="btn btn-primary" (click)="this.limpiar()">Limpiar</button>
+</div>

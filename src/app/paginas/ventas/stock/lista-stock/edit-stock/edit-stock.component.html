@@ -1,0 +1,56 @@
+<div class="card mt-3 mx-auto p-5 col-8 shadow">
+    <form [formGroup]="edicionForm" class="needs-validation" (ngSubmit)="enviarFormulario($event);edicionForm.markAllAsTouched();">
+      <h2 *ngIf="estadoFormulario == EnumEstadoFormulario.Nuevo">Ingresando un nuevo Stock de {{producto.descripcion}} - {{producto.marca?.descripcion || "Sin marca"}}</h2>
+      <h2 *ngIf="estadoFormulario == EnumEstadoFormulario.Editando">Editando un Stock de  Producto: {{producto.descripcion}} - {{producto.marca?.descripcion || "Sin marca"}}</h2>
+      <div class="card p-5 my-4">  
+        <h2>Coste y Cantidad del Producto</h2>
+        <div class="row">
+          <div class="col-6">
+            <label for="cantidad">Cantidad en el Stock del Producto<span class="text-danger">*</span>:</label>
+            <input type="text" id="cantidad" formControlName="cantidad" class="form-control">
+            <div *ngIf="edicionForm.get('cantidad')?.invalid && (edicionForm.get('cantidad')?.dirty || edicionForm.get('cantidad')?.touched)" class="text-danger">
+              La cantidad de existencia del producto es un campo obligatorio.
+            </div>
+          </div>
+          <div class="col-6">
+            <label for="coste">Coste del Producto<span class="text-danger">*</span>:</label>
+            <input type="text" id="coste" formControlName="coste" class="form-control">
+            <div *ngIf="edicionForm.get('coste')?.invalid && (edicionForm.get('coste')?.dirty || edicionForm.get('coste')?.touched)" class="text-danger">
+              El coste del producto es un campo obligatorio.
+            </div>
+          </div>
+          <div class="col-6">
+            <label for="fecha_vto">Fecha de vencimiento (Opcional):</label>
+            <div class="row align-items-center">
+              <div class="col-10"><input type="date" id="fecha_vto" formControlName="fecha_vto" class="form-control"></div>
+              <div class="col-1 text-center">
+                <button class="btn-secondary btn"  *ngIf="edicionForm.get('fecha_vto')?.value != null" type="button">
+                  <div class="d-flex justify-content-center align-items-center">
+                    <mat-icon (click)="edicionForm.patchValue({fecha_vto:null})">close</mat-icon>
+                  </div>
+              </button></div>
+
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="d-grid gap-2">
+            <button *ngIf="!elFormularioEstaSiendoEnviado" type="submit" class="btn btn-primary btn-block">{{(datosEdit) ? "Guardar cambios":"Crear Nuevo"}}</button>
+            <button *ngIf="elFormularioEstaSiendoEnviado" type="submit" [disabled]="true" class="btn btn-primary btn-block">Enviando...</button>
+        </div>
+      </div>
+    </form>    
+    
+    <br>
+    <br>
+    <div class="row">
+      <div class="col-5">
+        <div class="d-grid gap-2">
+          <button type="button" (click)="volverClick()" class="btn btn-secondary ml-auto">Volver</button>
+        </div>
+      </div>
+    </div>
+  </div>

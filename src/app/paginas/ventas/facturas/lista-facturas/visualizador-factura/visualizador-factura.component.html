@@ -1,0 +1,73 @@
+<div class="pt-5 px-1 row" *ngIf="factura!=null">
+  <h2 class="col-6">Revisión de la Factura:
+    <p>
+      {{factura.id_factura_venta}}
+    </p>
+  </h2>
+  <h2 class="col-6">
+    Fecha:
+    <p>
+      {{factura.fecha}}
+    </p>
+  </h2>
+</div>
+<div class="row" *ngIf="factura!=null">
+  <div class="col-6">
+    <h3>Cliente:</h3>
+    <p>{{(factura.cliente) ? factura.cliente.apellido+" "+factura.cliente.nombre:"Anónimo"}}</p>
+    <p *ngIf="factura.cliente"> Cuil/Cuit: {{factura.cliente.cuil_cuit}}</p>
+  </div>
+  <div class="col-6">
+    <h3>Cajero:</h3>
+    <p>{{factura.usuario?.apellido+" "+factura.usuario?.nombre}}</p>
+  </div>
+</div>
+<div class="card text-center" *ngIf="factura!=null">
+  <div class="pb-5 px-1">
+
+      <table class="mat-elevation-z8 cdk-table mat-table table text-center">
+          <!-- Definir las columnas -->
+          <thead>
+            <tr class="row ps-5 justify-content-center">
+              <th class="col-1">Nro Id</th>
+              <th class="col-2">Producto</th>
+              <th class="col-1">Cantidad</th>
+              <th class="col-1">Precio U.</th>
+              <th class="col-1">Total</th>
+              <!-- Definir el resto de las columnas -->
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Definir las filas -->
+            <tr class="row ps-5 justify-content-center" *ngFor="let datos of factura.detalles_venta">
+              <td class="col-1">{{ datos.id_det_venta}}</td>
+              <td class="col-2">{{ datos.hist_precio.stock?.producto?.descripcion}} {{ datos.hist_precio.stock?.producto?.marca?.descripcion || "SIN MARCA" }}</td>
+              <td class="col-1">{{ datos.cantidad}}</td>
+              <td class="col-1">$ {{ datos.hist_precio.precio }}</td>
+              <td class="col-1"> $ {{ datos.cantidad * datos.hist_precio.precio }}</td>
+              <!-- Definir el resto de las columnas -->
+            </tr>
+          </tbody>
+        </table>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <div class="row justify-content-end">
+        <h5 class="">Tipo De IVA: {{this.factura.cond_iva.descripcion}}</h5>
+      </div>      
+    </div>
+    <div *ngIf="this.factura" class="col-6">
+      <div class="row">
+        <h4 class="col-4">SubTotal: </h4>
+        <h4 class="col-3">$ {{this.subtotal}} </h4>
+      </div>
+      <div class="row">
+        <h4 class="col-4">Descuento de IVA: </h4>
+        <h4 class="col-3">$ {{this.subtotal - this.factura.total!}} </h4>
+      </div>
+      <div class="row">
+        <h4 class="col-4">Total: </h4>
+        <h4 class="col-3">$ {{this.factura.total}} </h4>
+      </div>
+    </div>
+  </div>

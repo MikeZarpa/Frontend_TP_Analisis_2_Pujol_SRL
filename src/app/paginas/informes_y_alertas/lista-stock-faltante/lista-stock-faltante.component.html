@@ -1,0 +1,44 @@
+<app-btn-volver *ngIf="estadoFormulario==EnumEstadoDelFormulario.Base" [routerLink]="['/bienvenido']"></app-btn-volver>
+<div class="card text-center  py-3">
+<div class="text-center">
+  <div class="pt-5 px-1" [hidden]="!(estadoFormulario == EnumEstadoDelFormulario.Base || estadoFormulario == EnumEstadoDelFormulario.Busqueda)">
+    <h2>Listado de los productos faltantes</h2>
+</div>
+
+<hr>
+
+<div class="pb-5 px-3" *ngIf=" (productos.length > 0) && (estadoFormulario == EnumEstadoDelFormulario.Base || estadoFormulario == EnumEstadoDelFormulario.Busqueda)">
+      <table class="mat-elevation-z8 cdk-table mat-table table mat-small text-center">
+          <!-- Definir las columnas -->
+          <thead>
+            <tr class="row ps-5 justify-content-center">
+              <th class="col-1">Nro Id</th>
+              <th class="col-2">Opciones</th>
+              <th class="col-2">Nombre</th>
+              <th class="col-2">Marca</th>
+              <th class="col-1">Cantidad Minima</th>
+              <th class="col-1">Stock</th>
+              <!-- Definir el resto de las columnas -->
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Definir las filas -->
+            <tr class="row ps-5 justify-content-center" *ngFor="let datos of productos">
+              <td class="col-1">{{ datos.id_producto}}</td>
+              <td class="col-2">
+                  <mat-icon class="accion-icon clickeable" [title]="(datos.habilitado == 1)?'Desactivar producto.':'Reactivar el producto.'" (click)="darDeBaja(datos)"npm install sweetalert2>{{datos.habilitado== 1 ? "arrow_downward" :"arrow_upward"}}</mat-icon>
+                  <mat-icon class="accion-icon clickeable" title="Cambia la cantidad minima a 0, silenciando la alarma." (click)="cambiar_cantidad_a_0(datos)">notifications_off</mat-icon>
+              </td>
+              <td class="col-2">{{ datos.descripcion}}</td>
+              <td class="col-2">{{ datos.marca?.descripcion || "Sin Marca" }}</td>
+              <td class="col-1">{{ datos.cantidad_minima || "No"}}</td>
+              <td class="col-1">{{ datos.total_cantidad ||"Sin Stock" }}</td>
+            </tr>
+          </tbody>
+        </table>
+  </div>
+</div>
+<div *ngIf="(productos.length == 0)" class="pb5 px-3 text-center" >
+    <p class="h3">¡Hurra! La lista de productos en bajo stock está vacía.</p>
+</div></div>
+<app-btn-volver *ngIf="estadoFormulario==EnumEstadoDelFormulario.Base" [routerLink]="['/bienvenido']"></app-btn-volver>

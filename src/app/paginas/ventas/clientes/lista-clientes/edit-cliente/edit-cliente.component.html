@@ -1,0 +1,133 @@
+<div class="card mt-3 mx-auto p-5 col-8 shadow">
+  <h2 *ngIf="estadoFormulario == EnumEstadoFormulario.Nuevo">Ingresando un Nuevo Cliente</h2>
+  <h2 *ngIf="estadoFormulario == EnumEstadoFormulario.Editando">Editando al Cliente: {{datosEdit.apellido}} {{datosEdit.nombre}}</h2>
+  <form [formGroup]="edicionForm"  class="needs-validation">
+    <div class="card p-5 my-4">
+      <h2>Datos Personales</h2>
+      <div class="row">
+        <div class="col-6">
+          <label for="apellido">Apellido del Cliente<span class="text-danger">*</span>:</label>
+          <input type="text" id="apellido" formControlName="apellido" class="form-control">
+          <div *ngIf="edicionForm.get('apellido')?.invalid && (edicionForm.get('apellido')?.dirty || edicionForm.get('apellido')?.touched)" class="text-danger">
+            El Apellido es un campo obligatorio.
+          </div>
+        </div>
+        <div class="col-6">
+          <label for="nombre">Nombre del Cliente<span class="text-danger">*</span>:</label>
+          <input type="text" id="nombre" formControlName="nombre" class="form-control">
+          <div *ngIf="edicionForm.get('nombre')?.invalid && (edicionForm.get('nombre')?.dirty || edicionForm.get('nombre')?.touched)" class="text-danger">
+            El Nombre es un campo obligatorio.
+          </div>
+        </div>
+        <div class="col-6">
+          <label for="dni">DNI<span class="text-danger">*</span>:</label>
+          <input type="number" id="dni" formControlName="dni" class="form-control" #dni>
+          <div *ngIf="edicionForm.get('dni')?.invalid && (edicionForm.get('dni')?.dirty || edicionForm.get('dni')?.touched)" class="text-danger">
+            El DNI debe ser un número.
+          </div>
+        </div>
+        <div class="col-6">
+          <label for="cuil_cuit">CUIL / CUIT<span class="text-danger">*</span>:</label>
+          <input type="text" id="cuil_cuit" formControlName="cuil_cuit" class="form-control" #cuil_cuit maxlength="11">
+          <div *ngIf="edicionForm.get('cuil_cuit')?.invalid && (edicionForm.get('cuil_cuit')?.dirty || edicionForm.get('cuil_cuit')?.touched) " class="text-danger">
+            El CUIL / CUIT debe ser un número de 11 dígitos.
+          </div>
+          <div *ngIf="(edicionForm.get('cuil_cuit')?.dirty || edicionForm.get('cuil_cuit')?.touched) && !(cuil_cuit.value.includes(dni.value))" class="text-warning">
+            Aviso: El CUIL / CUIT no está conteniendo el DNI.
+          </div>
+        </div>
+        <div class="col-6">
+          <label for="id_cond_iva">Condición IVA<span class="text-danger">*</span>:</label>
+          <select id="id_cond_iva" formControlName="id_cond_iva" class="form-select">
+            <option selected value="">Seleccione una opción</option>
+            <option *ngFor="let option of condicion_ivaOpciones" [value]="option.id_cond_iva">{{ option.descripcion }}</option>
+          </select>
+          <div *ngIf="edicionForm.get('id_cond_iva')?.invalid && (edicionForm.get('id_cond_iva')?.dirty || edicionForm.get('id_cond_iva')?.touched)" class="text-danger">
+            La Condición IVA es un campo obligatorio.
+          </div>
+        </div>
+        <div class="col-6">
+          <label for="id_pais">Nacionalidad<span class="text-danger">*</span>:</label>
+          <select id="id_pais" formControlName="id_pais" class="form-select">
+            <option value="">Seleccione un País</option>
+            <option *ngFor="let option of paisesOpciones" [value]="option.id_pais">{{ option.descripcion }}</option>
+          </select>
+          <div *ngIf="edicionForm.get('id_pais')?.invalid && (edicionForm.get('id_pais')?.dirty || edicionForm.get('id_pais')?.touched)" class="text-danger">
+            La nacionalidad es un campo obligatorio.
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <form [formGroup]="edicionDireccionForm" (ngSubmit)="enviarFormulario($event); edicionForm.markAllAsTouched(); edicionDireccionForm.markAllAsTouched();" class="needs-validation">
+    <div class="card p-5 my-4">
+      <h2>Dirección</h2>
+      <div class="row">
+      <div class="col-6">
+        <label for="calle">Calle<span class="text-danger">*</span>:</label>
+        <input type="text" id="calle" formControlName="calle" class="form-control">
+        <div *ngIf="edicionDireccionForm.get('calle')?.invalid && (edicionDireccionForm.get('calle')?.dirty || edicionDireccionForm.get('calle')?.touched)" class="text-danger">
+          La Calle es un campo obligatorio.
+        </div>
+      </div>
+      <div class="col-6">
+        <label for="altura">Altura:</label>
+        <input type="text" id="altura" formControlName="altura" class="form-control">
+      </div>
+      <div class="col-6">
+        <label for="piso">Piso:</label>
+        <input type="text" id="piso" formControlName="piso" class="form-control">
+      </div>
+      <div class="col-6">
+        <label for="departamento">Departamento:</label>
+        <input type="text" id="departamento" formControlName="departamento" class="form-control">
+      </div>
+      <div class="col-6">
+        <label for="id_pais_direccion">País<span class="text-danger">*</span>:</label>
+        <select id="id_pais_direccion" formControlName="id_pais_direccion" class="form-select" (change)="cargarProvincias(id_pais_direccion.value)" #id_pais_direccion>
+          <option selected value="">Seleccione un Pais</option>
+          <option *ngFor="let option of paisesOpciones" [value]="option.id_pais">{{ option.descripcion }}</option>
+        </select>
+        <div *ngIf="edicionDireccionForm.get('id_pais_direccion')?.invalid && (edicionDireccionForm.get('id_pais_direccion')?.dirty || edicionDireccionForm.get('id_pais_direccion')?.touched)" class="text-danger">
+          El Pais es un campo obligatorio.
+        </div>
+      </div>
+      <div class="col-6">
+        <label for="id_provincia_direccion">Provincia<span class="text-danger">*</span>:</label>
+        <select id="id_provincia_direccion" formControlName="id_provincia_direccion" class="form-select" (change)="cargarLocalidades(id_provincia_direccion.value)" #id_provincia_direccion>
+          <option selected value="">Seleccione una Provincia</option>
+          <option *ngFor="let option of provinciasOpciones" [value]="option.id_provincia">{{ option.descripcion }}</option>
+        </select>
+        <div *ngIf="edicionDireccionForm.get('id_provincia_direccion')?.invalid && (edicionDireccionForm.get('id_provincia_direccion')?.dirty || edicionDireccionForm.get('id_provincia_direccion')?.touched)" class="text-danger">
+          La Provincia es un campo obligatorio.
+        </div>
+      </div>
+      <div class="col-6">
+        <label for="id_localidad">Localidad<span class="text-danger">*</span>:</label>
+        <select id="id_localidad" formControlName="id_localidad" class="form-select">
+          <option value="">Seleccione una Localidad</option>
+          <option *ngFor="let option of localidadesOpciones" [value]="option.id_localidad">{{ option.descripcion }}</option>
+        </select>
+        <div *ngIf="edicionDireccionForm.get('id_localidad')?.invalid && (edicionDireccionForm.get('id_localidad')?.dirty || edicionDireccionForm.get('id_localidad')?.touched)" class="text-danger">
+          La Localidad es un campo obligatorio.
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="d-grid gap-2">
+        <button *ngIf="!elFormularioEstaSiendoEnviado" type="submit" class="btn btn-primary btn-block">{{(datosEdit) ? "Guardar cambios":"Crear Nuevo"}}</button>
+        <button *ngIf="elFormularioEstaSiendoEnviado" type="submit" [disabled]="true" class="btn btn-primary btn-block">Enviando...</button>
+      </div>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+      <div class="col-5">
+        <div class="d-grid gap-2">
+          <button type="button" (click)="volverClick()" class="btn btn-secondary ml-auto">Volver</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

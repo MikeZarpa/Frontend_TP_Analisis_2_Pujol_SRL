@@ -1,0 +1,53 @@
+<app-btn-volver [routerLink]="['/bienvenido']"></app-btn-volver>
+<div class="card text-center py-3">
+<div class="text-center">
+  <div class="pt-5 px-1">
+    <h2>Listado de los Lotes de Stock proximos a Vencer</h2>
+</div>
+  <div class="row align-content-center justify-content-center p-0">
+    <div class="input-group-text mb-3 text-start col-6">
+      <label for="cantidad">Días de antelación</label>
+      <input class=" form-control" type="number" name="cantidad" id="cantidad" [(ngModel)]="this.dias_de_antelacion">
+    </div>
+    <div class="col-2">
+      <button class="btn btn-primary m-auto" (change)="buscar()" type="button">Buscar</button>
+    </div>
+  </div>
+<hr>
+
+<div class="pb-5 px-3" *ngIf=" (lotes.length > 0)">
+      <table class="mat-elevation-z8 cdk-table mat-table table mat-small text-center">
+          <!-- Definir las columnas -->
+          <thead>
+            <tr class="row ps-5 justify-content-center">
+              <th class="col-1">Id Stock</th>
+              <th class="col-2">Opciones</th>
+              <th class="col-2">Nombre</th>
+              <th class="col-2">Marca</th>
+              <th class="col-1">Cantidad</th>
+              <th class="col-1">Fecha VTO</th>
+              <th class="col-1">Dias Faltantes</th>
+              <!-- Definir el resto de las columnas -->
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Definir las filas -->
+            <tr class="row ps-5 justify-content-center" *ngFor="let datos of lotes">
+              <td class="col-1">{{ datos.id_stock}}</td>
+              <td class="col-2">
+                  <mat-icon class="accion-icon clickeable" title="Borrar todo el stock" (click)="borrar_stock(datos)"npm install sweetalert2>delete_forever</mat-icon>
+              </td>
+              <td class="col-2">{{ datos.producto?.descripcion}}</td>
+              <td class="col-2">{{ datos.producto?.marca?.descripcion || "Sin Marca" }}</td>
+              <td class="col-1">{{ datos.cantidad }}</td>
+              <td class="col-1">{{ (datos.fecha_vto +"").substring(0,10)}}</td>
+              <td class="col-1">{{dias_fantantes(datos.fecha_vto+"") }}</td>
+            </tr>
+          </tbody>
+        </table>
+  </div>
+</div>
+<div *ngIf="(lotes.length == 0)" class="pb5 px-3 text-center" >
+    <p class="h3">¡Hurra! No hay lotes cercanos a vencer.</p>
+</div></div>
+<app-btn-volver [routerLink]="['/bienvenido']"></app-btn-volver>

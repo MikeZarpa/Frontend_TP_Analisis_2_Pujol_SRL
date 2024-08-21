@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { DatosNavegacionPorPagina, RespuestaPageable } from 'src/app/componentes/interfaz/barra-paginacion/barra-paginacion.component';
 import { Producto } from 'src/app/clases/base_de_datos/comercial/producto';
 import { HttpParams } from '@angular/common/http';
+import { Filtro, FiltroDetalle } from 'src/app/clases/utiles/filtro';
+import { TipoDeComparacion } from 'src/app/clases/enums';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +15,12 @@ export class ProductoService extends DatosDeConexion{
   constructor() {
     super();
    }
-    public obtenerTodosConPagina(datosPagina:DatosNavegacionPorPagina = {nroPagina:1,pageSize:10}):Observable<RespuestaPageable<Producto>>{  
-      //const filtroJSON = JSON.stringify(filtro);      
+    public obtenerTodosConPagina(filtro:Filtro<any>,datosPagina:DatosNavegacionPorPagina = {nroPagina:1,pageSize:10}):Observable<RespuestaPageable<Producto>>{  
+      const filtroJSON = JSON.stringify(filtro);      
       let params = new HttpParams()
       .set('nroPagina', datosPagina.nroPagina.toString())
-      .set('pageSize', datosPagina.pageSize.toString());
-      //.set('filtro',filtroJSON);      
+      .set('pageSize', datosPagina.pageSize.toString())
+      .set('filtro',filtroJSON);      
       return this.http.get<RespuestaPageable<Producto>>(this.urlConexionBase+"/producto.php",{ params: params });
      }
 
@@ -32,7 +34,24 @@ export class ProductoService extends DatosDeConexion{
     }
     
     public obtenerTodosSinPagina():Observable<Producto[]>{
-      return this.http.get<Producto[]>(this.urlConexionBase+"/producto.php?no_paginar=true");
+
+      const filtro = new Filtro<EnumFiltroProducto>();
+      filtro.setCantidadFilters(1);
+      const filtro_detalle1 = new FiltroDetalle<EnumFiltroProducto>();
+      filtro_detalle1.enabled = true;
+      filtro_detalle1.campo = EnumFiltroProducto.habilitado;
+      filtro_detalle1.terminosDeBusqueda = ['1'];
+      filtro_detalle1.tipoBusqueda = TipoDeComparacion.LITERAL;
+
+      filtro.filters[0] = (filtro_detalle1);
+      filtro.comprobar(); console.log(filtro);
+
+      const filtroJSON = JSON.stringify(filtro);      
+      let params = new HttpParams()
+      .set('no_paginar',true)
+      .set('filtro',filtroJSON);      
+
+      return this.http.get<Producto[]>(this.urlConexionBase+"/producto.php", {params:params});
     }
 
     public crear_producto(producto:Producto):Observable<void>{
@@ -41,4 +60,9 @@ export class ProductoService extends DatosDeConexion{
     public actualizar_producto(producto:Producto):Observable<void>{
       return this.http.put<void>(this.urlConexionBase+"/producto.php",producto);
     }
+}
+enum EnumFiltroProducto{
+  producto_descripcion,
+  habilitado,
+  marca_descripcion
 }

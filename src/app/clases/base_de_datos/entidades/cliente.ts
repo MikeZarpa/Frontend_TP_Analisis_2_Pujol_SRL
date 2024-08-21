@@ -11,6 +11,7 @@ export class Cliente{
     id_cond_iva:number|null = null;
     id_direccion!:number;
     id_pais:number|null= null;
+    habilitado:number=1;
 
     pais:Pais|null = null;
     direccion:Direccion|null = null;

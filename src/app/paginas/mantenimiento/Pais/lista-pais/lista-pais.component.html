@@ -12,7 +12,7 @@
             <th class="col-2">Opciones</th>
             <th class="col-2">Descripción</th>
             <th class="col-2 ">
-              <mat-icon class="accion-icon border" title="Registrar un nuevo país." (click)="this.crearNuevo()" >add</mat-icon>
+              <mat-icon class="accion-icon border clickeable" title="Registrar un nuevo país." (click)="this.crearNuevo()" >add</mat-icon>
             </th>
             <!-- Definir el resto de las columnas -->
           </tr>
@@ -21,8 +21,8 @@
           <!-- Definir las filas -->
           <tr class="row ps-5" *ngFor="let pais of Paises">
             <td class="col-2">
-                <mat-icon class="accion-icon" title="Modificar los datos del país." (click)="this.editar(pais)" >edit</mat-icon>
-                <!-- <mat-icon class="accion-icon" title="Borrar el registro del país." (click)="borrar(pais)"npm install sweetalert2>delete</mat-icon> -->
+                <mat-icon class="accion-icon clickeable" title="Modificar los datos del país." (click)="this.editar(pais)" >edit</mat-icon>
+                <!-- <mat-icon class="accion-icon clickeable" title="Borrar el registro del país." (click)="borrar(pais)"npm install sweetalert2>delete</mat-icon> -->
             </td>
             <td class="col-2">{{ pais.descripcion }}</td>
             <!-- Definir el resto de las columnas -->

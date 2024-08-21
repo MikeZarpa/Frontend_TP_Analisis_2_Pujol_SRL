@@ -17,6 +17,9 @@ export class UbicacionService extends DatosDeConexion{
   public obtenerPaises(): Observable<Pais[]> {
     return this.http.get<Pais[]>(this.urlConexionBase + "/pais");
   }
+  public obtenerPaisesSinPaginar(): Observable<Pais[]> {
+    return this.http.get<Pais[]>(this.urlConexionBase + "/pais");
+  }
   /*
   public obtenerPais(id:number): Observable<Pais>{
     return this.http.get<Pais>(this.urlConexionBase + "/pais/"+id);
@@ -24,8 +27,14 @@ export class UbicacionService extends DatosDeConexion{
   public obtenerProvinciasPorPaisId(id:number):Observable<Provincia[]>{
     return this.http.get<Provincia[]>(this.urlConexionBase+`/provincia?id_pais=${id}`);
   }
+  public obtenerProvinciasPorPaisIdSinPaginar(id:number):Observable<Provincia[]>{
+    return this.http.get<Provincia[]>(this.urlConexionBase+`/provincia?id_pais=${id}`);
+  }
 
   public obtenerLocalidadesPorProvinciaId(id:number):Observable<Localidad[]>{
+    return this.http.get<Localidad[]>(this.urlConexionBase+`/localidad?id_provincia=${id}`);
+  }
+  public obtenerLocalidadesPorProvinciaIdSinPaginar(id:number):Observable<Localidad[]>{
     return this.http.get<Localidad[]>(this.urlConexionBase+`/localidad?id_provincia=${id}`);
   }
 /*

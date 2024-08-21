@@ -1,0 +1,10 @@
+<app-barra-filtro-desplegable
+    *ngIf="opciones.length > 0"
+    [campo]="campo_id_usuario"
+    [filtroDetalle]="filtroDetalle"
+    [label_titulo]="'Usuario'"
+    [opcionesNombre]="opcionesNombre"
+    [opcionesValores]="opcionesValores"
+    (eventoEmision)="emitir()"
+>
+</app-barra-filtro-desplegable>

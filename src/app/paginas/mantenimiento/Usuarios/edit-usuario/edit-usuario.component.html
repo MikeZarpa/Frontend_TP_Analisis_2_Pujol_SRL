@@ -1,0 +1,78 @@
+<div class="card mx-auto px-5 pt-5 pb-2 col-8">
+    <div class="card px-5 pt-5 pb-1 mt-4 mb-2 shadow">
+      <h2 *ngIf="estadoDelFormulario==EstadoDelFormulario.Nuevo">Ingreso de nuevos Usuarios</h2>
+      <h2 *ngIf="estadoDelFormulario==EstadoDelFormulario.Editando">Editando al Usuario: {{datosEdit.username}}</h2>
+    <form [formGroup]="edicionForm" (ngSubmit)="enviarFormulario($event);edicionForm.markAllAsTouched();" class="row" >
+      <div class="col-6">
+        <label for="username">Nick de Usuario<span class="text-danger">*</span>:</label>
+        <input class="form-control uppercase-text" type="text" formControlName="username" id="username" autocomplete="off">
+        <div *ngIf="edicionForm.get('username')?.invalid && (edicionForm.get('username')?.dirty || edicionForm.get('username')?.touched)">
+          <div *ngIf="edicionForm.get('username')?.errors?.['required']" class="text-danger">El campo es obligatorio.</div>
+        </div>
+      </div>
+      <div class="col-6">
+        <label for="email">Email<span class="text-danger">*</span>:</label>
+        <input class="form-control" type="email"  formControlName="email" id="email">
+        <div *ngIf="edicionForm.get('email')?.invalid && (edicionForm.get('email')?.dirty || edicionForm.get('email')?.touched)">
+          <div *ngIf="edicionForm.get('email')?.errors?.['required']" class="text-danger">El campo es obligatorio.</div>
+          <div *ngIf="edicionForm.get('email')?.errors?.['email']" class="text-danger">El formato del correo electrónico no es válido.</div>
+        </div>
+      </div>
+         
+      
+    <div *ngIf="!(estadoDelFormulario == EstadoDelFormulario.Editando)" class="row">
+      <div class="col-6">
+        <label for="password">Password<span class="text-danger">*</span>:</label>
+        <input class="form-control" #pass1 type="password" formControlName="password" id="password" autocomplete="new-password">
+        <div *ngIf="edicionForm.get('password')?.invalid && (edicionForm.get('password')?.dirty || edicionForm.get('password')?.touched)">
+          <div *ngIf="edicionForm.get('password')?.errors?.['required']" class="text-danger">El campo es obligatorio.</div>
+          <div *ngIf="edicionForm.get('password')?.errors?.['minlength']" class="text-danger">La longitud mínima es 3 caracteres.</div>
+        </div>
+      </div>
+      <div class="col-6">
+        <label for="confirmPassword">Confirmar Password<span class="text-danger">*</span>:</label>
+        <input class="form-control" #pass2 type="password" formControlName="confirmPassword" id="confirmPassword">
+        <div *ngIf="!passwordsMatch(pass1.value,pass2.value) && (edicionForm.get('confirmPassword')?.dirty || edicionForm.get('confirmPassword')?.touched)" class="text-danger">
+          Las contraseñas no coinciden.
+        </div>
+      </div>     
+      <div class="col-6">
+        <label for="palabra_secreta">Palabra Secreta<span class="text-danger"></span>:</label>
+        <input class="form-control" type="text" formControlName="palabra_secreta" id="telefono">
+        <div *ngIf="edicionForm.get('palabra_secreta')?.invalid && (edicionForm.get('palabra_secreta')?.dirty || edicionForm.get('palabra_secreta')?.touched)">
+          <div *ngIf="edicionForm.get('palabra_secreta')?.errors?.['required']" class="text-danger">La palabra secreta es obligatoria.</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <label for="nombre">Nombre<span class="text-danger">*</span>:</label>
+      <input class="form-control uppercase-text"  type="text" formControlName="nombre" id="nombre">
+      <div *ngIf="edicionForm.get('nombre')?.invalid && (edicionForm.get('nombre')?.dirty || edicionForm.get('nombre')?.touched)">
+        <div *ngIf="edicionForm.get('nombre')?.errors?.['required']" class="text-danger">El campo es obligatorio.</div>
+      </div>
+    </div>
+      <div class="col-6">
+        <label for="apellido">Apellido<span class="text-danger">*</span>:</label>
+        <input class="form-control uppercase-text"  type="text" formControlName="apellido" id="apellido">
+        <div *ngIf="edicionForm.get('apellido')?.invalid && (edicionForm.get('apellido')?.dirty || edicionForm.get('apellido')?.touched)">
+          <div *ngIf="edicionForm.get('apellido')?.errors?.['required']" class="text-danger">El campo es obligatorio.</div>
+        </div>
+      </div>
+      
+      
+    
+      <div class="row px-5 pt-5 pb-4">
+        <div class="d-grid gap-2">
+          <button *ngIf="!elFormularioEstaSiendoEnviado" type="submit" class="btn btn-primary btn-block">Enviar</button>
+          <button *ngIf="elFormularioEstaSiendoEnviado" type="submit" [disabled]="true" class="btn btn-primary btn-block">Enviando...</button>
+        </div>
+        <div class="col-5 mt-3">
+          <div class="d-grid gap-2">
+            <button (click)="volverClick()" type="button" class="btn btn-secondary ml-auto">Volver</button>
+          </div>
+        </div>
+      </div>
+    </form>
+    </div>
+  </div>
+    

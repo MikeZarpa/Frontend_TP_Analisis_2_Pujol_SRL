@@ -1,3 +1,10 @@
 .contenedor-saludos{
     margin-top: 5%;
 }
+
+.resaltable{
+    cursor: pointer;
+}
+.resaltable:hover{
+    background-color: rgba(104, 111, 246, 0.497) !important;
+}

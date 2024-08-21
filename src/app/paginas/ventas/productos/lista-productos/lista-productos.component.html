@@ -1,17 +1,35 @@
-<app-btn-volver *ngIf="estadoFormulario!=EnumEstadoDelFormulario.Base" (volver)="volverABase()"></app-btn-volver>
+<app-btn-volver *ngIf="estadoFormulario!=EnumEstadoDelFormulario.Base && estadoFormulario!=EnumEstadoDelFormulario.Busqueda" (volver)="volverABase()"></app-btn-volver>
 <app-btn-volver *ngIf="estadoFormulario==EnumEstadoDelFormulario.Base" [routerLink]="['/bienvenido']"></app-btn-volver>
-<div class="card text-center">
-<div class="pt-5 px-1" [hidden]="estadoFormulario != EnumEstadoDelFormulario.Base">
+<div class="card text-center py-3">
+  <div class="pt-5 px-1" [hidden]="!(estadoFormulario == EnumEstadoDelFormulario.Base || estadoFormulario == EnumEstadoDelFormulario.Busqueda)">
     <h2>Gestión de los Registros de Productos</h2>
-    <div><button class="btn btn-primary" (click)="buscar()">Buscar</button></div>
+    <div>
+      <div class="row justify-content-center">
+        <app-barra-busqueda-texto class="col-6"
+          [opcionesNombre]="['Desc. Producto', 'Desc. Marca']"
+          [opcionesValores]="[EnumFiltroProductos.Producto, EnumFiltroProductos.Marca]"
+          [filtroDetalle]="filtro.filters[0]"
+          (emisionDeFiltro)="buscar()"></app-barra-busqueda-texto>
+          <app-barra-filtro-desplegable
+            class="col-2"
+            [campo]="EnumFiltroProductos.Habilitado"
+            [tipoDeComparacion]="TipoDeComparacion.LITERAL"
+            [label_titulo]="'Habilitado'"
+            [opcionesNombre]="['Habilitado','No Habilitado']"
+            [opcionesValores]="[1,0]"
+            [filtroDetalle]="filtro.filters[1]"
+            (eventoEmision)="buscar()">          
+        </app-barra-filtro-desplegable>
+      </div>
+    </div>
 </div>
 
-  <div class="pb-5 px-1" *ngIf="estadoFormulario == EnumEstadoDelFormulario.Base">
+<div class="pb-5 px-3" *ngIf="estadoFormulario == EnumEstadoDelFormulario.Base || estadoFormulario == EnumEstadoDelFormulario.Busqueda">
 
       <table class="mat-elevation-z8 cdk-table mat-table table mat-small text-center">
           <!-- Definir las columnas -->
           <thead>
-            <tr class="row ps-5">
+            <tr class="row ps-5 justify-content-center">
               <th class="col-1">Nro Id</th>
               <th class="col-2">Opciones</th>
               <th class="col-2">Nombre</th>
@@ -19,10 +37,11 @@
               <th class="col-1">Cantidad Minima</th>
               <th class="col-1">Stock</th>
               <th class="col-1">Precio Actual</th>
-              <th class="col-2">
+              <th class="col-1">Categoria</th>
+              <th class="col-1">
                 <div class="addicon-inline">
                   Habilitado
-                  <mat-icon class="accion-icon border" title="Agregar un nuevo producto." (click)="crearNuevo()" >add</mat-icon>
+                  <mat-icon class="accion-icon border clickeable" title="Agregar un nuevo producto." (click)="crearNuevo()" >add</mat-icon>
                 </div>
               </th>
               <!-- Definir el resto de las columnas -->
@@ -30,19 +49,21 @@
           </thead>
           <tbody>
             <!-- Definir las filas -->
-            <tr class="row ps-5" *ngFor="let datos of productos">
+            <tr class="row ps-5 justify-content-center" *ngFor="let datos of productos">
               <td class="col-1">{{ datos.id_producto}}</td>
               <td class="col-2">
-                  <mat-icon class="accion-icon" title="Cambiar el precio del producto." (click)="this.cambiar_el_precio(datos)" >paid</mat-icon>
-                  <mat-icon class="accion-icon" title="Modificar producto." (click)="this.editar(datos)" >edit</mat-icon>
-                  <mat-icon class="accion-icon" [title]="(datos.habilitado == 1)?'Desactivar producto.':'Reactivar el producto.'" (click)="darDeBaja(datos)"npm install sweetalert2>{{datos.habilitado== 1 ? "arrow_downward" :"arrow_upward"}}</mat-icon>
+                  <mat-icon *ngIf="estadoFormulario == EnumEstadoDelFormulario.Base" class="accion-icon clickeable" title="Cambiar el precio del producto." (click)="this.cambiar_el_precio(datos)" >paid</mat-icon>
+                  <mat-icon *ngIf="estadoFormulario == EnumEstadoDelFormulario.Base" class="accion-icon clickeable" title="Modificar producto." (click)="this.editar(datos)" >edit</mat-icon>
+                  <mat-icon *ngIf="estadoFormulario == EnumEstadoDelFormulario.Busqueda" class="accion-ico clickeable" title="Seleccionar el registro del cliente." (click)="this.emitirSeleccion(datos)" >search</mat-icon>
+                  <mat-icon class="accion-icon clickeable" [title]="(datos.habilitado == 1)?'Desactivar producto.':'Reactivar el producto.'" (click)="darDeBaja(datos)"npm install sweetalert2>{{datos.habilitado== 1 ? "arrow_downward" :"arrow_upward"}}</mat-icon>
               </td>
               <td class="col-2">{{ datos.descripcion}}</td>
               <td class="col-2">{{ datos.marca?.descripcion || "Sin Marca" }}</td>
               <td class="col-1">{{ datos.cantidad_minima || "No"}}</td>
               <td class="col-1">{{ datos.total_cantidad ||"Sin Stock" }}</td>
               <td class="col-1">{{ datos.historial_precio?.precio || "Sin Registro" }}</td>
-              <td class="col-2">{{ datos.habilitado== 1 ? "Activado" : "No"}}</td>
+              <td class="col-1">{{ datos.categoria?.descripcion || "Sin Categoria"}}</td>
+              <td class="col-1">{{ datos.habilitado== 1 ? "Activado" : "No"}}</td>
               <!-- Definir el resto de las columnas -->
             </tr>
           </tbody>
@@ -51,7 +72,7 @@
           <app-barra-paginacion class="col-6" (emitirBusqueda)="barraPageable($event)" *ngIf="datosPageable!=null" [datosPageable]="datosPageable!"></app-barra-paginacion>
         </div>
   </div>
-  <div class="pb-5 px-5" *ngIf="estadoFormulario != EnumEstadoDelFormulario.Base">
+  <div class="pb-5 px-5" *ngIf="estadoFormulario == EnumEstadoDelFormulario.Editando || estadoFormulario == EnumEstadoDelFormulario.Nuevo">
     <app-edit-producto [datosEdit]="productoSeleccionado" [estadoFormulario]="estadoFormulario" (envioExitoso)="envioExitoso()" (volver)="volverABase()"> </app-edit-producto>
   </div>
 </div>

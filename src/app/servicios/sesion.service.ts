@@ -1,3 +1,4 @@
+import { UsuarioService } from 'src/app/servicios/entidades/UsuarioService/usuario.service';
 import {  Injectable, inject } from '@angular/core';
 import { DatosDeConexion } from './datos-de-conexion';
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
@@ -7,6 +8,7 @@ import { Rol } from '../clases/base_de_datos/Rol';
 import { Usuario } from '../clases/base_de_datos/Usuario';
 import { DatosLogin } from '../clases/utiles/DatosLogin';
 import { Router } from '@angular/router';
+import { RolesDelSistema } from '../clases/enums';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +16,7 @@ import { Router } from '@angular/router';
 export class SesionService extends DatosDeConexion {
   
     usuario:Usuario| null = null;
+    solicitando_datos_del_usuario = false;
     
     get elUsuarioEstaCargado():boolean{
       return this.usuario != null;
@@ -41,37 +44,53 @@ export class SesionService extends DatosDeConexion {
   
       ).subscribe({
         next: res => { this.usuario = res; console.log(res); resolve(res!);},
-        error: error => reject({message:"Error de inicio de sesión", error: error})
+        error: error => {console.log("error",error);reject(error);}
       });
     });     
   }
-  /*
-   this.http.post<any>('URL_DE_TU_API/login', datos).toPromise()
-        .then((response) => {
-          resolve(response as Usuario);
-        })
-        .catch((error) => {
-          reject({ message: 'Error en el inicio de sesión', error });
-        });
-    });*/
 
   rolesDelUsuario():Rol[]{
-    if(this.usuario == null) throw Error("LA SESIÓN NO ESTÁ INICIADA");
+    if(this.usuario == null) return [];
       return this.usuario.roles;
   }
 
-  poseeElRol(rol:Rol):boolean{
+  poseeElRol(rol_codigo:RolesDelSistema):boolean{
     if(this.usuario == null) return false;
-
-    const codigoDelRol = rol.codigo;
+    const codigoDelRol = rol_codigo;
     const poseeElRolBuscado:boolean = this.usuario?.roles.map( rol => rol.codigo ).includes(codigoDelRol);
     return poseeElRolBuscado;
+  }
+
+  tieneAlgunRol():boolean{
+    if(this.usuario == null) return false;
+    return this.usuario?.roles.length > 0;
   }
 
   cerrarSesion():void{
     this.usuario=null;
     this.tokenService.borrar_token();
     this.router.navigateByUrl("/");
+  }
+
+  readonly usuarioService = inject(UsuarioService);
+
+  obtenerDatosDelUsuario(i:number){
+    if(this.solicitando_datos_del_usuario) return;
+    if(!this.tokenService.esta_logueado()) throw new Error("Debe estar iniciada la sesión para poder acceder a los datos de usuario, uso incorrecto de la función");
+    
+    this.solicitando_datos_del_usuario=true;
+
+    this.usuarioService.obtenerDatosDelUsuarioPorToken().subscribe({
+        next: res => {this.usuario = res; console.log("datos cargados exitosamente");
+         this.solicitando_datos_del_usuario=false; console.log(res);
+         },
+        error: error=> {this.solicitando_datos_del_usuario=false; this.cerrarSesion()}
+    });
+  }
+  usuarioEstaCargado():boolean{
+    if(this.tokenService.esta_logueado() && !this.elUsuarioEstaCargado)
+      this.obtenerDatosDelUsuario(1);
+    return this.usuario!= null;
   }
 }
 

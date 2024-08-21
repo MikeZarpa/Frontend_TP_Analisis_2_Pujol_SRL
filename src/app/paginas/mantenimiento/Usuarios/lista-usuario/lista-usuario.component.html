@@ -1,0 +1,49 @@
+<app-btn-volver *ngIf="[EstadoDelFormulario.Nuevo, EstadoDelFormulario.Editando].includes(estadoDelFormulario)" (volver)="eventoVolver()"></app-btn-volver>
+<app-btn-volver *ngIf="estadoDelFormulario == EstadoDelFormulario.Base" [routerLink]="['/bienvenido']"></app-btn-volver>
+<div class="card text-center py-3">
+<div class="p-5" *ngIf="[EstadoDelFormulario.Base, EstadoDelFormulario.Busqueda].includes(estadoDelFormulario)">
+    <h2>Gestión de los Usuarios del Sistema</h2>
+    <table class="mat-elevation-z8 cdk-table mat-table table mat-small">
+        <!-- Definir las columnas -->
+        <thead>
+          <tr class="row ps-5">
+            <th class="col-1">Nro Id</th>
+            <th class="col-2">Opciones</th>
+            <th class="col-2">Nick</th>
+            <th class="col-2">Apellido</th>
+            <th class="col-2">Nombre</th>
+            <th class="col-2">Estado</th>
+            <th class="col-1 ">
+              <mat-icon class="accion-icon border clickeable" title="Registrar un nuevo usuario." (click)="this.crearNuevo()" >add</mat-icon>
+            </th>
+            <!-- Definir el resto de las columnas -->
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Definir las filas -->
+          <tr class="row ps-5" *ngFor="let item of listado">
+            <td class="col-1">{{item.id_usuario}}</td>
+            <td class="col-2">
+                <mat-icon class="accion-icon clickeable" title="Editar los datos del usuario. (Excepto la contraseña)" (click)="this.editar(item)" >edit</mat-icon>
+                <mat-icon class="accion-icon clickeable" title="Modificar la contraseña del usuario." (click)="cambiarPass(item)"npm install sweetalert2>vpn_key</mat-icon>
+                <mat-icon class="accion-icon clickeable" title="Asignar los roles/permisos de los usuarios." (click)="this.asignarRoles(item)" >security</mat-icon>
+                <mat-icon class="accion-icon clickeable" 
+                [title]="(item.habilitado)?'Desactivar la cuenta del usuario.':'Reactivar la cuenta del usuario.'" 
+                (click)="bajaAlta(item)"npm install sweetalert2>{{item.habilitado ? "arrow_downward" :"arrow_upward"}}</mat-icon>
+            </td>
+            <td class="col-2">{{ item.username }}</td>
+            <td class="col-2">{{ item.apellido }}</td>
+            <td class="col-2">{{ item.nombre }}</td>
+            <td class="col-2">{{ item.habilitado ? "Activo" : "Inhabilitado" }}</td>
+            <!-- Definir el resto de las columnas -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <div *ngIf="[EstadoDelFormulario.Nuevo, EstadoDelFormulario.Editando].includes(estadoDelFormulario)">
+       <app-edit-usuario [datosEdit]="datosAEditar!" [estadoDelFormulario]="estadoDelFormulario"  (volver)="eventoVolver()" (envioExitoso)="eventoEnvioExitoso()"></app-edit-usuario>
+       <app-btn-volver (volver)="eventoVolver()"></app-btn-volver>
+    </div>
+  </div>
+<app-btn-volver *ngIf="EstadoDelFormulario.Base == estadoDelFormulario" [routerLink]="['/bienvenido']"></app-btn-volver>

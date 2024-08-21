@@ -1,0 +1,77 @@
+<app-btn-volver *ngIf="estadoFormulario!=EnumEstadoDelFormulario.Base && estadoFormulario!=EnumEstadoDelFormulario.Busqueda" (volver)="volverABase()"></app-btn-volver>
+<app-btn-volver *ngIf="estadoFormulario==EnumEstadoDelFormulario.Base" [routerLink]="['/bienvenido']"></app-btn-volver>
+<div class="card text-center py-3">
+<div class="pt-5 px-1" [hidden]="estadoFormulario != EnumEstadoDelFormulario.Base">
+    <h2>Gestión de los Registros de Facturas</h2>
+    <div>
+      <div class="row justify-content-center">
+        <app-barra-filtro-fecha class="col-6"
+          [campoAAplicarElFiltro] = "'1'"
+          [filtroDetalle]="filtro.filters[0]"
+          (emisionDeFiltro)="buscar()"></app-barra-filtro-fecha>
+        <app-barra-filtro-usuario
+          class="col-2"
+          [campo_id_usuario]="2"
+          [filtroDetalle]="filtro.filters[1]"
+          (eventoEmision)="buscar()"
+        ></app-barra-filtro-usuario>
+        <app-barra-filtro-desplegable
+          class="col-2"
+          [campo]="EnumFiltroFactura.id_cliente"
+          [tipoDeComparacion]="TipoDeComparacion.POR_NULIDAD"
+          [label_titulo]="'Cliente'"
+          [opcionesNombre]="['Anónimo','Identificado']"
+          [opcionesValores]="[0,1]"
+          [filtroDetalle]="filtro.filters[2]"
+          (eventoEmision)="buscar()">          
+      </app-barra-filtro-desplegable>
+        <div class="col-1 d-flex justify-content-center align-items-center">
+          <button class=" btn btn-primary" (click)="buscar()">Buscar</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+  <div class="pb-5 px-1" *ngIf="estadoFormulario == EnumEstadoDelFormulario.Base">
+
+      <table class="mat-elevation-z8 cdk-table mat-table table mat-small text-center">
+          <!-- Definir las columnas -->
+          <thead>
+            <tr class="row ps-5 justify-content-center">
+              <th class="col-1">Nro Id</th>
+              <th class="col-1">Opciones</th>
+              <th class="col-2">Fecha</th>
+              <th class="col-1">Método Pago</th>
+              <th class="col-2">Cliente</th>
+              <th class="col-2">Cajero</th>
+              <th class="col-1">Monto</th>
+              <th class="col-1">IVA</th>
+              <!-- Definir el resto de las columnas -->
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Definir las filas -->
+            <tr class="row ps-5 justify-content-center" *ngFor="let factura of facturas">
+              <td class="col-1">{{factura.id_factura_venta}}</td>
+              <td class="col-1">
+                  <mat-icon class="accion-icon clickeable" title="Ver los detalles de la factura." (click)="this.ver_detalles_de_la_factura(factura)" >search</mat-icon>
+              </td>
+              <td class="col-2">{{ factura.fecha}}</td>
+              <td class="col-1">{{ factura.metodo_pago?.descripcion || "Error descripcion" }}</td>
+              <td class="col-2">{{ (factura.cliente) ? factura.cliente.apellido+" "+factura.cliente.nombre  : "Anónimo" }}</td>
+              <td class="col-2">{{ factura.usuario?.apellido+" "+factura.usuario?.nombre}}</td>
+              <td class="col-1">{{ factura.total}}</td>
+              <td class="col-1">{{ factura.cond_iva.descripcion}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="row justify-content-center">
+          <app-barra-paginacion class="col-6" (emitirBusqueda)="barraPageable($event)" *ngIf="datosPageable!=null" [datosPageable]="datosPageable!"></app-barra-paginacion>
+        </div>
+  </div>
+  <div class="pb-5 px-5" *ngIf="estadoFormulario == EnumEstadoDelFormulario.ViendoDatosAdjuntos">
+    <app-visualizador-factura [id_factura]="facturaSeleccionada!.id_factura_venta!"  (volver)="volverABase()"> </app-visualizador-factura>
+  </div>
+</div>
+<app-btn-volver *ngIf="estadoFormulario==EnumEstadoDelFormulario.Base" [routerLink]="['/bienvenido']"></app-btn-volver>
+<app-btn-volver *ngIf="estadoFormulario!=EnumEstadoDelFormulario.Base" (volver)="volverABase()"></app-btn-volver>

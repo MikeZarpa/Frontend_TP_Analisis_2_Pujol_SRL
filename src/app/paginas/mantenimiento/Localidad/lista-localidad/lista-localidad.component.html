@@ -31,7 +31,7 @@
             <th class="col-2">Nombre</th>
             <th class="col-2">Código Postal</th>
             <th class="col-2 " [hidden]="provinciaSeleccionada==undefined">
-              <mat-icon class="accion-icon border" title="Registrar a una nueva localidad." (click)="this.crearNuevo()" >add</mat-icon>
+              <mat-icon class="accion-icon border clickeable" title="Registrar a una nueva localidad." (click)="this.crearNuevo()" >add</mat-icon>
             </th>
 
             <!-- Definir el resto de las columnas -->
@@ -41,8 +41,8 @@
           <!-- Definir las filas -->
           <tr class="row ps-5" *ngFor="let localidad of Localidades">
             <td class="col-2">
-                <mat-icon class="accion-icon" title="Editar los datos de la localidad." (click)="this.editar(localidad)" >edit</mat-icon>
-                <mat-icon class="accion-icon" title="Borrar la localidad." (click)="borrar(localidad)"npm install sweetalert2>delete</mat-icon>
+                <mat-icon class="accion-icon clickeable" title="Editar los datos de la localidad." (click)="this.editar(localidad)" >edit</mat-icon>
+                <mat-icon class="accion-icon clickeable" title="Borrar la localidad." (click)="borrar(localidad)"npm install sweetalert2>delete</mat-icon>
             </td>
             <td class="col-2">{{ localidad.descripcion }}</td>
             <td class="col-2">{{ localidad.codigo_postal }}</td>

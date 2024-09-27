@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { PaginaInicialComponent } from './paginas/pagina-inicial/pagina-inicial.component';
 import { PaginaLoginComponent } from './paginas/pagina-login/pagina-login.component';
 import { PaginaBienvenidaComponent } from './paginas/pagina-bienvenida/pagina-bienvenida.component';
-import { Interceptor } from './servicios/Interceptor/interceptor';
+import { Interceptor } from './servicios/sesion/Interceptor/interceptor';
 import { NavbarInicialComponent } from './componentes/navbars/navbar-inicial/navbar-inicial.component';
 import { NavbarBienvenidaComponent } from './componentes/navbars/navbar-bienvenida/navbar-bienvenida.component';
 import { NavbarOpcionesAdminComponent } from './componentes/navbars/navbar-opciones-admin/navbar-opciones-admin.component';
@@ -30,7 +30,7 @@ import { BtnVolverComponent } from './componentes/interfaz/btn-volver/btn-volver
 import { PaginaHomeComponent } from './paginas/pagina-bienvenida/pagina-home/pagina-home.component';
 import { ListaProductosComponent } from './paginas/ventas/productos/lista-productos/lista-productos.component';
 import { BarraPaginacionComponent } from './componentes/interfaz/barra-paginacion/barra-paginacion.component';
-import { EmisionVentaComponent } from './paginas/ventas/emisor_venta/emision-venta/emision-venta.component';
+import { EmisionVentaComponent } from './paginas/ventas/emision-venta/emision-venta.component';
 import { EditProductoComponent } from './paginas/ventas/productos/lista-productos/edit-producto/edit-producto.component';
 import { ListaClientesComponent } from './paginas/ventas/clientes/lista-clientes/lista-clientes.component';
 import { EditClienteComponent } from './paginas/ventas/clientes/lista-clientes/edit-cliente/edit-cliente.component';
@@ -53,7 +53,7 @@ import { EditStockComponent } from './paginas/ventas/stock/lista-stock/edit-stoc
 import { ListaStockFaltanteComponent } from './paginas/informes_y_alertas/lista-stock-faltante/lista-stock-faltante.component';
 import { InformeVentasComponent } from './paginas/informes_y_alertas/informe-ventas/informe-ventas.component';
 import { ListaStockPorVencerComponent } from './paginas/informes_y_alertas/lista-stock-por-vencer/lista-stock-por-vencer.component';
-import { SoloAdminDirective } from './servicios/directivas_de_visibilidad/solo-admin.directive';
+import { SoloAdminDirective } from './directivas_de_visibilidad/solo-admin.directive';
 import { CargadorDeStockPorCantidadComponent } from './paginas/ventas/stock/cargador-de-stock-por-cantidad/cargador-de-stock-por-cantidad.component';
 import { ListaCategoriaProductoComponent } from './paginas/ventas/categoria_producto/lista-categoria-producto/lista-categoria-producto.component';
 import { EditCategoriaProductoComponent } from './paginas/ventas/categoria_producto/lista-categoria-producto/edit-categoria-producto/edit-categoria-producto.component';

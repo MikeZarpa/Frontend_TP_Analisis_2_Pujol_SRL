@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { SesionService } from 'src/app/servicios/sesion.service';
+import { SesionService } from 'src/app/servicios/sesion/sesion.service';
 
 @Component({
   selector: 'app-pagina-bienvenida',

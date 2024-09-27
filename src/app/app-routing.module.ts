@@ -11,7 +11,7 @@ import { ListaProvinciaComponent } from './paginas/mantenimiento/Provincia/lista
 import { ListaPaisComponent } from './paginas/mantenimiento/Pais/lista-pais/lista-pais.component';
 import { PaginaHomeComponent } from './paginas/pagina-bienvenida/pagina-home/pagina-home.component';
 import { ListaProductosComponent } from './paginas/ventas/productos/lista-productos/lista-productos.component';
-import { EmisionVentaComponent } from './paginas/ventas/emisor_venta/emision-venta/emision-venta.component';
+import { EmisionVentaComponent } from './paginas/ventas/emision-venta/emision-venta.component';
 import { ListaClientesComponent } from './paginas/ventas/clientes/lista-clientes/lista-clientes.component';
 import { ListaUsuarioComponent } from './paginas/mantenimiento/Usuarios/lista-usuario/lista-usuario.component';
 import { ListaMarcasComponent } from './paginas/ventas/marcas/lista-marcas/lista-marcas.component';

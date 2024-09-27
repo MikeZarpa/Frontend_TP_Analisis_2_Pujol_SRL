@@ -1,7 +1,7 @@
 import { DetalleFactura } from './../../../../../clases/base_de_datos/comercial/detalle_factura';
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { Factura } from 'src/app/clases/base_de_datos/comercial/factura';
-import { RespuestaDeError } from 'src/app/clases/utiles/RespuestaDeError';
+import { RespuestaDeError } from 'src/app/clases/dtos/RespuestaDeError';
 import { FacturaService } from 'src/app/servicios/comercial/factura.service';
 import Swal from 'sweetalert2';
 

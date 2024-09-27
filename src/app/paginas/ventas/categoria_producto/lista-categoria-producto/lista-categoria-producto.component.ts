@@ -1,7 +1,7 @@
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { Categoria } from 'src/app/clases/base_de_datos/comercial/categoria';
 import { EnumFiltroCategoriaProducto, EstadoDelFormulario, TipoDeComparacion } from 'src/app/clases/enums';
-import { Filtro } from 'src/app/clases/utiles/filtro';
+import { Filtro } from 'src/app/clases/dtos/filtro';
 import { DatosNavegacionPorPagina, RespuestaPageable } from 'src/app/componentes/interfaz/barra-paginacion/barra-paginacion.component';
 import { CategoriaProductoService } from 'src/app/servicios/comercial/categoria_producto.service';
 import Swal from 'sweetalert2';

@@ -1,14 +1,14 @@
-import { CondicionIvaService } from './../../../../../servicios/entidades/condicion-iva.service';
+import { CondicionIvaService } from '../../../../../servicios/comercial/condicion-iva.service';
 import { ChangeDetectorRef, Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Cliente } from 'src/app/clases/base_de_datos/entidades/cliente';
-import { CondicionIva } from 'src/app/clases/base_de_datos/entidades/cond_iva';
+import { Cliente } from 'src/app/clases/base_de_datos/comercial/cliente';
+import { CondicionIva } from 'src/app/clases/base_de_datos/comercial/cond_iva';
 import { Localidad } from 'src/app/clases/base_de_datos/ubicacion/Localidad';
 import { Pais } from 'src/app/clases/base_de_datos/ubicacion/Pais';
 import { Provincia } from 'src/app/clases/base_de_datos/ubicacion/Provincia';
 import { EstadoDelFormulario } from 'src/app/clases/enums';
 import { FuncionesUtiles } from 'src/app/clases/utiles/funciones-utiles';
-import { ClienteService } from 'src/app/servicios/entidades/cliente.service';
+import { ClienteService } from 'src/app/servicios/comercial/cliente.service';
 import { UbicacionService } from 'src/app/servicios/ubicacion/ubicacion.service';
 import Swal from 'sweetalert2';
 

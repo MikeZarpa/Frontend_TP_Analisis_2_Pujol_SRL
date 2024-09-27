@@ -2,12 +2,12 @@ import { EstadoDelFormulario } from 'src/app/clases/enums';
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Usuario } from 'src/app/clases/base_de_datos/Usuario';
-import { UsuarioService } from 'src/app/servicios/entidades/UsuarioService/usuario.service';
+import { UsuarioService } from 'src/app/servicios/sesion/UsuarioService/usuario.service';
 
 import Swal from 'sweetalert2';
 import { Observable } from 'rxjs';
 import { FuncionesUtiles } from 'src/app/clases/utiles/funciones-utiles';
-import { RespuestaDeError } from 'src/app/clases/utiles/RespuestaDeError';
+import { RespuestaDeError } from 'src/app/clases/dtos/RespuestaDeError';
 
 @Component({
   selector: 'app-edit-usuario',

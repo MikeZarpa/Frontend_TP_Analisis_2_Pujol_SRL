@@ -1,13 +1,13 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Factura } from './../../../../clases/base_de_datos/comercial/factura';
+import { Factura } from '../../../clases/base_de_datos/comercial/factura';
 import { Component, OnInit, Provider, inject } from '@angular/core';
 import { Producto } from 'src/app/clases/base_de_datos/comercial/producto';
-import { Cliente } from 'src/app/clases/base_de_datos/entidades/cliente';
+import { Cliente } from 'src/app/clases/base_de_datos/comercial/cliente';
 import { EmisionFacturaDTO, ItemEmisionFacturaDTO } from 'src/app/clases/dtos/emision_factura_dto';
 import { EmisionVentasService } from 'src/app/servicios/comercial/emision-ventas/emision-ventas.service';
 import { ProductoService } from 'src/app/servicios/comercial/producto.service';
 import Swal from 'sweetalert2';
-import { RespuestaDeError } from 'src/app/clases/utiles/RespuestaDeError';
+import { RespuestaDeError } from 'src/app/clases/dtos/RespuestaDeError';
 import { VentanasBusquedaService } from 'src/app/servicios/dialogs/ventanas-busqueda.service';
 import { FuncionesUtilesComerciales } from 'src/app/clases/utiles/funciones-utiles-comercial';
 

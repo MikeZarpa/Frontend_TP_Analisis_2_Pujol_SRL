@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { Producto } from 'src/app/clases/base_de_datos/comercial/producto';
 import { EnumFiltroProductos, EstadoDelFormulario, TipoDeComparacion } from 'src/app/clases/enums';
-import { Filtro } from 'src/app/clases/utiles/filtro';
+import { Filtro } from 'src/app/clases/dtos/filtro';
 import { DatosNavegacionPorPagina, RespuestaPageable } from 'src/app/componentes/interfaz/barra-paginacion/barra-paginacion.component';
 import { ProductoService } from 'src/app/servicios/comercial/producto.service';
-import { SesionService } from 'src/app/servicios/sesion.service';
+import { SesionService } from 'src/app/servicios/sesion/sesion.service';
 import Swal from 'sweetalert2';
 
 @Component({

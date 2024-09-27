@@ -2,7 +2,7 @@ import { Factura } from 'src/app/clases/base_de_datos/comercial/factura';
 import { Component, inject } from '@angular/core';
 import { DatosNavegacionPorPagina, RespuestaPageable } from 'src/app/componentes/interfaz/barra-paginacion/barra-paginacion.component';
 import { FacturaService } from 'src/app/servicios/comercial/factura.service';
-import { Filtro } from 'src/app/clases/utiles/filtro';
+import { Filtro } from 'src/app/clases/dtos/filtro';
 import { EnumFiltroFactura, EstadoDelFormulario, TipoDeComparacion } from 'src/app/clases/enums';
 
 @Component({

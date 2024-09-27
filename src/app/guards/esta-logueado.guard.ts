@@ -1,9 +1,9 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { SesionService } from '../servicios/sesion.service';
-import { TokenService } from '../servicios/token.service';
+import { TokenService } from '../servicios/sesion/token.service';
 import { RolesDelSistema } from '../clases/enums';
 import Swal from 'sweetalert2';
+import { SesionService } from '../servicios/sesion/sesion.service';
 
 export const estaLogueadoGuard: CanActivateFn = (route, state) => {
   const servicioDeSesion = inject(SesionService);

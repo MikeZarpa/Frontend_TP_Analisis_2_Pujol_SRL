@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { DatosDeConexion } from '../datos-de-conexion';
+import { DatosDeConexion } from '../../datos-de-conexion';
 import { Observable } from 'rxjs';
 import { Producto } from 'src/app/clases/base_de_datos/comercial/producto';
 import Swal from 'sweetalert2';
-import { RespuestaDeError } from 'src/app/clases/utiles/RespuestaDeError';
+import { RespuestaDeError } from 'src/app/clases/dtos/RespuestaDeError';
 
 @Injectable({
   providedIn: 'root'

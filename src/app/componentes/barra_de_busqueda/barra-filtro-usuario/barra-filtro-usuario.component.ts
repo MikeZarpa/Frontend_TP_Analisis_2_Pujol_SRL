@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { Usuario } from 'src/app/clases/base_de_datos/Usuario';
 import { TipoDeComparacion } from 'src/app/clases/enums';
-import { FiltroDetalle } from 'src/app/clases/utiles/filtro';
-import { UsuarioService } from 'src/app/servicios/entidades/UsuarioService/usuario.service';
+import { FiltroDetalle } from 'src/app/clases/dtos/filtro';
+import { UsuarioService } from 'src/app/servicios/sesion/UsuarioService/usuario.service';
 
 @Component({
   selector: 'app-barra-filtro-usuario',

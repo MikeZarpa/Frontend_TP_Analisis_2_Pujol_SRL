@@ -1,4 +1,4 @@
-import { CondicionIva } from "../base_de_datos/entidades/cond_iva";
+import { CondicionIva } from "../base_de_datos/comercial/cond_iva";
 
 export class FuncionesUtilesComerciales{
     public static obtener_descuento_de_iva(monto_total:number, condicion_iva:CondicionIva){

@@ -5,7 +5,7 @@ import { Producto } from 'src/app/clases/base_de_datos/comercial/producto';
 import { StockLote } from 'src/app/clases/base_de_datos/comercial/stock';
 import { EstadoDelFormulario } from 'src/app/clases/enums';
 import { FuncionesUtiles } from 'src/app/clases/utiles/funciones-utiles';
-import { RespuestaDeError } from 'src/app/clases/utiles/RespuestaDeError';
+import { RespuestaDeError } from 'src/app/clases/dtos/RespuestaDeError';
 import { StockLoteService } from 'src/app/servicios/comercial/stock_lote.service';
 import Swal from 'sweetalert2';
 

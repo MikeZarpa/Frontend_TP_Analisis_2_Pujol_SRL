@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TipoDeComparacion } from 'src/app/clases/enums';
-import { FiltroDetalle } from 'src/app/clases/utiles/filtro';
+import { FiltroDetalle } from 'src/app/clases/dtos/filtro';
 
 @Component({
   selector: 'app-barra-filtro-desplegable',

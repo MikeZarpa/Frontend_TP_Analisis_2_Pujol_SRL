@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DatosDeConexion } from '../datos-de-conexion';
 import { Observable } from 'rxjs';
-import { CondicionIva } from 'src/app/clases/base_de_datos/entidades/cond_iva';
+import { CondicionIva } from 'src/app/clases/base_de_datos/comercial/cond_iva';
 
 @Injectable({
   providedIn: 'root'

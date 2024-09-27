@@ -1,14 +1,16 @@
-import { UsuarioService } from 'src/app/servicios/entidades/UsuarioService/usuario.service';
+import { UsuarioService } from 'src/app/servicios/sesion/UsuarioService/usuario.service';
 import {  Injectable, inject } from '@angular/core';
-import { DatosDeConexion } from './datos-de-conexion';
+import { DatosDeConexion } from '../datos-de-conexion';
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { map } from 'rxjs';
-import { TokenService } from './token.service';
-import { Rol } from '../clases/base_de_datos/Rol';
-import { Usuario } from '../clases/base_de_datos/Usuario';
-import { DatosLogin } from '../clases/utiles/DatosLogin';
+
+
 import { Router } from '@angular/router';
-import { RolesDelSistema } from '../clases/enums';
+import { RolesDelSistema } from '../../clases/enums';
+import { TokenService } from './token.service';
+import { Usuario } from 'src/app/clases/base_de_datos/Usuario';
+import { DatosLogin } from 'src/app/clases/dtos/DatosLogin';
+import { Rol } from 'src/app/clases/base_de_datos/Rol';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +35,7 @@ export class SesionService extends DatosDeConexion {
 
   iniciarSesion(datos:DatosLogin): Promise<Usuario> {       
     return new Promise((resolve, reject) => {
-      this.http.post<Usuario>( this.urlConexionBase +'/verificar_login', datos, {headers:this.headers,observe:'response'})
+      this.http.post<Usuario>( this.urlConexionBase +'/usuario/verificar_login', datos, {headers:this.headers,observe:'response'})
         .pipe(map((response:HttpResponse<Usuario>)=>{
           //Para el login, separamos el header y el body, el header de la respuesta exitosa lo mandamos al servicio de Token
           const headers = response.headers;

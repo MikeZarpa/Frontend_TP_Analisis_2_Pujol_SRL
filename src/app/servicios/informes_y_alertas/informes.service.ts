@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DatosDeConexion } from '../datos-de-conexion';
 import { Observable } from 'rxjs';
-import { RespuestaDeError } from 'src/app/clases/utiles/RespuestaDeError';
+import { RespuestaDeError } from 'src/app/clases/dtos/RespuestaDeError';
 import { HttpParams } from '@angular/common/http';
 import { InformeCategoriaVentasFechas, InformeProductosVentasFechas } from 'src/app/clases/informes/informe_ventas_fechas';
 

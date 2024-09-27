@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Categoria } from 'src/app/clases/base_de_datos/comercial/categoria';
 import { Marca } from 'src/app/clases/base_de_datos/comercial/marca';
 import { Producto } from 'src/app/clases/base_de_datos/comercial/producto';
-import { Cliente } from 'src/app/clases/base_de_datos/entidades/cliente';
+import { Cliente } from 'src/app/clases/base_de_datos/comercial/cliente';
 import { DialogBusquedaCategoriaProductoComponent } from 'src/app/paginas/ventas/categoria_producto/dialog-busqueda-categoria-producto/dialog-busqueda-categoria-producto.component';
 import { DialogBusquedaClienteComponent } from 'src/app/paginas/ventas/clientes/dialog-busqueda-cliente/dialog-busqueda-cliente.component';
 import { DialogBusquedaMarcaComponent } from 'src/app/paginas/ventas/marcas/dialog-busqueda-marca/dialog-busqueda-marca.component';

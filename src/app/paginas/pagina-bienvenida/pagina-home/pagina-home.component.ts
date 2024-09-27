@@ -2,9 +2,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { PATHS } from 'src/app/app-routing.module';
 import { RolesDelSistema } from 'src/app/clases/enums';
-import { AlertasStockService } from 'src/app/servicios/informes_y_alertas/alertas-stock.service';
-import { AlertasVencimientoService } from 'src/app/servicios/informes_y_alertas/alertas-vencimiento.service';
-import { SesionService} from 'src/app/servicios/sesion.service';
+import { AlertasStockService } from 'src/app/servicios/informes_y_alertas/alertas/alertas-stock.service';
+import { AlertasVencimientoService } from 'src/app/servicios/informes_y_alertas/alertas/alertas-vencimiento.service';
+
+import { SesionService } from 'src/app/servicios/sesion/sesion.service';
+
 
 @Component({
   selector: 'app-pagina-home',

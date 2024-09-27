@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { DatosNavegacionPorPagina, RespuestaPageable } from 'src/app/componentes/interfaz/barra-paginacion/barra-paginacion.component';
 import { HttpParams } from '@angular/common/http';
 import { Factura } from 'src/app/clases/base_de_datos/comercial/factura';
-import { Filtro } from 'src/app/clases/utiles/filtro';
+import { Filtro } from 'src/app/clases/dtos/filtro';
 
 @Injectable({
   providedIn: 'root'

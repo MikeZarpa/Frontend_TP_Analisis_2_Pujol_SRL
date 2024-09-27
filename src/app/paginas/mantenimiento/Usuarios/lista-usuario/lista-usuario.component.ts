@@ -1,9 +1,9 @@
 import { Component, inject, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
-import { UsuarioService } from 'src/app/servicios/entidades/UsuarioService/usuario.service';
+import { UsuarioService } from 'src/app/servicios/sesion/UsuarioService/usuario.service';
 import { Usuario } from 'src/app/clases/base_de_datos/Usuario';
-import { RespuestaDeError } from 'src/app/clases/utiles/RespuestaDeError';
+import { RespuestaDeError } from 'src/app/clases/dtos/RespuestaDeError';
 import { EstadoDelFormulario } from 'src/app/clases/enums';
 import { PopupSeleccionRolComponent } from '../popup-seleccion-rol/popup-seleccion-rol.component';
 

@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { DatosNavegacionPorPagina, RespuestaPageable } from 'src/app/componentes/interfaz/barra-paginacion/barra-paginacion.component';
 import { Producto } from 'src/app/clases/base_de_datos/comercial/producto';
 import { HttpParams } from '@angular/common/http';
-import { Filtro, FiltroDetalle } from 'src/app/clases/utiles/filtro';
-import { TipoDeComparacion } from 'src/app/clases/enums';
+import { Filtro, FiltroDetalle } from 'src/app/clases/dtos/filtro';
+import { EnumFiltroProductos, TipoDeComparacion } from 'src/app/clases/enums';
 
 @Injectable({
   providedIn: 'root'
@@ -30,16 +30,16 @@ export class ProductoService extends DatosDeConexion{
   
     public actualizar_precio(id_producto:number,precio:number){
       let body = {id_producto, precio};
-      return this.http.post<void>(this.urlConexionBase+"/producto_ext/historial_precio",body);
+      return this.http.post<void>(this.urlConexionBase+"/producto_precio/historial_precio.php",body);
     }
     
     public obtenerTodosSinPagina():Observable<Producto[]>{
 
-      const filtro = new Filtro<EnumFiltroProducto>();
+      const filtro = new Filtro<EnumFiltroProductos>();
       filtro.setCantidadFilters(1);
-      const filtro_detalle1 = new FiltroDetalle<EnumFiltroProducto>();
+      const filtro_detalle1 = new FiltroDetalle<EnumFiltroProductos>();
       filtro_detalle1.enabled = true;
-      filtro_detalle1.campo = EnumFiltroProducto.habilitado;
+      filtro_detalle1.campo = EnumFiltroProductos.Habilitado;
       filtro_detalle1.terminosDeBusqueda = ['1'];
       filtro_detalle1.tipoBusqueda = TipoDeComparacion.LITERAL;
 
@@ -60,9 +60,4 @@ export class ProductoService extends DatosDeConexion{
     public actualizar_producto(producto:Producto):Observable<void>{
       return this.http.put<void>(this.urlConexionBase+"/producto.php",producto);
     }
-}
-enum EnumFiltroProducto{
-  producto_descripcion,
-  habilitado,
-  marca_descripcion
 }

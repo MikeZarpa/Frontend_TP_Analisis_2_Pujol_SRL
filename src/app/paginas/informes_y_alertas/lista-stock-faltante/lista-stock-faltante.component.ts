@@ -2,9 +2,9 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Producto } from 'src/app/clases/base_de_datos/comercial/producto';
 import { EstadoDelFormulario } from 'src/app/clases/enums';
 import { FuncionesUtiles } from 'src/app/clases/utiles/funciones-utiles';
-import { RespuestaDeError } from 'src/app/clases/utiles/RespuestaDeError';
+import { RespuestaDeError } from 'src/app/clases/dtos/RespuestaDeError';
 import { ProductoService } from 'src/app/servicios/comercial/producto.service';
-import { AlertasStockService } from 'src/app/servicios/informes_y_alertas/alertas-stock.service';
+import { AlertasStockService } from 'src/app/servicios/informes_y_alertas/alertas/alertas-stock.service';
 import Swal from 'sweetalert2';
 
 @Component({

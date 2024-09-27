@@ -2,8 +2,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RespuestaDeError } from 'src/app/clases/utiles/RespuestaDeError';
-import { SesionService } from 'src/app/servicios/sesion.service';
+import { RespuestaDeError } from 'src/app/clases/dtos/RespuestaDeError';
+import { SesionService } from 'src/app/servicios/sesion/sesion.service';
 import Swal from 'sweetalert2';
 
 @Component({

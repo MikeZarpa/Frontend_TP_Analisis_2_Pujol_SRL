@@ -3,9 +3,9 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Rol } from 'src/app/clases/base_de_datos/Rol';
 import { Usuario } from 'src/app/clases/base_de_datos/Usuario';
 import { FuncionesUtiles } from 'src/app/clases/utiles/funciones-utiles';
-import { RespuestaDeError } from 'src/app/clases/utiles/RespuestaDeError';
-import { RolService } from 'src/app/servicios/entidades/UsuarioService/rol.service';
-import { UsuarioService } from 'src/app/servicios/entidades/UsuarioService/usuario.service';
+import { RespuestaDeError } from 'src/app/clases/dtos/RespuestaDeError';
+import { RolService } from 'src/app/servicios/sesion/UsuarioService/rol.service';
+import { UsuarioService } from 'src/app/servicios/sesion/UsuarioService/usuario.service';
 import Swal from 'sweetalert2';
 
 @Component({

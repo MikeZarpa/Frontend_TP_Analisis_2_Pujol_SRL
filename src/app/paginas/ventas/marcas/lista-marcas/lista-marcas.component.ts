@@ -1,11 +1,11 @@
 import { DatosNavegacionPorPagina, RespuestaPageable } from 'src/app/componentes/interfaz/barra-paginacion/barra-paginacion.component';
-import { SesionService } from 'src/app/servicios/sesion.service';
+import { SesionService } from 'src/app/servicios/sesion/sesion.service';
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { MarcaService } from 'src/app/servicios/comercial/marca.service';
 import { Marca } from 'src/app/clases/base_de_datos/comercial/marca';
 import { EnumFiltroMarcas, EstadoDelFormulario, TipoDeComparacion } from 'src/app/clases/enums';
 import Swal from 'sweetalert2';
-import { Filtro } from 'src/app/clases/utiles/filtro';
+import { Filtro } from 'src/app/clases/dtos/filtro';
 
 @Component({
   selector: 'app-lista-marcas',

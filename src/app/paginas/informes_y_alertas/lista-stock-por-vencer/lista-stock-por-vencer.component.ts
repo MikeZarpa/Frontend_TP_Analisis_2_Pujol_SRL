@@ -2,7 +2,8 @@ import { Component, inject, OnInit } from '@angular/core';
 import { StockLote } from 'src/app/clases/base_de_datos/comercial/stock';
 import { FuncionesUtiles } from 'src/app/clases/utiles/funciones-utiles';
 import { StockLoteService } from 'src/app/servicios/comercial/stock_lote.service';
-import { AlertasVencimientoService } from 'src/app/servicios/informes_y_alertas/alertas-vencimiento.service';
+import { AlertasVencimientoService } from 'src/app/servicios/informes_y_alertas/alertas/alertas-vencimiento.service';
+
 
 @Component({
   selector: 'app-lista-stock-por-vencer',

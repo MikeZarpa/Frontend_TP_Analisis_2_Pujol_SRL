@@ -1,10 +1,10 @@
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
-import { Cliente } from 'src/app/clases/base_de_datos/entidades/cliente';
+import { Cliente } from 'src/app/clases/base_de_datos/comercial/cliente';
 import { EnumFiltroCliente, EstadoDelFormulario, TipoDeComparacion } from 'src/app/clases/enums';
-import { Filtro } from 'src/app/clases/utiles/filtro';
+import { Filtro } from 'src/app/clases/dtos/filtro';
 import { DatosNavegacionPorPagina, RespuestaPageable } from 'src/app/componentes/interfaz/barra-paginacion/barra-paginacion.component';
-import { ClienteService } from 'src/app/servicios/entidades/cliente.service';
-import { SesionService } from 'src/app/servicios/sesion.service';
+import { ClienteService } from 'src/app/servicios/comercial/cliente.service';
+import { SesionService } from 'src/app/servicios/sesion/sesion.service';
 import Swal from 'sweetalert2';
 
 @Component({

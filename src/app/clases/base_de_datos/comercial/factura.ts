@@ -1,7 +1,7 @@
-import { CarritoItem } from "src/app/paginas/ventas/emisor_venta/emision-venta/emision-venta.component";
+import { CarritoItem } from "src/app/paginas/ventas/emision-venta/emision-venta.component";
 import { Usuario } from "../Usuario";
-import { CondicionIva } from "../entidades/cond_iva";
-import { Cliente } from "../entidades/cliente";
+import { CondicionIva } from "./cond_iva";
+import { Cliente } from "./cliente";
 import { MetodoPago } from "./metodo_pago";
 import { DetalleFactura } from "./detalle_factura";
 

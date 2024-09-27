@@ -2,7 +2,8 @@ import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { PATHS } from 'src/app/app-routing.module';
 import { FuncionesUtiles } from 'src/app/clases/utiles/funciones-utiles';
-import { SesionService } from 'src/app/servicios/sesion.service';
+import { SesionService } from 'src/app/servicios/sesion/sesion.service';
+
 import Swal from 'sweetalert2';
 
 @Component({

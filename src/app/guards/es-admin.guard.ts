@@ -1,5 +1,5 @@
 import { CanActivateChildFn } from '@angular/router';
-import { SesionService } from '../servicios/sesion.service';
+import { SesionService } from '../servicios/sesion/sesion.service';
 import { inject } from '@angular/core';
 import { RolesDelSistema } from '../clases/enums';
 

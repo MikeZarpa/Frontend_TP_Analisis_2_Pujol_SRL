@@ -10,6 +10,8 @@ import Swal from 'sweetalert2';
 import { RespuestaDeError } from 'src/app/clases/dtos/RespuestaDeError';
 import { VentanasBusquedaService } from 'src/app/servicios/dialogs/ventanas-busqueda.service';
 import { FuncionesUtilesComerciales } from 'src/app/clases/utiles/funciones-utiles-comercial';
+import { MetodoPagoService } from 'src/app/servicios/comercial/metodo-pago.service';
+import { MetodoPago } from 'src/app/clases/base_de_datos/comercial/metodo_pago';
 
 @Component({
   selector: 'app-emision-venta',
@@ -21,6 +23,7 @@ export class EmisionVentaComponent implements OnInit {
 
   productos_filtrados:Producto[]=[];
   todos_los_productos:Producto[]=[];
+  id_metodo_pago:number = 1;
   producto_seleccionado:Producto|null = null;
   carrito:CarritoItem[]=[];
 
@@ -49,6 +52,8 @@ export class EmisionVentaComponent implements OnInit {
     return " ";
   }
 
+  servicioMetodoPago = inject(MetodoPagoService);
+  metodosDePagoDisponibles:MetodoPago[] = [];
   buscar(){
     this.servicioProducto.obtenerTodosSinPagina().subscribe({
       next:(res)=>{this.todos_los_productos = res; this.filtrar('');},
@@ -58,6 +63,22 @@ export class EmisionVentaComponent implements OnInit {
           text:`Error al recibir los productos. ¿Servidor ocupado?.`
         });
         this.todos_los_productos=[];
+      }
+    });
+    this.servicioMetodoPago.obtenerTodosSinPagina().subscribe({
+      next:(res)=>{
+        this.metodosDePagoDisponibles = res.filter((metPago) => metPago.habilitado=="1");
+        if(this.metodosDePagoDisponibles.length >0){
+          this.id_metodo_pago = this.metodosDePagoDisponibles[0].id_metpago!;
+        } else {
+          Swal.fire({
+            title:"Error!",
+            icon:'error',
+            text:'Ningún método de pago se encuentra habilitado, contacte con el Administrador del Sistema.',
+            confirmButtonText:"Entendido"
+          });
+          this.id_metodo_pago = -1;
+        }
       }
     })
   }
@@ -120,6 +141,7 @@ export class EmisionVentaComponent implements OnInit {
     factura.id_cliente = this.cliente?.id_cliente || null;
     factura.carrito = [];
     factura.descuento = this.descuento;
+    factura.id_metodo_pago = this.id_metodo_pago;
     this.carrito.forEach(item => {
       const new_factura_item = new ItemEmisionFacturaDTO();
       new_factura_item.cantidad = item.cantidad;

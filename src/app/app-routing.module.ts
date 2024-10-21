@@ -29,8 +29,6 @@ export const PATHS = {
   servicios : "servicios",
   acercaDe : "acerca-de",
   panelAdministrador: "bienvenido",
-  panelAgente : "agente",
-  panelMantenimiento : "mantenimiento",  
   ventas:"ventas",
   clientes:"clientes",
   usuarios:"usuarios",
@@ -51,7 +49,7 @@ const routes: Routes = [
       { path: 'ListaDeProvincias', component: ListaProvinciaComponent, canActivate:[esAdminGuard]},
       { path: 'ListaDePaises', component: ListaPaisComponent, canActivate:[esAdminGuard]}
     ],
-    canActivate:[estaLogueadoGuard]},
+    canActivate:[estaLogueadoGuard, esAdminGuard]},
     {path:PATHS.ventas, component:PaginaBienvenidaComponent,
       children:[
         { path: 'Productos', component: ListaProductosComponent , canActivate:[esAdminGuard]},

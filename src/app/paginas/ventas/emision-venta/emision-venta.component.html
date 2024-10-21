@@ -97,8 +97,16 @@
                 </div>
                 <div class="col-6 text-center">
                     <button class="btn btn-warning"
-                    [disabled]="this.carrito.length == 0 || emitiendo" (click)="cerrar_factura()">FINALIZAR</button>
-                </div>            </div>
+                    [disabled]="this.carrito.length == 0 || emitiendo || this.id_metodo_pago<1" (click)="cerrar_factura()">FINALIZAR</button>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <label class="col-4" for="MetodoPago">Método de Pago:
+                </label>
+                <select class="col-6" name="" id="MetodoPago" [(ngModel)]="id_metodo_pago">
+                    <option *ngFor="let metodoPago of metodosDePagoDisponibles" [value]="metodoPago.id_metpago">{{metodoPago.descripcion}}</option>
+                </select>                   
+            </div>
         </div>
     </div>
 </div>

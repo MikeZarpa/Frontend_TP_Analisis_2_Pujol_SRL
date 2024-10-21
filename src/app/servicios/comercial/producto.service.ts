@@ -16,11 +16,13 @@ export class ProductoService extends DatosDeConexion{
     super();
    }
     public obtenerTodosConPagina(filtro:Filtro<any>,datosPagina:DatosNavegacionPorPagina = {nroPagina:1,pageSize:10}):Observable<RespuestaPageable<Producto>>{  
-      const filtroJSON = JSON.stringify(filtro);      
+      const filtroJSON = JSON.stringify(filtro);   
+         
       let params = new HttpParams()
       .set('nroPagina', datosPagina.nroPagina.toString())
       .set('pageSize', datosPagina.pageSize.toString())
-      .set('filtro',filtroJSON);      
+      .set('filtro',filtroJSON);   
+
       return this.http.get<RespuestaPageable<Producto>>(this.urlConexionBase+"/producto.php",{ params: params });
      }
 

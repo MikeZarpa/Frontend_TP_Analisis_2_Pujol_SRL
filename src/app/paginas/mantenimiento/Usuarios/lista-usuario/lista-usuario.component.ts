@@ -123,8 +123,10 @@ export class ListaUsuarioComponent {
       showCancelButton: true        
     });
 
-    if(!contrasena_del_solicitante)
+    if(!contrasena_del_solicitante){
       contrasena_del_solicitante = "";
+      return;
+    }
 
     /*Swal.fire({
       title: "Ingresa tu contraseña para continuar",
@@ -168,8 +170,8 @@ export class ListaUsuarioComponent {
           return false;
         }
         return Swal.fire({
-          title: 'Confirme su contraseña',
-          html: `<input id="swal-input2" class="swal2-input" type="password" placeholder="Confirme su contraseña">`,
+          title: 'Confirme la nueva contraseña',
+          html: `<input id="swal-input2" class="swal2-input" type="password" placeholder="Otra vez, nueva contraseña">`,
           focusConfirm: false,
           showCancelButton: true,
           confirmButtonText: 'Confirmar',

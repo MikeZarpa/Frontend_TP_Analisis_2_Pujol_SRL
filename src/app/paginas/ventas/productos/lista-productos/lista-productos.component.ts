@@ -193,6 +193,7 @@ export class ListaProductosComponent implements OnInit {
 
   constructor(){
     this.filtro.setCantidadFilters(2);
+    //Valor por defecto para el segundo filtro
     this.filtro.filters[1].campo = EnumFiltroProductos.Habilitado;
     this.filtro.filters[1].terminosDeBusqueda[0] = '1';
     this.filtro.filters[1].tipoBusqueda = TipoDeComparacion.LITERAL;

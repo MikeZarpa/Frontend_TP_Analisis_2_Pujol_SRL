@@ -2,6 +2,7 @@ export class EmisionFacturaDTO{
     carrito:ItemEmisionFacturaDTO[] = []
     id_cliente:number|null = null;
     descuento:number|null = null;
+    id_metodo_pago:number = 1;  //Por defecto efectivo
 }
 
 export class ItemEmisionFacturaDTO{

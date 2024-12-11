@@ -41,7 +41,7 @@
     <p>Cantidad de días {{cantidad_dias}}</p>
 </div>
 <hr/>
-<div *ngIf="registros_productos.length == 0" class="text-center">
+<div *ngIf="(registros_productos.length || registros_categorias.length) == 0" class="text-center">
     <p class="h4">No se encontraron registros.</p>
 </div>
 <div class="pb-5 px-3" *ngIf=" (buscar_por_categoria && (registros_categorias.length>0)) || (!buscar_por_categoria && (registros_productos.length > 0))">

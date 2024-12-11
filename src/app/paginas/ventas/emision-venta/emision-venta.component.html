@@ -46,7 +46,7 @@
                 <input class="mx-2" type="number" name="input-cantidad" id="" #input_cantidad>
             </div>
             <div class="col-6">
-                <button #btn  class="btn btn-primary" (click)="btn.focus(); agregar_al_carrito(input_cantidad.valueAsNumber || 1);">Ingresar a la lista</button>
+                <button #btn  class="btn btn-primary" (click)="btn.focus(); agregar_al_carrito(input_cantidad.valueAsNumber || 1); input_cantidad.value=''">Ingresar a la lista</button>
             </div>
         </div>
     </div>

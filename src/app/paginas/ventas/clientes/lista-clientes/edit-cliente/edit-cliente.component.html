@@ -21,9 +21,10 @@
         </div>
         <div class="col-6">
           <label for="dni">DNI<span class="text-danger">*</span>:</label>
-          <input type="number" id="dni" formControlName="dni" class="form-control" #dni>
+          <input type="text" id="dni" formControlName="dni" class="form-control" #dni>
           <div *ngIf="edicionForm.get('dni')?.invalid && (edicionForm.get('dni')?.dirty || edicionForm.get('dni')?.touched)" class="text-danger">
             El DNI debe ser un número.
+            EL DNI debe ser un numero de 8 digitos.
           </div>
         </div>
         <div class="col-6">

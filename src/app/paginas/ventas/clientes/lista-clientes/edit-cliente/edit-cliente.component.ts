@@ -46,7 +46,7 @@ export class EditClienteComponent {
       id_cliente: [null],
       nombre: ["", Validators.required],
       apellido: ["", Validators.required],
-      dni: ["", [Validators.required, Validators.pattern("[0-9]+")]],
+      dni: ["", [Validators.required, Validators.pattern("[0-9]+"),Validators.minLength(8),Validators.maxLength(8)]],
       cuil_cuit: ["", [Validators.required,Validators.minLength(11),Validators.maxLength(11), Validators.pattern("[0-9]+")]],
       id_cond_iva: [null, Validators.required],
       id_direccion: "",

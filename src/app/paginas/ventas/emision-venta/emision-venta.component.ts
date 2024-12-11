@@ -56,7 +56,7 @@ export class EmisionVentaComponent implements OnInit {
   metodosDePagoDisponibles:MetodoPago[] = [];
   buscar(){
     this.servicioProducto.obtenerTodosSinPagina().subscribe({
-      next:(res)=>{this.todos_los_productos = res; this.filtrar('');},
+      next:(res)=>{this.todos_los_productos = res.filter((producto) => producto.habilitado&&producto.total_cantidad!>0); this.filtrar('');},
       error:()=>{Swal.fire({
           title:'Error',
           icon:'error',
@@ -107,6 +107,17 @@ export class EmisionVentaComponent implements OnInit {
   agregar_al_carrito(cantidad:number){
     if(!this.producto_seleccionado)
       return;
+    if(0>cantidad)
+      return;
+    if(cantidad>this.producto_seleccionado.total_cantidad! ){
+      Swal.fire({
+        title:"Error",
+        icon:'error',
+        text:"La cantidad solicitada sobrepasa el stock",
+        confirmButtonText:"Entendido"
+      })
+      return;
+    }
     this.carrito.push({producto:this.producto_seleccionado, cantidad, id_tipo_det_venta:1});
     this.producto_seleccionado = null;
   }

@@ -98,12 +98,6 @@ export class ListaStockComponent {
         }
         });
       }
-
-
-    this.servicio.borrar_o_vaciar_stock_lote(stock.id_stock!).subscribe({
-      next: ()=>{FuncionesUtiles.CartelDeOperaciónRealizada(); this.buscar()},
-      error: ()=>{}
-    });
   }
 
 

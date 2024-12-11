@@ -96,3 +96,8 @@
 th{
     background-color: lightgray;
 }
+
+.producto-en-carrito-remover:hover{
+    transition: all ease 250ms;
+    background-color: rgba(184, 36, 36, 0.5);
+}

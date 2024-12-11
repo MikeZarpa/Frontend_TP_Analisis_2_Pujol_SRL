@@ -68,11 +68,11 @@
                     </thead>
                     <tbody class="cuerpo-lista-productos">
                     <!-- Definir las filas -->
-                        <tr class="row" (click)="remover_lista(datos)" *ngFor="let datos of carrito">
-                            <td class="col-8">{{datos.producto.descripcion}} - {{datos.producto.marca?.descripcion || "Sin marca"}}</td>
+                        <tr class="row producto-en-carrito-remover" (click)="remover_lista(datos)" *ngFor="let datos of carrito">
+                            <td class="col-8 producto-en-carrito-remover">{{datos.producto.descripcion}} - {{datos.producto.marca?.descripcion || "Sin marca"}}</td>
                             <!-- <th class="col-4">{{datos.producto.marca?.descripcion || "Sin marca"}}</th> -->
-                            <td class="col-2">{{datos.cantidad || "-" }}</td>
-                            <td class="col-2">{{datos.producto.historial_precio?.precio || 0 * datos.cantidad }}</td>
+                            <td class="col-2 producto-en-carrito-remover" >{{datos.cantidad || "-" }}</td>
+                            <td class="col-2 producto-en-carrito-remover">{{datos.producto.historial_precio?.precio || 0 * datos.cantidad }}</td>
                         </tr>
                     </tbody>
                 </table>
